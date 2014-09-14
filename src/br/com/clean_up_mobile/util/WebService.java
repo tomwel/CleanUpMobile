@@ -3,6 +3,9 @@ package br.com.clean_up_mobile.util;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -57,6 +60,36 @@ public class WebService {
 			// "Unexpected Error occcured! [Most common Error: Device might not be connected to Internet or remote server is not up and running]",
 			// Toast.LENGTH_LONG).show();
 			// }
+		}
+		return null;
+	}
+
+	public static String getRESTPost(String url, String json) {
+
+		HttpClient httpclient = new DefaultHttpClient();
+		HttpGet httpget = new HttpGet(url);
+
+		try {
+			URL u = new URL(url);
+			HttpURLConnection conexao = (HttpURLConnection) u.openConnection();
+
+			conexao.setRequestMethod("POST");
+			conexao.addRequestProperty("Content-type", "application/json");
+
+			conexao.setDoOutput(true);
+
+			conexao.connect();
+
+			OutputStream os = conexao.getOutputStream();
+			os.write(json
+					.getBytes());
+			os.flush();
+
+			InputStream is = conexao.getInputStream();
+			return toString(is);
+
+		} catch (Exception e) {
+			Log.e("NGVL", "Falha ao acessar Web service", e);
 		}
 		return null;
 	}

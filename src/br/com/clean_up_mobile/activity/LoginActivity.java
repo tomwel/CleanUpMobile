@@ -3,6 +3,8 @@ package br.com.clean_up_mobile.activity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.gson.Gson;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -15,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import br.com.clean_up_mobile.R;
+import br.com.clean_up_mobile.model.Usuario;
 import br.com.clean_up_mobile.util.Util;
 import br.com.clean_up_mobile.util.WebService;
 
@@ -25,7 +28,7 @@ public class LoginActivity extends Activity {
 	EditText emailET;
 	EditText pwdET;
 
-	public static final String LOGIN_USU = "http://192.168.25.2:8080/cleanUp/zeus/webservice/usuario/login/";
+	public static final String LOGIN_USU = "http://192.168.25.2:8080/cleanUp/zeus/webservice/usuario/login";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +62,15 @@ public class LoginActivity extends Activity {
 
 		if (Util.isNotNull(email) && Util.isNotNull(password)) {
 			if (Util.validate(email)) {
-				new HttpAsyncTask().execute(LOGIN_USU + email + "/" + password);
+
+				Usuario u = new Usuario();
+				u.setEmail(email);
+				u.setSenha(password);
+
+				Gson gson = new Gson();
+				String json = gson.toJson(u);
+
+				new HttpAsyncTask().execute(LOGIN_USU, json);
 			} else {
 				Toast.makeText(getApplicationContext(),
 						"Please enter valid email", Toast.LENGTH_LONG).show();
@@ -75,7 +86,7 @@ public class LoginActivity extends Activity {
 		@Override
 		protected String doInBackground(String... url) {
 
-			return WebService.getRESTFileContent(url[0]);
+			return WebService.getRESTPost(url[0], url[1]);
 		}
 
 		// onPostExecute displays the results of the AsyncTask.
