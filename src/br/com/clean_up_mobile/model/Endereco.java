@@ -1,4 +1,4 @@
-package br.com.clean_up_mobile;
+package br.com.clean_up_mobile.model;
 
 public class Endereco {
 	private String rua;
