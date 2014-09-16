@@ -28,7 +28,7 @@ public class LoginActivity extends Activity {
 	EditText emailET;
 	EditText pwdET;
 
-	public static final String LOGIN_USU = "http://192.168.25.2:8080/cleanUp/zeus/webservice/usuario/login";
+	public static final String LOGIN_USU = "http://192.168.42.93:8080/cleanUp/login/mobile";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,9 +66,8 @@ public class LoginActivity extends Activity {
 				Usuario u = new Usuario();
 				u.setEmail(email);
 				u.setSenha(password);
-
-				Gson gson = new Gson();
-				String json = gson.toJson(u);
+				
+				String json = Util.convertJSON(u);
 
 				new HttpAsyncTask().execute(LOGIN_USU, json);
 			} else {
@@ -84,9 +83,9 @@ public class LoginActivity extends Activity {
 
 	private class HttpAsyncTask extends AsyncTask<String, Void, String> {
 		@Override
-		protected String doInBackground(String... url) {
+		protected String doInBackground(String... dados) {
 
-			return WebService.getRESTPost(url[0], url[1]);
+			return WebService.getREST(dados[0], dados[1]);
 		}
 
 		// onPostExecute displays the results of the AsyncTask.

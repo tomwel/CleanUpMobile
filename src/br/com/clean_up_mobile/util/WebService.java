@@ -14,11 +14,15 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import br.com.clean_up_mobile.model.Usuario;
+
+import com.google.gson.Gson;
+
 import android.util.Log;
 
 public class WebService {
 
-	public static String getRESTFileContent(String url) {
+	public static String getREST(String url) {
 
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpGet httpget = new HttpGet(url);
@@ -63,8 +67,10 @@ public class WebService {
 		}
 		return null;
 	}
+	
+	
 
-	public static String getRESTPost(String url, String json) {
+	public static String getREST(String url, String json) {
 
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpGet httpget = new HttpGet(url);
@@ -93,6 +99,8 @@ public class WebService {
 		}
 		return null;
 	}
+	
+
 
 	private static String toString(InputStream is) throws IOException {
 

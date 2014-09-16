@@ -3,6 +3,9 @@ package br.com.clean_up_mobile.util;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
+import com.google.gson.Gson;
+
 /**
  *  * Class which has Utility methods  *  
  */
@@ -30,5 +33,14 @@ public class Util {
 	 */
 	public static boolean isNotNull(String txt) {
 		return txt != null && txt.trim().length() > 0 ? true : false;
+	}
+	
+	
+	public static String convertJSON(Object o){
+
+		Gson gson = new Gson();
+		String json = gson.toJson(o);
+		
+		return json;		
 	}
 }
