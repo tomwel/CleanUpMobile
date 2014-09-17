@@ -70,10 +70,12 @@ public class WebService {
 	
 	
 
-	public static String getREST(String url, String json) {
+	public static String getREST(String  url, Object o) {
 
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpGet httpget = new HttpGet(url);
+		
+		String json = Util.convertJSON(o);
 
 		try {
 			URL u = new URL(url);

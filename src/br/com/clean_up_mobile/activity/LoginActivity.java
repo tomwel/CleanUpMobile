@@ -1,5 +1,7 @@
 package br.com.clean_up_mobile.activity;
 
+import java.net.URL;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -67,9 +69,7 @@ public class LoginActivity extends Activity {
 				u.setEmail(email);
 				u.setSenha(password);
 				
-				String json = Util.convertJSON(u);
-
-				new HttpAsyncTask().execute(LOGIN_USU, json);
+				new HttpAsyncTask(LOGIN_USU, u);
 			} else {
 				Toast.makeText(getApplicationContext(),
 						"Please enter valid email", Toast.LENGTH_LONG).show();
@@ -81,11 +81,19 @@ public class LoginActivity extends Activity {
 		}
 	}
 
-	private class HttpAsyncTask extends AsyncTask<String, Void, String> {
-		@Override
-		protected String doInBackground(String... dados) {
+	private class HttpAsyncTask extends AsyncTask<Void, Void, String> {
+		
+		private Usuario u; 
+		private String url;
+		
+		public HttpAsyncTask(String url, Usuario u) {
+			this.u = u;
+			this.url = url;
+		}
 
-			return WebService.getREST(dados[0], dados[1]);
+		@Override
+		protected String doInBackground(Void... params) {
+			return WebService.getREST(url, u);
 		}
 
 		// onPostExecute displays the results of the AsyncTask.
@@ -116,6 +124,7 @@ public class LoginActivity extends Activity {
 
 			}
 		}
+
 	}
 
 	/**
