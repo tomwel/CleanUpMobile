@@ -3,6 +3,9 @@ package br.com.clean_up_mobile.util;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -34,13 +37,32 @@ public class Util {
 	public static boolean isNotNull(String txt) {
 		return txt != null && txt.trim().length() > 0 ? true : false;
 	}
-	
-	
-	public static String convertJSON(Object o){
+
+	public static String convertJSON(Object o) {
 
 		Gson gson = new Gson();
 		String json = gson.toJson(o);
-		
-		return json;		
+
+		return json;
 	}
+
+	public static boolean existeConexao(Context c) {
+
+		ConnectivityManager cm = (ConnectivityManager) c
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+		int wifi = ConnectivityManager.TYPE_WIFI;
+		int mobile = ConnectivityManager.TYPE_MOBILE;
+
+		if (cm.getNetworkInfo(mobile).isConnected()
+				|| cm.getNetworkInfo(wifi).isConnected()) {
+			return true;
+		} else {
+			Toast.makeText(c, "Sem conexão com a internet", Toast.LENGTH_SHORT)
+					.show();
+			return false;
+		}
+
+	}
+
 }

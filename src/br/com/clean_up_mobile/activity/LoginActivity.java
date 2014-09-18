@@ -1,11 +1,7 @@
 package br.com.clean_up_mobile.activity;
 
-import java.net.URL;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import com.google.gson.Gson;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -20,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import br.com.clean_up_mobile.R;
 import br.com.clean_up_mobile.model.Usuario;
+import br.com.clean_up_mobile.util.Constantes;
 import br.com.clean_up_mobile.util.Util;
 import br.com.clean_up_mobile.util.WebService;
 
@@ -29,8 +26,6 @@ public class LoginActivity extends Activity {
 	TextView errorMsg;
 	EditText emailET;
 	EditText pwdET;
-
-	public static final String LOGIN_USU = "http://192.168.42.93:8080/cleanUp/login/mobile";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +63,8 @@ public class LoginActivity extends Activity {
 				Usuario u = new Usuario();
 				u.setEmail(email);
 				u.setSenha(password);
-				
-				new HttpAsyncTask(LOGIN_USU, u);
+
+				doLogin(u);
 			} else {
 				Toast.makeText(getApplicationContext(),
 						"Please enter valid email", Toast.LENGTH_LONG).show();
@@ -81,11 +76,16 @@ public class LoginActivity extends Activity {
 		}
 	}
 
+	public void doLogin(Usuario usuario) {
+		if (Util.existeConexao(getApplicationContext()))
+			new HttpAsyncTask(Constantes.POST_LOGIN, usuario).execute();
+	}
+
 	private class HttpAsyncTask extends AsyncTask<Void, Void, String> {
-		
-		private Usuario u; 
+
+		private Usuario u;
 		private String url;
-		
+
 		public HttpAsyncTask(String url, Usuario u) {
 			this.u = u;
 			this.url = url;
@@ -100,20 +100,29 @@ public class LoginActivity extends Activity {
 		@Override
 		protected void onPostExecute(String result) {
 			try {
-				System.out.println(result);
-				JSONObject obj = new JSONObject(result);
-				if (obj.getBoolean("status")) {
-					Toast.makeText(getApplicationContext(),
-							"You are successfully logged in!",
-							Toast.LENGTH_LONG).show();
-					// Navigate to Home screen
-					navigatetoHomeActivity();
+
+				if (result != null) {
+
+					JSONObject obj = new JSONObject(result);
+
+					if (obj.getBoolean("status")) {
+						Toast.makeText(getApplicationContext(),
+								"You are successfully logged in!",
+								Toast.LENGTH_LONG).show();
+						// Navigate to Home screen
+						navigatetoHomeActivity();
+					} else {
+						errorMsg.setText(obj.getString("error_msg"));
+						Toast.makeText(getApplicationContext(),
+								obj.getString("error_msg"), Toast.LENGTH_LONG)
+								.show();
+					}
 				} else {
-					errorMsg.setText(obj.getString("error_msg"));
 					Toast.makeText(getApplicationContext(),
-							obj.getString("error_msg"), Toast.LENGTH_LONG)
-							.show();
+							"Erro na conexão tente novamente!",
+							Toast.LENGTH_LONG).show();
 				}
+
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				Toast.makeText(
