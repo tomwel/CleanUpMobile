@@ -11,12 +11,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import br.com.clean_up_mobile.R;
 import br.com.clean_up_mobile.model.Pessoa;
 import br.com.clean_up_mobile.util.Constantes;
+import br.com.clean_up_mobile.util.Mask;
 import br.com.clean_up_mobile.util.Util;
 import br.com.clean_up_mobile.util.WebService;
 
@@ -29,6 +32,10 @@ public class CadastroActivity extends Activity {
 	ProgressDialog prgDialog;
 	TextView errorMsg;
 	EditText nameET;
+	EditText lastNameET;
+	EditText cpfET;
+	EditText phoneET;
+	EditText addressET;
 	EditText emailET;
 	EditText pwdET;
 
@@ -38,41 +45,135 @@ public class CadastroActivity extends Activity {
 		setContentView(R.layout.activity_cadastro);
 
 		errorMsg = (TextView) findViewById(R.id.register_error);
-		nameET = (EditText) findViewById(R.id.registerName);
+		
+		nameET = (EditText) findViewById(R.id.registerName1);
+		
+		lastNameET = (EditText) findViewById(R.id.registerName2);
+		
+		cpfET = (EditText) findViewById(R.id.registerCPF);
+		cpfET.addTextChangedListener(Mask.insert("###.###.###-##", cpfET));
+		
+		phoneET = (EditText) findViewById(R.id.registerPhone);
+		phoneET.addTextChangedListener(Mask.insert("(##)####-####", phoneET));
+		
+		addressET =(EditText)findViewById(R.id.registerAddress);
+		
 		emailET = (EditText) findViewById(R.id.registerEmail);
+		
+		
 		pwdET = (EditText) findViewById(R.id.registerPassword);
+		
 		prgDialog = new ProgressDialog(this);
 		prgDialog.setMessage("Please wait...");
 		prgDialog.setCancelable(false);
 
 		Button btnRegister = (Button) findViewById(R.id.btnRegister);
 		btnRegister.setOnClickListener(btnRegisterOnClickListener);
+		
+		CheckBox checkDiarista = (CheckBox)findViewById(R.id.checkBox6);
+		checkDiarista.setOnClickListener(chckSelDiarista);
+		
+		
+		
+		
 	}
+	
+	private OnClickListener chckSelDiarista = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			
+			LinearLayout ll = (LinearLayout)findViewById(R.id.specialty);
+			
+				if (((CheckBox) v).isChecked()) {
+					
+					ll.setVisibility(View.VISIBLE);
+				}else{
+					
+					ll.setVisibility(View.GONE);
+				}
+	
+			
+		}
+	};
+	
+	
+			
+	
+	
 
 	private OnClickListener btnRegisterOnClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			validaForm();
+
+			
 		}
 	};
 
+	
+	
+	
 	public void validaForm() {
 
 		String name = nameET.getText().toString();
+		String lastname = lastNameET.getText().toString();
+		String cpf = cpfET.getText().toString();
+		String phone = phoneET.getText().toString();
+		String address = addressET.getText().toString();
 		String email = emailET.getText().toString();
 		String password = pwdET.getText().toString();
+		
 
-		if (Util.isNotNull(name) && Util.isNotNull(email)
+		
+		if (Util.isNotNull(name)
+				&& Util.isNotNull(lastname)
+				&& Util.isNotNull(cpf)
+				&& Util.isNotNull(phone)
+				&& Util.isNotNull(address)
+				&& Util.isNotNull(email)
 				&& Util.isNotNull(password)) {
-			if (Util.validate(email)) {
+			
+			if  (Util.check(cpf)) 
+			{
 
 				// monta objeto usuario
 				// chama a função cadastrar usuario
 
-			} else {
+			} else 
+				{	
 				Toast.makeText(getApplicationContext(),
-						"Please enter valid email", Toast.LENGTH_LONG).show();
-			}
+						"Please enter valid CPF", Toast.LENGTH_LONG).show();
+				}
+
+
+			if  (Util.validate(email)) 
+			{
+
+				// monta objeto usuario
+				// chama a função cadastrar usuario
+
+			} else 
+				{	
+				Toast.makeText(getApplicationContext(),
+						"Please enter valid E-MAIL", Toast.LENGTH_LONG).show();
+				}
+			
+			
+			if(pwdET.length() >= 8 ) { //verifica tamanho do conteúdo do EditText
+				// monta objeto usuario
+				// chama a função cadastrar usuario
+
+	        }
+	        else {
+	        	Toast.makeText(getApplicationContext(),
+						"Enter Password (Min 8, Max 14)", Toast.LENGTH_LONG).show();
+	        }
+			
+			
+			
+			
+			
+
 		} else {
 			Toast.makeText(getApplicationContext(),
 					"Please fill the form, don't leave any field blank",
@@ -148,8 +249,15 @@ public class CadastroActivity extends Activity {
 
 	public void setDefaultValues() {
 		nameET.setText("");
+		lastNameET.setText("");
+		cpfET.setText("");
+		phoneET.setText("");
+		addressET.setText("");
 		emailET.setText("");
 		pwdET.setText("");
+		
+		
+		
 	}
 
 }
