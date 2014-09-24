@@ -1,4 +1,4 @@
-package br.com.clean_up_mobile.banco;
+package br.com.clean_up_mobile.util;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -16,8 +16,7 @@ public class DBHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL("create TABLE usuario (id INTEGER PRIMARY KEY,"
 				+ "email TEXT, ativo INTEGER, apelido TEXT,"
-				+ "senha TEXT, data TEXT, local TEXT,"
-				+ " perfil TEXT)");
+				+ "senha TEXT, perfil TEXT)");
 	}
 
 	@Override

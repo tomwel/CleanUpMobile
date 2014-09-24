@@ -1,6 +1,8 @@
 package br.com.clean_up_mobile.model;
 
-public class Usuario {
+import java.io.Serializable;
+
+public class Usuario implements Serializable{
 	private int id;
 	private String email;
 	private String apelido;

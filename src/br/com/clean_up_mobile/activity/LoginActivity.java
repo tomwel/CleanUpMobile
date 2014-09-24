@@ -4,7 +4,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import com.google.gson.Gson;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -17,13 +16,19 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import br.com.clean_up_mobile.R;
-import br.com.clean_up_mobile.banco.UsuarioDB;
 import br.com.clean_up_mobile.model.Usuario;
 import br.com.clean_up_mobile.util.Constantes;
+import br.com.clean_up_mobile.util.UsuarioDB;
 import br.com.clean_up_mobile.util.Util;
 import br.com.clean_up_mobile.util.WebService;
+import android.content.SharedPreferences;
 
-public class LoginActivity extends Activity {
+
+public class LoginActivity extends Activity{
+	public static final String MyPREFERENCES = "MyPrefs";
+	public static final String email = "emailKey";
+	public static final String pass = "passwordKey";
+	SharedPreferences sharedpreferences;
 	Gson gson = new Gson();
 	UsuarioDB db;
 	ProgressBar progress;
@@ -31,7 +36,7 @@ public class LoginActivity extends Activity {
 	TextView errorMsg;
 	EditText emailET;
 	EditText pwdET;
-
+	Usuario usuario;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -49,23 +54,15 @@ public class LoginActivity extends Activity {
 
 		Button btnLogin = (Button) findViewById(R.id.btnLogin);
 		btnLogin.setOnClickListener(btnLoginOnClickListener);
-
-		Button btnRegistro = (Button) findViewById(R.id.btnLinkToRegisterScreen);
-		btnRegistro.setOnClickListener(btnIrParaTelaDeRegistro);
-
+		//sharedpreferences = getSharedPreferences(MyPREFERENCES,
+			//	Context.MODE_PRIVATE);
 	}
+
 
 	private OnClickListener btnLoginOnClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			validaForm();
-		}
-	};
-
-	private OnClickListener btnIrParaTelaDeRegistro = new OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			navigatetoRegisterActivity(v);
 		}
 	};
 
@@ -98,19 +95,6 @@ public class LoginActivity extends Activity {
 			new HttpAsyncTask(Constantes.POST_LOGIN, usuario).execute();
 	}
 
-	public void navigatetoRegisterActivity(View view) {
-		Intent loginIntent = new Intent(getApplicationContext(),
-				CadastroActivity.class);
-		loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		startActivity(loginIntent);
-	}
-
-	private void mostrarProgress() {
-		progress.setVisibility(View.VISIBLE);
-		txtMensagem.setVisibility(View.VISIBLE);
-		txtMensagem.setText(R.string.carregando);
-	}
-
 	private class HttpAsyncTask extends AsyncTask<Void, Void, String> {
 
 		private Usuario u;
@@ -130,7 +114,13 @@ public class LoginActivity extends Activity {
 		@Override
 		protected void onPostExecute(String result) {
 			try {
-
+//				 Editor editor = sharedpreferences.edit();
+//			      String u = emailET.getText().toString();
+//			      String p = pwdET.getText().toString();
+//			      editor.putString(email, u);
+//			      editor.putString(pass, p);
+//			      editor.commit();
+			      
 				if (result != null) {
 
 					JSONObject obj = new JSONObject(result);
@@ -143,13 +133,13 @@ public class LoginActivity extends Activity {
 								"You are successfully logged in!",
 								Toast.LENGTH_LONG).show();
 
-						Usuario usuario = gson.fromJson(
+						usuario = gson.fromJson(
 								obj.getString("objeto"), Usuario.class);
 						Log.v("MyApp", usuario.getPerfil());
 						if (!db.listaUsuario(usuario)) {
 							db.inserir(usuario);
 						}
-						if (usuario.getPerfil().equals("ROLE_CLIENT")) {
+						if (usuario.getPerfil().equals("ROLE_CLIENT")) {    
 							navigatetoHomeClientActivity();
 						} else if (usuario.getPerfil().equals("ROLE_DIARIST")) {
 							navigatetoHomeDiaristActivity();
@@ -176,12 +166,18 @@ public class LoginActivity extends Activity {
 				e.printStackTrace();
 			}
 		}
+	}
+		/**
+		 * Method which navigates from Login Activity to Home Activity
+		 */
 
 		public void navigatetoHomeClientActivity() {
 			Intent homeClientIntent = new Intent(getApplicationContext(),
 					HomeClientActivity.class);
+			homeClientIntent.putExtra("usuario", usuario);
 			homeClientIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(homeClientIntent);
+			finish();
 		}
 
 		public void navigatetoHomeDiaristActivity() {
@@ -189,6 +185,25 @@ public class LoginActivity extends Activity {
 					HomeDiaristActivity.class);
 			homeDiaristIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(homeDiaristIntent);
+			finish();
 		}
+
+		/**
+		 * Method gets triggered when Register button is clicked
+		 * 
+		 * @param view
+		 */
+		public void navigatetoRegisterActivity(View view) {
+			Intent loginIntent = new Intent(getApplicationContext(),
+					CadastroActivity.class);
+			loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(loginIntent);
+		}
+	
+
+	private void mostrarProgress() {
+		progress.setVisibility(View.VISIBLE);
+		txtMensagem.setVisibility(View.VISIBLE);
+		txtMensagem.setText(R.string.carregando);
 	}
 }

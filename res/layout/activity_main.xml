@@ -6,26 +6,16 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="br.com.clean_up_mobile.activity.HomeDiaristActivity" >
-
-    <TextView
-        android:id="@+id/textViewWelcomeDiarist"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="166dp"
-        android:text="Welcome Diarist!"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+    tools:context="br.com.clean_up_mobile.activity.MainActivity" >
 
     <TextView
         android:id="@+id/textViewNameDiarist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_marginRight="21dp"
-        android:text="Medium Text"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="177dp"
+        android:text="Clean Up"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>

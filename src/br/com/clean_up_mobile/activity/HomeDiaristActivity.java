@@ -1,14 +1,17 @@
 package br.com.clean_up_mobile.activity;
 
 import br.com.clean_up_mobile.R;
+import br.com.clean_up_mobile.model.Usuario;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class HomeDiaristActivity extends Activity {
 	ProgressDialog prgDialog;
+	TextView diaristName;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -16,6 +19,11 @@ public class HomeDiaristActivity extends Activity {
 		prgDialog = new ProgressDialog(this);
 		prgDialog.setMessage("Please wait...");
 		prgDialog.setCancelable(false);
+		
+		Usuario usuario =   
+				  (Usuario) getIntent().getSerializableExtra("usuario");
+		diaristName = (TextView)findViewById(R.id.textViewNameDiarist);
+		diaristName.setText(usuario.getApelido());
 	}
 
 	@Override

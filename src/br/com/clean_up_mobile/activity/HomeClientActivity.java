@@ -1,6 +1,7 @@
 package br.com.clean_up_mobile.activity;
 
 import br.com.clean_up_mobile.R;
+import br.com.clean_up_mobile.model.Usuario;
 import android.R.layout;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -12,11 +13,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class HomeClientActivity extends Activity {
+	TextView clientName;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home_client);
-
+		Usuario usuario =   
+				  (Usuario) getIntent().getSerializableExtra("usuario");
+		clientName = (TextView)findViewById(R.id.textViewNameClient);
+		clientName.setText(usuario.getApelido());
 	}
 
 	@Override

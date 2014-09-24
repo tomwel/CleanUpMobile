@@ -1,4 +1,4 @@
-package br.com.clean_up_mobile.banco;
+package br.com.clean_up_mobile.util;
 
 import br.com.clean_up_mobile.model.Usuario;
 import android.content.ContentValues;
@@ -61,8 +61,7 @@ public class UsuarioDB {
 
 		SQLiteDatabase db = helper.getReadableDatabase();
 
-		Cursor cursor = db.rawQuery("select * from usuario where email = ?",
-				new String[] { usuario.getEmail() });
+		Cursor cursor = db.rawQuery("select * from usuario where 1=1", null);
 
 		while (cursor.moveToNext()) {
 			usuario = preencherUsuario(cursor);
@@ -75,8 +74,8 @@ public class UsuarioDB {
 	private Usuario preencherUsuario(Cursor cursor) {
 		int id = cursor.getInt(0);
 		String email = cursor.getString(1);
-		String apelido = cursor.getString(2);
-		boolean ativo = cursor.getInt(3) == 0;
+		boolean ativo = cursor.getInt(2) == 0;
+		String apelido = cursor.getString(3);
 		String senha = cursor.getString(4);
 		String perfil = cursor.getString(5);
 		Usuario usuario = new Usuario(id, email, apelido, ativo, senha, perfil);
