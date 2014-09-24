@@ -3,7 +3,9 @@ package br.com.clean_up_mobile.util;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.widget.Toast;
 
@@ -48,32 +50,32 @@ public class Util {
 
 	public static boolean existeConexao(Context c) {
 
-		ConnectivityManager cm = (ConnectivityManager) c
-				.getSystemService(Context.CONNECTIVITY_SERVICE);
-
-		int wifi = ConnectivityManager.TYPE_WIFI;
-		int mobile = ConnectivityManager.TYPE_MOBILE;
-
-		if (cm.getNetworkInfo(mobile).isConnected()
-				|| cm.getNetworkInfo(wifi).isConnected()) {
-			return true;
-		} else {
-			Toast.makeText(c, "Sem conexão com a internet", Toast.LENGTH_SHORT)
-					.show();
-			return false;
-		}
-
+//		ConnectivityManager cm = (ConnectivityManager) c
+//				.getSystemService(Context.CONNECTIVITY_SERVICE);
+//
+//		int wifi = ConnectivityManager.TYPE_WIFI;
+//		int mobile = ConnectivityManager.TYPE_MOBILE;
+//
+//		if (cm.getNetworkInfo(mobile).isConnected()
+//				|| cm.getNetworkInfo(wifi).isConnected()) {
+//			return true;
+//		} else {
+//			Toast.makeText(c, "Sem conexão com a internet", Toast.LENGTH_SHORT)
+//					.show();
+//			return false;
+//		}
+		return true;
 	}
-	
+
 	public static boolean check(String documento) {
 		documento = Mask.unmask(documento);
 		if (documento.length() == 11)
 			return checkCPF(documento);
-		//if (documento.length() == 14)
-		//	return ValidarDocumento.checkCNPJ(documento);
+		// if (documento.length() == 14)
+		// return ValidarDocumento.checkCNPJ(documento);
 		return false;
 	}
-	
+
 	private static boolean checkCPF(String CPF) {
 		if (CPF.equals("00000000000") || CPF.equals("11111111111")
 				|| CPF.equals("22222222222") || CPF.equals("33333333333")
@@ -125,12 +127,42 @@ public class Util {
 		}
 
 	}
-	
-	
-	
-	
-	
-	
-	
+
+	public static void criarToast(Context c, String mensagem) {
+		Toast.makeText(c, mensagem, Toast.LENGTH_LONG).show();
+	}
+
+	public static String limpaCpf(String cpf) {
+		cpf = cpf.replace(".", "");
+		cpf = cpf.replace("-", "");
+		return cpf;
+	}
+
+	public static String limpaTelefone(String telefone) {
+		telefone = telefone.replace("(", "");
+		telefone = telefone.replace(")", "");
+		telefone = telefone.replace("-", "");
+		return telefone;
+	}
+
+	public static void criarAlertSimples(Context c, String titulo,
+			String mensagem) {
+
+		AlertDialog alerta;
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(c);
+		builder.setTitle(titulo);
+		builder.setMessage(mensagem);
+
+		builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface arg0, int arg1) {
+				// Toast.makeText(MainActivity.this, "positivo=" + arg1,
+				// Toast.LENGTH_SHORT).show();
+			}
+		});
+
+		alerta = builder.create();
+		alerta.show();
+	}
 
 }

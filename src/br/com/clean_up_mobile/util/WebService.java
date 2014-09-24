@@ -13,6 +13,8 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import android.util.Log;
+
 public class WebService {
 
 	public static String getREST(String url) {
@@ -47,6 +49,8 @@ public class WebService {
 		try {
 
 			json = Util.convertJSON(o);
+			
+			Log.v("CLUP", "json" + json);
 
 			u = new URL(url);
 
@@ -55,7 +59,7 @@ public class WebService {
 			conexao.setRequestMethod("POST");
 			conexao.addRequestProperty("Content-type", "application/json");
 			conexao.setReadTimeout(10000);
-			conexao.setConnectTimeout(15000);
+			conexao.setConnectTimeout(20000);
 
 			conexao.setDoOutput(true);
 
@@ -71,12 +75,12 @@ public class WebService {
 				return toString(is);
 			} else {
 				// pode ser erro 403 ou 404 ou 409
-				// Log.v("CLUP", "erro" + conexao.getResponseCode());
+				 Log.v("CLUP", "erro" + conexao.getResponseCode());
 				return null;
 			}
 
 		} catch (IOException e) {
-			// Log.e("CLUP", "Falha ao acessar Web service", e);
+			 Log.e("CLUP", "Falha ao acessar Web service classe web", e);
 			return null;
 		} finally {
 			conexao.disconnect();

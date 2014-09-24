@@ -68,7 +68,7 @@
             android:layout_below="@+id/login_error"
             android:layout_marginTop="22dp"
             android:background="#ff6347"
-            android:text="Login"
+            android:text="@string/btnLogin"
             android:textColor="#fff" />
 
         <Button
@@ -80,7 +80,7 @@
             android:layout_marginTop="24dp"
             android:background="@null"
             android:onClick="navigatetoRegisterActivity"
-            android:text="Signup"
+            android:text="@string/register_title"
             android:textColor="#228b22"
             android:textStyle="bold" />
 

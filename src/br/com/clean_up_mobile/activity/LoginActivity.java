@@ -17,9 +17,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import br.com.clean_up_mobile.R;
+import br.com.clean_up_mobile.banco.UsuarioDB;
 import br.com.clean_up_mobile.model.Usuario;
 import br.com.clean_up_mobile.util.Constantes;
-import br.com.clean_up_mobile.util.UsuarioDB;
 import br.com.clean_up_mobile.util.Util;
 import br.com.clean_up_mobile.util.WebService;
 
@@ -37,18 +37,21 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		db = new UsuarioDB(getApplicationContext());
 		setContentView(R.layout.activity_login);
-		
+
 		errorMsg = (TextView) findViewById(R.id.login_error);
 		emailET = (EditText) findViewById(R.id.loginEmail);
 		pwdET = (EditText) findViewById(R.id.loginPassword);
 		progress = (ProgressBar) findViewById(R.id.progressBar1);
 		txtMensagem = (TextView) findViewById(R.id.textViewLoading);
-		
+
 		txtMensagem.setVisibility(View.GONE);
 		progress.setVisibility(View.GONE);
-		
+
 		Button btnLogin = (Button) findViewById(R.id.btnLogin);
 		btnLogin.setOnClickListener(btnLoginOnClickListener);
+
+		Button btnRegistro = (Button) findViewById(R.id.btnLinkToRegisterScreen);
+		btnRegistro.setOnClickListener(btnIrParaTelaDeRegistro);
 
 	}
 
@@ -56,6 +59,13 @@ public class LoginActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			validaForm();
+		}
+	};
+
+	private OnClickListener btnIrParaTelaDeRegistro = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			navigatetoRegisterActivity(v);
 		}
 	};
 
@@ -86,6 +96,19 @@ public class LoginActivity extends Activity {
 	public void doLogin(Usuario usuario) {
 		if (Util.existeConexao(getApplicationContext()))
 			new HttpAsyncTask(Constantes.POST_LOGIN, usuario).execute();
+	}
+
+	public void navigatetoRegisterActivity(View view) {
+		Intent loginIntent = new Intent(getApplicationContext(),
+				CadastroActivity.class);
+		loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(loginIntent);
+	}
+
+	private void mostrarProgress() {
+		progress.setVisibility(View.VISIBLE);
+		txtMensagem.setVisibility(View.VISIBLE);
+		txtMensagem.setText(R.string.carregando);
 	}
 
 	private class HttpAsyncTask extends AsyncTask<Void, Void, String> {
@@ -131,7 +154,7 @@ public class LoginActivity extends Activity {
 						} else if (usuario.getPerfil().equals("ROLE_DIARIST")) {
 							navigatetoHomeDiaristActivity();
 						}
-						
+
 					} else {
 						errorMsg.setText(obj.getString("error_msg"));
 						Toast.makeText(getApplicationContext(),
@@ -154,16 +177,6 @@ public class LoginActivity extends Activity {
 			}
 		}
 
-		/**
-		 * Method which navigates from Login Activity to Home Activity
-		 */
-		public void navigatetoHomeActivity() {
-			Intent homeIntent = new Intent(getApplicationContext(),
-					HomeActivity.class);
-			homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(homeIntent);
-		}
-
 		public void navigatetoHomeClientActivity() {
 			Intent homeClientIntent = new Intent(getApplicationContext(),
 					HomeClientActivity.class);
@@ -177,22 +190,5 @@ public class LoginActivity extends Activity {
 			homeDiaristIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(homeDiaristIntent);
 		}
-
-		/**
-		 * Method gets triggered when Register button is clicked
-		 * 
-		 * @param view
-		 */
-		public void navigatetoRegisterActivity(View view) {
-			Intent loginIntent = new Intent(getApplicationContext(),
-					CadastroActivity.class);
-			loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(loginIntent);
-		}
-	}
-	private void mostrarProgress() {
-		progress.setVisibility(View.VISIBLE);
-		txtMensagem.setVisibility(View.VISIBLE);
-		txtMensagem.setText(R.string.carregando);
 	}
 }

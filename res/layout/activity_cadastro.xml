@@ -2,15 +2,15 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
- 
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="5dip" >
- 
+
         <!-- View Title Label -->
- 
+
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -18,179 +18,175 @@
             android:text="@string/register_title"
             android:textSize="25sp"
             android:textStyle="bold" />
-        <!-- Name Label -->
 
-        <CheckBox
-            android:id="@+id/checkBox6"
-            android:layout_width="wrap_content"
+        <RadioGroup
+            android:id="@+id/tipo_usuario"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Diarista" />
- 
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/radio_diarista"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/diarista" />
+
+            <RadioButton
+                android:id="@+id/radio_cliente"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cliente" />
+
+        </RadioGroup>
+
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/name" />
-        
-         <EditText
+
+        <EditText
             android:id="@+id/registerName1"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" 
-            android:hint="Enter your Name"/>
- 
-        
+            android:layout_height="wrap_content"
+            android:hint="Enter your Name" />
+
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/lastname" />
         <!-- Name TextField -->
- 
+
         <EditText
             android:id="@+id/registerName2"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" 
-            android:hint="Enter your Last Name"/>
-        
-        
+            android:layout_height="wrap_content"
+            android:hint="Enter your Last Name" />
+
         <!-- CPF Label -->
- 
+
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/cpf" />
         <!-- CPF TextField -->
- 
+
         <EditText
             android:id="@+id/registerCPF"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:hint="Enter your CPF"
             android:inputType="number" />
-        
-        
-        
-        
+
         <!-- Phone Label -->
- 
+
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/phone" />
-        
-       <!-- Phone TextField -->
- 
+
+        <!-- Phone TextField -->
+
         <EditText
             android:id="@+id/registerPhone"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:hint="Enter your Phone"
             android:inputType="phone" />
-        
-   
+
         <!-- Address Label -->
- 
+
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/address" />
         <!-- Address TextField -->
- 
+
         <EditText
             android:id="@+id/registerAddress"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:hint="Enter your Address"
             android:inputType="textMultiLine" />
-        
-     
+
         <Spinner
-        android:id="@+id/spinner1"
-        android:entries="@array/spinner_item"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
-        
-      
-        
- 
+            android:id="@+id/spinner1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/spinner_item" />
+
         <!-- Email Label -->
 
-         <LinearLayout
-             android:id="@+id/specialty"
-             android:layout_width="fill_parent"
-             android:layout_height="wrap_content"
-             android:orientation="vertical"
-             android:visibility="gone" >
+        <LinearLayout
+            android:id="@+id/specialty"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone" >
 
             <CheckBox
-        	    android:id="@+id/checkBox1"
+                android:id="@+id/checkBox1"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-           		android:text="Passar" />
-			
+                android:text="Passar" />
+
             <CheckBox
-        	    android:id="@+id/checkBox2"
+                android:id="@+id/checkBox2"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-              
                 android:text="Limpar" />
-            
+
             <CheckBox
-        	    android:id="@+id/checkBox3"
+                android:id="@+id/checkBox3"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-               
                 android:text="Arrumar" />
-            
+
             <CheckBox
-        	    android:id="@+id/checkBox4"
+                android:id="@+id/checkBox4"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="Faxinar" />
-            
-             <CheckBox
-        	    android:id="@+id/checkBox5"
+
+            <CheckBox
+                android:id="@+id/checkBox5"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="Cozinhar" />
-            
-            
         </LinearLayout>
- 
+
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/email" />
         <!-- Email TextField -->
- 
+
         <EditText
             android:id="@+id/registerEmail"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:hint="Enter your Email"
             android:inputType="textEmailAddress" />
-        
-       
-        
-        
- 
+
         <!-- Password Label -->
- 
+
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dip"
             android:text="@string/pwd" />
         <!-- Password TextField -->
- 
+
         <EditText
             android:id="@+id/registerPassword"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:maxLength="14"
             android:hint="Enter Password (Min 8, Max 14)"
-            android:inputType="textPassword" />
- 
+            android:inputType="textPassword"
+            android:maxLength="14" />
+
         <!-- Error message -->
- 
+
         <TextView
             android:id="@+id/register_error"
             android:layout_width="fill_parent"
@@ -199,7 +195,7 @@
             android:padding="10dip"
             android:textColor="#e30000"
             android:textStyle="bold" />
- 
+
         <Button
             android:id="@+id/btnRegister"
             android:layout_width="fill_parent"
@@ -209,9 +205,9 @@
             android:onClick="registerUser"
             android:text="@string/btnRegister"
             android:textColor="#fff" />
- 
+
         <!-- Link to Login Screen -->
- 
+
         <Button
             android:id="@+id/btnLinkToLoginScreen"
             android:layout_width="fill_parent"
@@ -223,5 +219,5 @@
             android:textColor="#228b22"
             android:textStyle="bold" />
     </LinearLayout>
- 
+
 </ScrollView>
