@@ -29,6 +29,7 @@ import br.com.clean_up_mobile.util.WebService;
 public class CadastroActivity extends Activity {
 
 	int tipoUsuario = 0;
+	int[] arrEspecialidades;
 
 	ProgressDialog prgDialog;
 	TextView errorMsg;
@@ -56,10 +57,6 @@ public class CadastroActivity extends Activity {
 		emailET = (EditText) findViewById(R.id.registerEmail);
 		pwdET = (EditText) findViewById(R.id.registerPassword);
 
-		prgDialog = new ProgressDialog(this);
-		prgDialog.setMessage("Please wait...");
-		prgDialog.setCancelable(false);
-
 		Button btnRegister = (Button) findViewById(R.id.btnRegister);
 		btnRegister.setOnClickListener(btnRegisterOnClickListener);
 
@@ -67,7 +64,50 @@ public class CadastroActivity extends Activity {
 		radioGroup.setOnCheckedChangeListener(btnRadioOnCheckedChangeListener);
 	}
 
+	// public void onCheckboxClicked(View view) {
+	// boolean checked = ((CheckBox) view).isChecked();
+	//
+	// switch(view.getId()) {
+	// case R.id.checkBox1:
+	// if (checked){
+	// arrEspecialidades[1] = 1;
+	// } else {
+	// arrEspecialidades[1] = null;
+	// }
+	// break;
+	// case R.id.checkBox2:
+	// if (checked){
+	// arrEspecialidades[2] = 2;
+	// }else{
+	// arrEspecialidades[2] = null;
+	// }
+	// break;
+	// case R.id.checkBox3:
+	// if (checked){
+	// arrEspecialidades[3] = 3;
+	// } else {
+	// arrEspecialidades[3] = null;
+	// }
+	// break;
+	// case R.id.checkBox4:
+	// if (checked){
+	// arrEspecialidades[4] = 4;
+	// }else{
+	// arrEspecialidades[4] = null;
+	// }
+	// break;
+	// case R.id.checkBox5:
+	// if (checked){
+	// arrEspecialidades[5] = 5;
+	// }else{
+	// arrEspecialidades[5] = null;
+	// }
+	// break;
+	// }
+	// }
+
 	OnCheckedChangeListener btnRadioOnCheckedChangeListener = new OnCheckedChangeListener() {
+
 		@Override
 		public void onCheckedChanged(RadioGroup group, int checkedId) {
 			LinearLayout ll = (LinearLayout) findViewById(R.id.specialty);
@@ -82,23 +122,6 @@ public class CadastroActivity extends Activity {
 				tipoUsuario = 0;
 				break;
 			}
-		}
-	};
-
-	private OnClickListener chckSelDiarista = new OnClickListener() {
-		@Override
-		public void onClick(View v) {
-
-			LinearLayout ll = (LinearLayout) findViewById(R.id.specialty);
-
-			if (((CheckBox) v).isChecked()) {
-
-				ll.setVisibility(View.VISIBLE);
-			} else {
-
-				ll.setVisibility(View.GONE);
-			}
-
 		}
 	};
 
@@ -138,6 +161,7 @@ public class CadastroActivity extends Activity {
 				p.setEmail(email);
 				p.setSenha(password);
 				p.setTipo(tipoUsuario);
+				p.setEspecialidades(arrEspecialidades);
 
 				doCadastroUsuario(p);
 
@@ -199,6 +223,16 @@ public class CadastroActivity extends Activity {
 		}
 
 		@Override
+		protected void onPreExecute() {
+			prgDialog = new ProgressDialog(getApplicationContext());
+			prgDialog.setMessage("Sincronizando informações.");
+			prgDialog.setTitle("Sincronizando");
+			prgDialog.setCancelable(true);
+			prgDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+			prgDialog.show();
+		}
+
+		@Override
 		protected String doInBackground(Void... params) {
 			Log.v("CLUP", "dfdd" + url);
 			return WebService.getREST(url, o);
@@ -206,8 +240,11 @@ public class CadastroActivity extends Activity {
 
 		@Override
 		protected void onPostExecute(String result) {
-			try {
 
+			try {
+				if (prgDialog.isShowing()) {
+					prgDialog.dismiss();
+				}
 				if (result != null) {
 
 					JSONObject obj = new JSONObject(result);

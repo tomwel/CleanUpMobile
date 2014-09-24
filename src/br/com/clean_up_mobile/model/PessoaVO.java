@@ -3,7 +3,7 @@ package br.com.clean_up_mobile.model;
 public class PessoaVO {
 
 	private String nome;
-	private Integer[] especialidades;
+	private int[] especialidades;
 	private String cpf;
 	private String telefone;
 	private String endereco;
@@ -18,10 +18,10 @@ public class PessoaVO {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public Integer[] getEspecialidades() {
+	public int[] getEspecialidades() {
 		return especialidades;
 	}
-	public void setEspecialidades(Integer[] especialidades) {
+	public void setEspecialidades(int[] especialidades) {
 		this.especialidades = especialidades;
 	}
 	public String getCpf() {
