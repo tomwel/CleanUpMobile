@@ -7,16 +7,17 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="17" />
-	<uses-permission android:name="android.permission.INTERNET" />
-  	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-  
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="br.com.clean_up_mobile.activity.LoginActivity"
+            android:name=".activity.LoginActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,8 +25,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="br.com.clean_up_mobile.activity.HomeActivity" />
-        <activity android:name="br.com.clean_up_mobile.activity.CadastroActivity" />
+        <activity android:name=".activity.HomeActivity" />
+        <activity android:name=".activity.CadastroActivity" />
+        <activity
+            android:name="br.com.clean_up_mobile.activity.HomeClientActivity"
+            android:label="@string/title_activity_home_client" >
+        </activity>
+        <activity
+            android:name="br.com.clean_up_mobile.activity.HomeDiaristActivity"
+            android:label="@string/title_activity_home_diarist" >
+        </activity>
     </application>
 
 </manifest>

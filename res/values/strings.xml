@@ -11,19 +11,21 @@
     <string name="lastname">Last Name</string>
     <string name="email">Email</string>
     <string name="pwd">Password</string>
-	<string name="btnRegister">Register</string>
-	<string name="cpf">CPF</string>
-	<string name="phone">Phone</string>
-	<string name="address">Address</string>
-	
-	
-	<string-array name = "spinner_item">
+    <string name="btnRegister">Register</string>
+    <string name="cpf">CPF</string>
+    <string name="phone">Phone</string>
+    <string name="address">Address</string>
+	<string name="carregando">Loading...</string>
+    <string-array name="spinner_item">
         <item>Recife</item>
         <item>Olinda</item>
         <item>Jaboatão</item>
         <item>Cabo</item>
         <item>Paulista</item>
     </string-array>
-	
+
+    <string name="title_activity_home_client">HomeClientActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_home_diarist">HomeDiaristActivity</string>
 
 </resources>

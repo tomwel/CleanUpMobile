@@ -2,27 +2,32 @@ package br.com.clean_up_mobile.activity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import com.google.gson.Gson;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import br.com.clean_up_mobile.R;
 import br.com.clean_up_mobile.model.Usuario;
 import br.com.clean_up_mobile.util.Constantes;
+import br.com.clean_up_mobile.util.UsuarioDB;
 import br.com.clean_up_mobile.util.Util;
 import br.com.clean_up_mobile.util.WebService;
 
 public class LoginActivity extends Activity {
-
-	ProgressDialog prgDialog;
+	Gson gson = new Gson();
+	UsuarioDB db;
+	ProgressBar progress;
+	TextView txtMensagem;
 	TextView errorMsg;
 	EditText emailET;
 	EditText pwdET;
@@ -30,16 +35,18 @@ public class LoginActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		db = new UsuarioDB(getApplicationContext());
 		setContentView(R.layout.activity_login);
-
+		
 		errorMsg = (TextView) findViewById(R.id.login_error);
 		emailET = (EditText) findViewById(R.id.loginEmail);
 		pwdET = (EditText) findViewById(R.id.loginPassword);
-		prgDialog = new ProgressDialog(this);
-		prgDialog.setMessage("Please wait...");
-		prgDialog.setCancelable(false);
-
+		progress = (ProgressBar) findViewById(R.id.progressBar1);
+		txtMensagem = (TextView) findViewById(R.id.textViewLoading);
+		
+		txtMensagem.setVisibility(View.GONE);
+		progress.setVisibility(View.GONE);
+		
 		Button btnLogin = (Button) findViewById(R.id.btnLogin);
 		btnLogin.setOnClickListener(btnLoginOnClickListener);
 
@@ -105,12 +112,26 @@ public class LoginActivity extends Activity {
 
 					JSONObject obj = new JSONObject(result);
 
+					Log.d("json", result);
+
 					if (obj.getBoolean("status")) {
+						mostrarProgress();
 						Toast.makeText(getApplicationContext(),
 								"You are successfully logged in!",
 								Toast.LENGTH_LONG).show();
-						// Navigate to Home screen
-						navigatetoHomeActivity();
+
+						Usuario usuario = gson.fromJson(
+								obj.getString("objeto"), Usuario.class);
+						Log.v("MyApp", usuario.getPerfil());
+						if (!db.listaUsuario(usuario)) {
+							db.inserir(usuario);
+						}
+						if (usuario.getPerfil().equals("ROLE_CLIENT")) {
+							navigatetoHomeClientActivity();
+						} else if (usuario.getPerfil().equals("ROLE_DIARIST")) {
+							navigatetoHomeDiaristActivity();
+						}
+						
 					} else {
 						errorMsg.setText(obj.getString("error_msg"));
 						Toast.makeText(getApplicationContext(),
@@ -130,31 +151,48 @@ public class LoginActivity extends Activity {
 						"Error Occured [Server's JSON response might be invalid]!",
 						Toast.LENGTH_LONG).show();
 				e.printStackTrace();
-
 			}
 		}
 
-	}
+		/**
+		 * Method which navigates from Login Activity to Home Activity
+		 */
+		public void navigatetoHomeActivity() {
+			Intent homeIntent = new Intent(getApplicationContext(),
+					HomeActivity.class);
+			homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(homeIntent);
+		}
 
-	/**
-	 * Method which navigates from Login Activity to Home Activity
-	 */
-	public void navigatetoHomeActivity() {
-		Intent homeIntent = new Intent(getApplicationContext(),
-				HomeActivity.class);
-		homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		startActivity(homeIntent);
-	}
+		public void navigatetoHomeClientActivity() {
+			Intent homeClientIntent = new Intent(getApplicationContext(),
+					HomeClientActivity.class);
+			homeClientIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(homeClientIntent);
+		}
 
-	/**
-	 * Method gets triggered when Register button is clicked
-	 * 
-	 * @param view
-	 */
-	public void navigatetoRegisterActivity(View view) {
-		Intent loginIntent = new Intent(getApplicationContext(),
-				CadastroActivity.class);
-		loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		startActivity(loginIntent);
+		public void navigatetoHomeDiaristActivity() {
+			Intent homeDiaristIntent = new Intent(getApplicationContext(),
+					HomeDiaristActivity.class);
+			homeDiaristIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(homeDiaristIntent);
+		}
+
+		/**
+		 * Method gets triggered when Register button is clicked
+		 * 
+		 * @param view
+		 */
+		public void navigatetoRegisterActivity(View view) {
+			Intent loginIntent = new Intent(getApplicationContext(),
+					CadastroActivity.class);
+			loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(loginIntent);
+		}
+	}
+	private void mostrarProgress() {
+		progress.setVisibility(View.VISIBLE);
+		txtMensagem.setVisibility(View.VISIBLE);
+		txtMensagem.setText(R.string.carregando);
 	}
 }
