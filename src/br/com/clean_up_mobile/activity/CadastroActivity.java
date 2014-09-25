@@ -28,7 +28,7 @@ import br.com.clean_up_mobile.util.WebService;
 
 public class CadastroActivity extends Activity {
 
-	int tipoUsuario = 0;
+	int tipoUsuario = 1;
 	int[] arrEspecialidades;
 
 	ProgressDialog prgDialog;
@@ -161,7 +161,6 @@ public class CadastroActivity extends Activity {
 				p.setEmail(email);
 				p.setSenha(password);
 				p.setTipo(tipoUsuario);
-				p.setEspecialidades(arrEspecialidades);
 
 				doCadastroUsuario(p);
 
@@ -224,12 +223,12 @@ public class CadastroActivity extends Activity {
 
 		@Override
 		protected void onPreExecute() {
-			prgDialog = new ProgressDialog(getApplicationContext());
-			prgDialog.setMessage("Sincronizando informações.");
-			prgDialog.setTitle("Sincronizando");
-			prgDialog.setCancelable(true);
-			prgDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-			prgDialog.show();
+//			prgDialog = new ProgressDialog(getApplicationContext());
+//			prgDialog.setMessage("Sincronizando informações.");
+//			prgDialog.setTitle("Sincronizando");
+//			prgDialog.setCancelable(true);
+//			prgDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//			prgDialog.show();
 		}
 
 		@Override
@@ -242,9 +241,9 @@ public class CadastroActivity extends Activity {
 		protected void onPostExecute(String result) {
 
 			try {
-				if (prgDialog.isShowing()) {
-					prgDialog.dismiss();
-				}
+//				if (prgDialog.isShowing()) {
+//					prgDialog.dismiss();
+//				}
 				if (result != null) {
 
 					JSONObject obj = new JSONObject(result);
