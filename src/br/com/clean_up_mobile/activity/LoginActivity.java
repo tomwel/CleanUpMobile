@@ -4,6 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import com.google.gson.Gson;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,11 +24,12 @@ import br.com.clean_up_mobile.util.Util;
 import br.com.clean_up_mobile.util.WebService;
 import android.content.SharedPreferences;
 
+public class LoginActivity extends Activity {
 
-public class LoginActivity extends Activity{
 	public static final String MyPREFERENCES = "MyPrefs";
 	public static final String email = "emailKey";
 	public static final String pass = "passwordKey";
+
 	SharedPreferences sharedpreferences;
 	Gson gson = new Gson();
 	UsuarioDB db;
@@ -37,6 +39,8 @@ public class LoginActivity extends Activity{
 	EditText emailET;
 	EditText pwdET;
 	Usuario usuario;
+	ProgressDialog prgDialog;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -54,10 +58,9 @@ public class LoginActivity extends Activity{
 
 		Button btnLogin = (Button) findViewById(R.id.btnLogin);
 		btnLogin.setOnClickListener(btnLoginOnClickListener);
-		//sharedpreferences = getSharedPreferences(MyPREFERENCES,
-			//	Context.MODE_PRIVATE);
+		// sharedpreferences = getSharedPreferences(MyPREFERENCES,
+		// Context.MODE_PRIVATE);
 	}
-
 
 	private OnClickListener btnLoginOnClickListener = new OnClickListener() {
 		@Override
@@ -80,19 +83,48 @@ public class LoginActivity extends Activity{
 
 				doLogin(u);
 			} else {
-				Toast.makeText(getApplicationContext(),
-						"Please enter valid email", Toast.LENGTH_LONG).show();
+				Util.criarToast(getApplicationContext(),
+						R.string.msgEmailInvalido);
 			}
 		} else {
-			Toast.makeText(getApplicationContext(),
-					"Please fill the form, don't leave any field blank",
-					Toast.LENGTH_LONG).show();
+			Util.criarToast(getApplicationContext(),
+					R.string.msgFormularioVazio);
 		}
 	}
 
 	public void doLogin(Usuario usuario) {
 		if (Util.existeConexao(getApplicationContext()))
 			new HttpAsyncTask(Constantes.POST_LOGIN, usuario).execute();
+	}
+
+	public void navigatetoHomeClientActivity() {
+		Intent homeClientIntent = new Intent(getApplicationContext(),
+				HomeClientActivity.class);
+		homeClientIntent.putExtra("usuario", usuario);
+		homeClientIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(homeClientIntent);
+		finish();
+	}
+
+	public void navigatetoHomeDiaristActivity() {
+		Intent homeDiaristIntent = new Intent(getApplicationContext(),
+				HomeDiaristActivity.class);
+		homeDiaristIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(homeDiaristIntent);
+		finish();
+	}
+
+	public void navigatetoRegisterActivity(View view) {
+		Intent loginIntent = new Intent(getApplicationContext(),
+				CadastroActivity.class);
+		loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(loginIntent);
+	}
+
+	private void mostrarProgress() {
+		progress.setVisibility(View.VISIBLE);
+		txtMensagem.setVisibility(View.VISIBLE);
+		txtMensagem.setText(R.string.carregando);
 	}
 
 	private class HttpAsyncTask extends AsyncTask<Void, Void, String> {
@@ -106,104 +138,69 @@ public class LoginActivity extends Activity{
 		}
 
 		@Override
+		protected void onPreExecute() {
+			prgDialog = new ProgressDialog(LoginActivity.this);
+			prgDialog.setMessage("Aguarde, realizando o login. ");
+			prgDialog.setTitle("Login");
+			prgDialog.setCancelable(true);
+			prgDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+			prgDialog.show();
+		}
+
+		@Override
 		protected String doInBackground(Void... params) {
 			return WebService.getREST(url, u);
 		}
 
-		// onPostExecute displays the results of the AsyncTask.
 		@Override
 		protected void onPostExecute(String result) {
 			try {
-//				 Editor editor = sharedpreferences.edit();
-//			      String u = emailET.getText().toString();
-//			      String p = pwdET.getText().toString();
-//			      editor.putString(email, u);
-//			      editor.putString(pass, p);
-//			      editor.commit();
-			      
+
+				if (prgDialog.isShowing()) {
+					prgDialog.dismiss();
+				}
+
 				if (result != null) {
 
 					JSONObject obj = new JSONObject(result);
 
-					Log.d("json", result);
+					// Log.d("json", result);
 
 					if (obj.getBoolean("status")) {
-						mostrarProgress();
-						Toast.makeText(getApplicationContext(),
-								"You are successfully logged in!",
-								Toast.LENGTH_LONG).show();
+//						mostrarProgress();
+						Util.criarToast(getApplicationContext(),
+								R.string.msgLoginSucesso);
 
-						usuario = gson.fromJson(
-								obj.getString("objeto"), Usuario.class);
-						Log.v("MyApp", usuario.getPerfil());
+						usuario = gson.fromJson(obj.getString("objeto"),
+								Usuario.class);
+						// Log.v("MyApp", usuario.getPerfil());
 						if (!db.listaUsuario(usuario)) {
 							db.inserir(usuario);
 						}
-						if (usuario.getPerfil().equals("ROLE_CLIENT")) {    
+						if (usuario.getPerfil().equals("ROLE_CLIENT")) {
 							navigatetoHomeClientActivity();
 						} else if (usuario.getPerfil().equals("ROLE_DIARIST")) {
 							navigatetoHomeDiaristActivity();
 						}
 
 					} else {
-						errorMsg.setText(obj.getString("error_msg"));
-						Toast.makeText(getApplicationContext(),
-								obj.getString("error_msg"), Toast.LENGTH_LONG)
-								.show();
+						Util.criarToast(getApplicationContext(),
+								R.string.msgLoginErrado);
+//						errorMsg.setText(obj.getString("error_msg"));
+//						Toast.makeText(getApplicationContext(),
+//								obj.getString("error_msg"), Toast.LENGTH_LONG)
+//								.show();
 					}
 				} else {
-					Toast.makeText(getApplicationContext(),
-							"Erro na conexão tente novamente!",
-							Toast.LENGTH_LONG).show();
+					Util.criarToast(getApplicationContext(),
+							R.string.msgDeErroWebservice);
 				}
 
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				Toast.makeText(
-						getApplicationContext(),
-						"Error Occured [Server's JSON response might be invalid]!",
-						Toast.LENGTH_LONG).show();
-				e.printStackTrace();
+				Util.criarToast(getApplicationContext(),
+						R.string.msgDeErroWebservice);
 			}
 		}
 	}
-		/**
-		 * Method which navigates from Login Activity to Home Activity
-		 */
 
-		public void navigatetoHomeClientActivity() {
-			Intent homeClientIntent = new Intent(getApplicationContext(),
-					HomeClientActivity.class);
-			homeClientIntent.putExtra("usuario", usuario);
-			homeClientIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(homeClientIntent);
-			finish();
-		}
-
-		public void navigatetoHomeDiaristActivity() {
-			Intent homeDiaristIntent = new Intent(getApplicationContext(),
-					HomeDiaristActivity.class);
-			homeDiaristIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(homeDiaristIntent);
-			finish();
-		}
-
-		/**
-		 * Method gets triggered when Register button is clicked
-		 * 
-		 * @param view
-		 */
-		public void navigatetoRegisterActivity(View view) {
-			Intent loginIntent = new Intent(getApplicationContext(),
-					CadastroActivity.class);
-			loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(loginIntent);
-		}
-	
-
-	private void mostrarProgress() {
-		progress.setVisibility(View.VISIBLE);
-		txtMensagem.setVisibility(View.VISIBLE);
-		txtMensagem.setText(R.string.carregando);
-	}
 }

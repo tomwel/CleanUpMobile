@@ -18,7 +18,7 @@
             android:layout_marginBottom="10dip"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
-            android:text="@string/login_title"
+            android:text="@string/tvTituloLogin"
             android:textSize="25sp"
             android:textStyle="bold" />
 
@@ -29,7 +29,7 @@
             android:layout_alignLeft="@+id/TextView1"
             android:layout_below="@+id/TextView1"
             android:layout_marginTop="15dp"
-            android:hint="Enter your Email ID"
+            android:hint="@string/edtEmail"
             android:inputType="textEmailAddress" />
 
         <TextView
@@ -39,7 +39,7 @@
             android:layout_alignLeft="@+id/TextView1"
             android:layout_below="@+id/loginEmail"
             android:layout_marginTop="23dp"
-            android:text="@string/pwd" />
+            android:text="@string/tvSenha" />
 
         <EditText
             android:id="@+id/loginPassword"
@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/TextView1"
             android:layout_below="@+id/TextView2"
-            android:hint="Enter Password"
+            android:hint="@string/edtSenhaLogin"
             android:inputType="textPassword" />
 
         <TextView
@@ -80,7 +80,7 @@
             android:layout_marginTop="24dp"
             android:background="@null"
             android:onClick="navigatetoRegisterActivity"
-            android:text="@string/register_title"
+            android:text="@string/btnRegister"
             android:textColor="#228b22"
             android:textStyle="bold" />
 

@@ -8,11 +8,11 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
@@ -29,7 +29,7 @@ import br.com.clean_up_mobile.util.WebService;
 public class CadastroActivity extends Activity {
 
 	int tipoUsuario = 1;
-	int[] arrEspecialidades;
+	int[] arrEspecialidades = new int[5];
 
 	ProgressDialog prgDialog;
 	TextView errorMsg;
@@ -46,7 +46,7 @@ public class CadastroActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_cadastro);
 
-		errorMsg = (TextView) findViewById(R.id.register_error);
+		errorMsg = (TextView) findViewById(R.id.tvRegistroErro);
 		nameET = (EditText) findViewById(R.id.registerName1);
 		lastNameET = (EditText) findViewById(R.id.registerName2);
 		cpfET = (EditText) findViewById(R.id.registerCPF);
@@ -62,49 +62,99 @@ public class CadastroActivity extends Activity {
 
 		RadioGroup radioGroup = (RadioGroup) findViewById(R.id.tipo_usuario);
 		radioGroup.setOnCheckedChangeListener(btnRadioOnCheckedChangeListener);
+
+		// CheckBox
+
+		CheckBox checkBox1 = (CheckBox) findViewById(R.id.checkBox1);
+		checkBox1.setOnClickListener(checkBoxOnClickListener);
+
+		CheckBox checkBox2 = (CheckBox) findViewById(R.id.checkBox2);
+		checkBox2.setOnClickListener(checkBoxOnClickListener);
+
+		CheckBox checkBox3 = (CheckBox) findViewById(R.id.checkBox3);
+		checkBox3.setOnClickListener(checkBoxOnClickListener);
+
+		CheckBox checkBox4 = (CheckBox) findViewById(R.id.checkBox4);
+		checkBox4.setOnClickListener(checkBoxOnClickListener);
+
+		CheckBox checkBox5 = (CheckBox) findViewById(R.id.checkBox5);
+		checkBox5.setOnClickListener(checkBoxOnClickListener);
+
+		// Spinner
+
+		// Spinner spiCidade = (Spinner) findViewById(R.id.spinner1);
+		// spiCidade.setOnItemSelectedListener(spiCidadeOnItemSelectedListener);
+
 	}
 
-	// public void onCheckboxClicked(View view) {
-	// boolean checked = ((CheckBox) view).isChecked();
 	//
-	// switch(view.getId()) {
-	// case R.id.checkBox1:
-	// if (checked){
-	// arrEspecialidades[1] = 1;
-	// } else {
-	// arrEspecialidades[1] = null;
+	// OnItemSelectedListener spiCidadeOnItemSelectedListener = new
+	// OnItemSelectedListener (){
+	//
+	// @Override
+	// public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
+	// long arg3) {
+	// // TODO Auto-generated method stub
+	//
 	// }
-	// break;
-	// case R.id.checkBox2:
-	// if (checked){
-	// arrEspecialidades[2] = 2;
-	// }else{
-	// arrEspecialidades[2] = null;
+	//
+	// @Override
+	// public void onNothingSelected(AdapterView<?> arg0) {
+	// // TODO Auto-generated method stub
+	//
 	// }
-	// break;
-	// case R.id.checkBox3:
-	// if (checked){
-	// arrEspecialidades[3] = 3;
-	// } else {
-	// arrEspecialidades[3] = null;
-	// }
-	// break;
-	// case R.id.checkBox4:
-	// if (checked){
-	// arrEspecialidades[4] = 4;
-	// }else{
-	// arrEspecialidades[4] = null;
-	// }
-	// break;
-	// case R.id.checkBox5:
-	// if (checked){
-	// arrEspecialidades[5] = 5;
-	// }else{
-	// arrEspecialidades[5] = null;
-	// }
-	// break;
-	// }
-	// }
+	//
+	// };
+
+	OnClickListener checkBoxOnClickListener = new OnClickListener() {
+
+		@Override
+		public void onClick(View view) {
+			boolean checked = ((CompoundButton) view).isChecked();
+
+			Toast.makeText(getApplicationContext(),
+					"info " + view.getId() + "  " + checked, Toast.LENGTH_LONG)
+					.show();
+
+			switch (view.getId()) {
+			case R.id.checkBox1:
+				if (checked) {
+					arrEspecialidades[0] = 1;
+				} else {
+					arrEspecialidades[0] = 0;
+				}
+				break;
+			case R.id.checkBox2:
+				if (checked) {
+					arrEspecialidades[1] = 2;
+				} else {
+					arrEspecialidades[1] = 0;
+				}
+				break;
+			case R.id.checkBox3:
+				if (checked) {
+					arrEspecialidades[2] = 3;
+				} else {
+					arrEspecialidades[2] = 0;
+				}
+				break;
+			case R.id.checkBox4:
+				if (checked) {
+					arrEspecialidades[3] = 4;
+				} else {
+					arrEspecialidades[3] = 0;
+				}
+				break;
+			case R.id.checkBox5:
+				if (checked) {
+					arrEspecialidades[4] = 5;
+				} else {
+					arrEspecialidades[4] = 0;
+				}
+				break;
+			}
+		}
+	};
 
 	OnCheckedChangeListener btnRadioOnCheckedChangeListener = new OnCheckedChangeListener() {
 
@@ -147,45 +197,44 @@ public class CadastroActivity extends Activity {
 				&& Util.isNotNull(address) && Util.isNotNull(email)
 				&& Util.isNotNull(password)) {
 
-			if (Util.check(cpf)) {
-
-				String cpfLimpo = Util.limpaCpf(cpf);
-				String telefoneLimpo = Util.limpaTelefone(phone);
-
-				PessoaVO p = new PessoaVO();
-				p.setNome(name + " " + lastname);
-				p.setCpf(cpfLimpo);
-				p.setTelefone(telefoneLimpo);
-				p.setEndereco(address);
-				p.setCidade(1);
-				p.setEmail(email);
-				p.setSenha(password);
-				p.setTipo(tipoUsuario);
-
-				doCadastroUsuario(p);
-
-			} else {
-				Toast.makeText(getApplicationContext(),
-						"Please enter valid CPF", Toast.LENGTH_LONG).show();
-			}
-
+			// Valida email
 			if (!Util.validate(email)) {
-				Toast.makeText(getApplicationContext(),
-						"Please enter valid E-MAIL", Toast.LENGTH_LONG).show();
-			}
+				Util.criarToast(getApplicationContext(),
+						R.string.msgEmailInvalido);
+			} else {
+				// Valida o tamanho da senha
+				if (pwdET.length() < 8) {
+					Util.criarToast(getApplicationContext(),
+							R.string.msgSenhaInvalido);
+				} else {
+					// Valida o cpf
+					if (!Util.check(cpf)) {
+						Util.criarToast(getApplicationContext(),
+								R.string.msgCpfInvalido);
+					} else {
 
-			if (pwdET.length() < 8) { // verifica tamanho do conteúdo do
-				Toast.makeText(getApplicationContext(),
-						"Enter Password (Min 8, Max 14)", Toast.LENGTH_LONG)
-						.show();
-			}
+						String cpfLimpo = Util.limpaCpf(cpf);
+						String telefoneLimpo = Util.limpaTelefone(phone);
 
+						PessoaVO p = new PessoaVO();
+						p.setNome(name + " " + lastname);
+						p.setCpf(cpfLimpo);
+						p.setTelefone(telefoneLimpo);
+						p.setEndereco(address);
+						p.setCidade(1);
+						p.setEmail(email);
+						p.setSenha(password);
+						p.setTipo(tipoUsuario);
+						p.setEspecialidades(arrEspecialidades);
+
+						doCadastroUsuario(p);
+					}
+				}
+			}
 		} else {
-			Toast.makeText(getApplicationContext(),
-					"Please fill the form, don't leave any field blank",
-					Toast.LENGTH_LONG).show();
+			Util.criarToast(getApplicationContext(),
+					R.string.msgFormularioVazio);
 		}
-
 	}
 
 	public void doCadastroUsuario(PessoaVO pessoa) {
@@ -223,17 +272,16 @@ public class CadastroActivity extends Activity {
 
 		@Override
 		protected void onPreExecute() {
-//			prgDialog = new ProgressDialog(getApplicationContext());
-//			prgDialog.setMessage("Sincronizando informações.");
-//			prgDialog.setTitle("Sincronizando");
-//			prgDialog.setCancelable(true);
-//			prgDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-//			prgDialog.show();
+			prgDialog = new ProgressDialog(CadastroActivity.this);
+			prgDialog.setMessage("Ralizando Cadastro");
+			prgDialog.setTitle("Cadastro");
+			prgDialog.setCancelable(true);
+			prgDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+			prgDialog.show();
 		}
 
 		@Override
 		protected String doInBackground(Void... params) {
-			Log.v("CLUP", "dfdd" + url);
 			return WebService.getREST(url, o);
 		}
 
@@ -241,42 +289,42 @@ public class CadastroActivity extends Activity {
 		protected void onPostExecute(String result) {
 
 			try {
-//				if (prgDialog.isShowing()) {
-//					prgDialog.dismiss();
-//				}
+				if (prgDialog.isShowing()) {
+					prgDialog.dismiss();
+				}
 				if (result != null) {
 
 					JSONObject obj = new JSONObject(result);
 
+					// cadastro realizado
 					if (obj.getBoolean("status")) {
 						setDefaultValues();
 						Util.criarToast(getApplicationContext(),
-								"Cadastrado com sucesso");
+								R.string.msgCadastroRealizado);
 					} else {
-						String mensagemErrro;
+
+						int mensagemErrro;
+
+						// cpf já cadastrado
 						if (obj.getString("error_msg").equals("cpf_cadastrado")) {
-							mensagemErrro = "CPF já cadastrado";
+							mensagemErrro = R.string.msgCpfCadastrado;
+							// email já cadastrado
 						} else if (obj.getString("error_msg").equals(
 								"email_cadastrado")) {
-							mensagemErrro = "Email já cadastrado";
+							mensagemErrro = R.string.msgEmailCadastrado;
+							// erro no servidor ao cadastrar
 						} else {
-							mensagemErrro = obj.getString("error_msg");
+							mensagemErrro = R.string.msgDeErroWebservice;
 						}
 						Util.criarToast(getApplicationContext(), mensagemErrro);
 					}
 				} else {
-					Toast.makeText(getApplicationContext(),
-							"Erro na conexão tente novamente!",
-							Toast.LENGTH_LONG).show();
+					Util.criarToast(getApplicationContext(),
+							R.string.msgDeErroWebservice);
 				}
-
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				Toast.makeText(
-						getApplicationContext(),
-						"Error Occured [Server's JSON response might be invalid]!",
-						Toast.LENGTH_LONG).show();
-				e.printStackTrace();
+				Util.criarToast(getApplicationContext(),
+						R.string.msgDeErroWebservice);
 
 			}
 		}

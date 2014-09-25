@@ -3,24 +3,62 @@
 
     <string name="app_name">CleanUpMobile</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_login">Login</string>
-    <string name="title_activity_home">HomeActivity</string>
-    <string name="register_title">Register</string>
-    <string name="login_title">Login</string>
-    <string name="name">Name</string>
-    <string name="lastname">Last Name</string>
-    <string name="email">Email</string>
-    <string name="pwd">Password</string>
-    <string name="btnRegister">Register</string>
-    <string name="cpf">CPF</string>
-    <string name="phone">Phone</string>
     <string name="address">Address</string>
-    <string name="carregando">Loading...</string>
-    <string name="btnLogin">Login</string>
-    <string name="cliente">Cliente</string>
-    <string name="diarista">Diarista</string>
+    <string name="carregando">Carregando</string>
 
-    <string-array name="spinner_item">
+    <!-- Mensagens -->
+    <string name="msgFormularioVazio">Favor preencher o formulário </string>
+    <string name="msgSenhaInvalido">Digite uma senha (Min 8, Max 14)</string>
+    <string name="msgCpfInvalido">Favor digite um CPF válido </string>
+    <string name="msgEmailInvalido">Favor digite um Email válido </string>
+    <string name="msgCadastroRealizado">Cadastro Realizado</string>
+    <string name="msgCpfCadastrado">CPF já cadastrado</string>
+    <string name="msgEmailCadastrado">Email já cadastrado</string>
+    <string name="msgLoginSucesso">Login realizado com sucesso</string>
+    <string name="msgLoginErrado">Senha ou email errado.</string>
+    <string name="msgDeErroWebservice">Ocorreu um erro de conexão com servidor. Tente novamente.</string>
+
+    <!-- TextView -->
+    <string name="tvNome">Nome</string>
+    <string name="tvSobrenome">Sobrenome</string>
+    <string name="tvEmail">Email</string>
+    <string name="tvSenha">Senha</string>
+    <string name="tvCpf">CPF</string>
+    <string name="tvTelefone">Telefone</string>
+    <string name="tvCidade">Cidade</string>
+    <string name="tvEndereco">Endereço</string>
+    <string name="tvTituloLogin">Login</string>
+    <string name="tvTituloCadastro">Cadastro</string>
+
+    <!-- Radio Button -->
+
+    <string name="rbCliente">Cliente</string>
+    <string name="rbDiarista">Diarista</string>
+
+    <!-- Button -->
+    <string name="btnLogin">Login</string>
+    <string name="btnRegister">Registro</string>
+
+    <!-- CheckBox -->
+
+    <string name="ckbPassar">Passar</string>
+    <string name="ckbLimpar">Limpar</string>
+    <string name="ckbArrumar">Arrumar</string>
+    <string name="ckbFaxina">Faxina</string>
+    <string name="ckbCozinhar">Cozinhar</string>
+
+    <!-- EditTExt -->
+    <string name="edtEndereco">Digite seu endereço</string>
+    <string name="edtEmail">Digite seu email</string>
+    <string name="edtSenha">Digite uma senha (Min 8, Max 14)</string>
+    <string name="edtNome">Digite seu nome</string>
+    <string name="edtSobrenome">Digite seu Sobrenome</string>
+    <string name="edtCpf">Digite seu CPF</string>
+    <string name="edtTelefone">Digite seu Telefone</string>
+    <string name="edtSenhaLogin">Digite sua senha</string>
+    <!-- Spinner -->
+
+    <string-array name="spiCidade">
         <item>Recife</item>
         <item>Olinda</item>
         <item>Jaboatão</item>
@@ -28,9 +66,12 @@
         <item>Paulista</item>
     </string-array>
 
+    <!-- Tittle Activity -->
+
     <string name="title_activity_home_client">HomeClientActivity</string>
-    <string name="hello_world">Hello world!</string>
     <string name="title_activity_home_diarist">HomeDiaristActivity</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_home">HomeActivity</string>
 
 </resources>
