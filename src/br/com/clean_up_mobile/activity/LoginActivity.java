@@ -8,14 +8,12 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 import br.com.clean_up_mobile.R;
 import br.com.clean_up_mobile.model.Usuario;
 import br.com.clean_up_mobile.util.Constantes;
@@ -121,12 +119,6 @@ public class LoginActivity extends Activity {
 		startActivity(loginIntent);
 	}
 
-	private void mostrarProgress() {
-		progress.setVisibility(View.VISIBLE);
-		txtMensagem.setVisibility(View.VISIBLE);
-		txtMensagem.setText(R.string.carregando);
-	}
-
 	private class HttpAsyncTask extends AsyncTask<Void, Void, String> {
 
 		private Usuario u;
@@ -167,7 +159,7 @@ public class LoginActivity extends Activity {
 					// Log.d("json", result);
 
 					if (obj.getBoolean("status")) {
-//						mostrarProgress();
+						// mostrarProgress();
 						Util.criarToast(getApplicationContext(),
 								R.string.msgLoginSucesso);
 
@@ -186,10 +178,10 @@ public class LoginActivity extends Activity {
 					} else {
 						Util.criarToast(getApplicationContext(),
 								R.string.msgLoginErrado);
-//						errorMsg.setText(obj.getString("error_msg"));
-//						Toast.makeText(getApplicationContext(),
-//								obj.getString("error_msg"), Toast.LENGTH_LONG)
-//								.show();
+						// errorMsg.setText(obj.getString("error_msg"));
+						// Toast.makeText(getApplicationContext(),
+						// obj.getString("error_msg"), Toast.LENGTH_LONG)
+						// .show();
 					}
 				} else {
 					Util.criarToast(getApplicationContext(),

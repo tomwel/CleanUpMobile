@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/screen"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -12,20 +13,32 @@
         android:id="@+id/textViewWelcomeDiarist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="166dp"
-        android:text="Welcome Diarist!"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="150dp"
+        android:text="Welcome"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/textViewNameDiarist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textViewWelcomeDiarist"
+        android:layout_alignBottom="@+id/textViewWelcomeDiarist"
+        android:layout_marginLeft="25dp"
+        android:layout_toRightOf="@+id/textViewWelcomeDiarist"
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/textViewLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_marginRight="21dp"
-        android:text="Medium Text"
+        android:text="@string/tvLogout"
+        android:clickable="true"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

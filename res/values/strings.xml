@@ -29,7 +29,9 @@
     <string name="tvEndereco">Endereço</string>
     <string name="tvTituloLogin">Login</string>
     <string name="tvTituloCadastro">Cadastro</string>
-
+    <string name="tvLogout">Logout</string>
+    <string name="tvLogo1">Encontrando diarista de maneira</string>
+    <string name="tvLogo2">INTELIGENTE</string>
     <!-- Radio Button -->
 
     <string name="rbCliente">Cliente</string>
@@ -73,5 +75,7 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_login">Login</string>
     <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_splash_screen">SplashScreenActivity</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

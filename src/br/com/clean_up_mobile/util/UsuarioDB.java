@@ -21,11 +21,19 @@ public class UsuarioDB {
 
 		long id = db.insert("usuario", null, values);
 		usuario.setId((int) id);
-		
 
 		db.close();
 
 		return id;
+	}
+
+	public int excluir(Usuario usuario) {
+		SQLiteDatabase db = helper.getWritableDatabase();
+
+		int rows = db.delete("usuario", "id = " + usuario.getId(), null);
+		db.close();
+
+		return rows;
 	}
 
 	private ContentValues valoresPorUsuario(Usuario usuario) {

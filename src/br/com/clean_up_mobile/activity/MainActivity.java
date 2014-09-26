@@ -17,40 +17,44 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		db = new UsuarioDB(getApplicationContext());
-		usuario = db.listaUsuario();
-		if ( usuario.getEmail() != null) {
-			if (usuario.getPerfil().equals("ROLE_CLIENT")) {
-				navigatetoHomeClientActivity();
-			} else if (usuario.getPerfil().equals("ROLE_DIARIST")) {
-				navigatetoHomeDiaristActivity();
+
+		Thread background = new Thread() {
+			public void run() {
+
+				try {
+					// Thread will sleep for 5 seconds
+					sleep(5 * 1000);
+
+					// After 5 seconds redirect to another intent
+					db = new UsuarioDB(getApplicationContext());
+					usuario = db.listaUsuario();
+					if (usuario.getEmail() != null) {
+						if (usuario.getPerfil().equals("ROLE_CLIENT")) {
+							navigatetoHomeClientActivity();
+						} else if (usuario.getPerfil().equals("ROLE_DIARIST")) {
+							navigatetoHomeDiaristActivity();
+						}
+					} else {
+						Intent homeLoginIntent = new Intent(getApplicationContext(),
+								LoginActivity.class);
+						homeLoginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+						startActivity(homeLoginIntent);
+						finish();
+					}
+				} catch (Exception e) {
+
+				}
 			}
-		} else {
-			Intent homeLoginIntent = new Intent(getApplicationContext(),
-					LoginActivity.class);
-			homeLoginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(homeLoginIntent);
-			finish();
-		}
+		};
+		// start thread
+		background.start();	
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
+	protected void onDestroy() {
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
+		super.onDestroy();
+
 	}
 
 	public void navigatetoHomeClientActivity() {

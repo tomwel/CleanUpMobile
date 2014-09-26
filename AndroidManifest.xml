@@ -39,6 +39,10 @@
             android:name=".activity.LoginActivity"
             android:label="@string/title_activity_main" >
         </activity>
+        <activity
+            android:name="br.com.clean_up_mobile.activity.SplashScreenActivity"
+            android:label="@string/title_activity_splash_screen" >
+        </activity>
     </application>
 
 </manifest>
