@@ -10,6 +10,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -17,6 +19,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import br.com.clean_up_mobile.R;
@@ -82,29 +85,28 @@ public class CadastroActivity extends Activity {
 
 		// Spinner
 
-		// Spinner spiCidade = (Spinner) findViewById(R.id.spinner1);
-		// spiCidade.setOnItemSelectedListener(spiCidadeOnItemSelectedListener);
+//		 Spinner spiCidade = (Spinner) findViewById(R.id.spinner1);
+//		 spiCidade.setOnItemSelectedListener(spiCidadeOnItemSelectedListener);
 
 	}
 
-	//
-	// OnItemSelectedListener spiCidadeOnItemSelectedListener = new
-	// OnItemSelectedListener (){
-	//
-	// @Override
-	// public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
-	// long arg3) {
-	// // TODO Auto-generated method stub
-	//
-	// }
-	//
-	// @Override
-	// public void onNothingSelected(AdapterView<?> arg0) {
-	// // TODO Auto-generated method stub
-	//
-	// }
-	//
-	// };
+//	OnItemSelectedListener spiCidadeOnItemSelectedListener = new OnItemSelectedListener() {
+//
+//		@Override
+//		public void onItemSelected(AdapterView<?> parent, View view, 
+//	            int pos, long id) {
+//			
+//			Util.criarToast(getApplicationContext(), pos + " - " + id);
+//
+//		}
+//
+//		@Override
+//		public void onNothingSelected(AdapterView<?> arg0) {
+//			// TODO Auto-generated method stub
+//
+//		}
+//
+//	};
 
 	OnClickListener checkBoxOnClickListener = new OnClickListener() {
 
