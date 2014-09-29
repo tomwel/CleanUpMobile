@@ -6,8 +6,7 @@ import br.com.clean_up_mobile.util.UsuarioDB;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.Window;
 
 public class MainActivity extends Activity {
 	UsuarioDB db;
@@ -23,21 +22,32 @@ public class MainActivity extends Activity {
 
 				try {
 					// Thread will sleep for 5 seconds
-					sleep(5 * 1000);
+					sleep(3 * 1000);
 
 					// After 5 seconds redirect to another intent
 					db = new UsuarioDB(getApplicationContext());
 					usuario = db.listaUsuario();
 					if (usuario.getEmail() != null) {
-						if (usuario.getPerfil().equals("ROLE_CLIENT")) {
-							navigatetoHomeClientActivity();
-						} else if (usuario.getPerfil().equals("ROLE_DIARIST")) {
-							navigatetoHomeDiaristActivity();
-						}
+
+						Intent homeDiaristIntent = new Intent(
+								getApplicationContext(), HomeActivity.class);
+						homeDiaristIntent.putExtra("usuario", usuario);
+						homeDiaristIntent
+								.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+						startActivity(homeDiaristIntent);
+						finish();
+
+						// if (usuario.getPerfil().equals("ROLE_CLIENT")) {
+						// navigatetoHomeClientActivity();
+						// } else if
+						// (usuario.getPerfil().equals("ROLE_DIARIST")) {
+						// navigatetoHomeDiaristActivity();
+						// }
 					} else {
-						Intent homeLoginIntent = new Intent(getApplicationContext(),
-								LoginActivity.class);
-						homeLoginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+						Intent homeLoginIntent = new Intent(
+								getApplicationContext(), LoginActivity.class);
+						homeLoginIntent
+								.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 						startActivity(homeLoginIntent);
 						finish();
 					}
@@ -47,7 +57,7 @@ public class MainActivity extends Activity {
 			}
 		};
 		// start thread
-		background.start();	
+		background.start();
 	}
 
 	@Override

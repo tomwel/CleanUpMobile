@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/screen"
     tools:context="br.com.clean_up_mobile.activity.MainActivity" >
 
     <ImageView
@@ -23,7 +22,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
         android:text="@string/tvLogo1"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        />
 
     <TextView
         android:id="@+id/textViewLogo2"
@@ -34,5 +33,5 @@
         android:layout_marginTop="14dp"
         android:text="@string/tvLogo2"
         android:textAppearance="?android:attr/textAppearanceLarge" />
-    
+
 </RelativeLayout>
