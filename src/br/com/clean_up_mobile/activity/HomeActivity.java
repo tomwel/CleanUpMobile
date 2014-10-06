@@ -35,7 +35,7 @@ public class HomeActivity extends FragmentActivity implements
 		usuario = (Usuario) getIntent().getSerializableExtra("usuario");
 
 		if (usuario.getPerfil().equals("ROLE_CLIENT")) {
-			f = new DiaristaFragment();
+			f = new ClienteFragment();
 		} else if (usuario.getPerfil().equals("ROLE_DIARIST")) {
 			f = new DiaristaFragment();
 		}
