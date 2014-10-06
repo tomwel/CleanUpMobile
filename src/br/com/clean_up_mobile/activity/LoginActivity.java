@@ -45,20 +45,25 @@ public class LoginActivity extends Activity {
 		db = new UsuarioDB(getApplicationContext());
 		setContentView(R.layout.activity_login);
 
-		errorMsg = (TextView) findViewById(R.id.login_error);
 		emailET = (EditText) findViewById(R.id.loginEmail);
 		pwdET = (EditText) findViewById(R.id.loginPassword);
-		progress = (ProgressBar) findViewById(R.id.progressBar1);
-		txtMensagem = (TextView) findViewById(R.id.textViewLoading);
-
-		txtMensagem.setVisibility(View.GONE);
-		progress.setVisibility(View.GONE);
 
 		Button btnLogin = (Button) findViewById(R.id.btnLogin);
 		btnLogin.setOnClickListener(btnLoginOnClickListener);
-		// sharedpreferences = getSharedPreferences(MyPREFERENCES,
-		// Context.MODE_PRIVATE);
+
+		Button btnRegistro = (Button) findViewById(R.id.btnRegistro);
+		btnRegistro.setOnClickListener(btnRegistroOnClickListener);
 	}
+
+	private OnClickListener btnRegistroOnClickListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			Intent cadastroIntent = new Intent(getApplicationContext(),
+					CadastroActivity.class);
+			cadastroIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(cadastroIntent);
+		}
+	};
 
 	private OnClickListener btnLoginOnClickListener = new OnClickListener() {
 		@Override
@@ -95,26 +100,9 @@ public class LoginActivity extends Activity {
 			new HttpAsyncTask(Constantes.POST_LOGIN, usuario).execute();
 	}
 
-	public void navigatetoHomeClientActivity() {
-		Intent homeClientIntent = new Intent(getApplicationContext(),
-				HomeClientActivity.class);
-		homeClientIntent.putExtra("usuario", usuario);
-		homeClientIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		startActivity(homeClientIntent);
-		finish();
-	}
-
-	public void navigatetoHomeDiaristActivity() {
-		Intent homeDiaristIntent = new Intent(getApplicationContext(),
-				HomeDiaristActivity.class);
-		homeDiaristIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		startActivity(homeDiaristIntent);
-		finish();
-	}
-
-	public void navigatetoRegisterActivity(View view) {
+	public void navigatetoHome() {
 		Intent loginIntent = new Intent(getApplicationContext(),
-				CadastroActivity.class);
+				HomeActivity.class);
 		loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(loginIntent);
 	}
@@ -169,11 +157,8 @@ public class LoginActivity extends Activity {
 						if (!db.listaUsuario(usuario)) {
 							db.inserir(usuario);
 						}
-						if (usuario.getPerfil().equals("ROLE_CLIENT")) {
-							navigatetoHomeClientActivity();
-						} else if (usuario.getPerfil().equals("ROLE_DIARIST")) {
-							navigatetoHomeDiaristActivity();
-						}
+
+						navigatetoHome();
 
 					} else {
 						Util.criarToast(getApplicationContext(),

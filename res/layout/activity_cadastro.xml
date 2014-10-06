@@ -3,13 +3,18 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="5dip" >
+    <RelativeLayout
+        android:id="@+id/RelativeLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:background="#80FFFFFF"
+        android:gravity="center"
+        android:padding="10dp" >
 
         <TextView
+            android:id="@+id/textView1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dip"
@@ -17,192 +22,178 @@
             android:textSize="25sp"
             android:textStyle="bold" />
 
-        <RadioGroup
-            android:id="@+id/tipo_usuario"
-            android:layout_width="fill_parent"
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:layout_below="@+id/textView1" >
 
-            <RadioButton
-                android:id="@+id/radio_cliente"
-                android:layout_width="wrap_content"
+            <RadioGroup
+                android:id="@+id/tipo_usuario"
+                android:layout_width="263dp"
                 android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="@string/rbCliente" />
+                android:orientation="horizontal" >
 
-            <RadioButton
-                android:id="@+id/radio_diarista"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/rbDiarista" />
-        </RadioGroup>
+                <RadioButton
+                    android:id="@+id/radio_cliente"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/rbCliente" />
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/tvNome" />
+                <RadioButton
+                    android:id="@+id/radio_diarista"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rbDiarista" />
+            </RadioGroup>
+        </LinearLayout>
 
         <EditText
             android:id="@+id/registerName1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/edtNome" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/tvSobrenome" />
+            android:layout_alignLeft="@+id/linearLayout1"
+            android:layout_below="@+id/linearLayout1"
+            android:ems="10"
+            android:hint="@string/tvNome"
+            android:textColorHint="@color/preto" />
 
         <EditText
             android:id="@+id/registerName2"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/edtSobrenome" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/tvCpf" />
+            android:layout_alignLeft="@+id/registerName1"
+            android:layout_below="@+id/registerName1"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/tvSobrenome"
+            android:textColorHint="@color/preto" />
 
         <EditText
             android:id="@+id/registerCPF"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/edtCpf"
-            android:inputType="number" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/tvTelefone" />
-
-        <EditText
-            android:id="@+id/registerPhone"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/edtTelefone"
-            android:inputType="phone" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/address" />
+            android:layout_alignLeft="@+id/registerName2"
+            android:layout_below="@+id/registerName2"
+            android:ems="10"
+            android:hint="@string/tvCpf"
+            android:inputType="number"
+            android:textColorHint="@color/preto" />
 
         <EditText
             android:id="@+id/registerAddress"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/edtEndereco"
-            android:inputType="textMultiLine" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/tvCidade" />
+            android:layout_alignLeft="@+id/registerCPF"
+            android:layout_below="@+id/registerCPF"
+            android:ems="10"
+            android:hint="@string/tvEndereco"
+            android:inputType="textMultiLine"
+            android:textColorHint="@color/preto" />
 
         <Spinner
             android:id="@+id/spinner1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/registerAddress"
+            android:layout_below="@+id/registerAddress"
             android:entries="@array/spiCidade" />
-
-        <!-- Email Label -->
 
         <LinearLayout
             android:id="@+id/specialty"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/spinner1"
+            android:layout_centerHorizontal="true"
             android:orientation="vertical"
             android:visibility="gone" >
 
             <CheckBox
                 android:id="@+id/checkBox1"
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ckbPassar" />
 
             <CheckBox
                 android:id="@+id/checkBox2"
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ckbLimpar" />
 
             <CheckBox
                 android:id="@+id/checkBox3"
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ckbArrumar" />
 
             <CheckBox
                 android:id="@+id/checkBox4"
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ckbFaxina" />
 
             <CheckBox
                 android:id="@+id/checkBox5"
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ckbCozinhar" />
         </LinearLayout>
 
-        <TextView
+        <EditText
+            android:id="@+id/registerPhone"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/tvEmail" />
+            android:layout_alignLeft="@+id/specialty"
+            android:layout_below="@+id/specialty"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/tvTelefone"
+            android:inputType="phone"
+            android:textColorHint="@color/preto" />
 
         <EditText
             android:id="@+id/registerEmail"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/edtEmail"
-            android:inputType="textEmailAddress" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dip"
-            android:text="@string/tvSenha" />
+            android:layout_alignLeft="@+id/registerPhone"
+            android:layout_below="@+id/registerPhone"
+            android:ems="10"
+            android:hint="@string/tvEmail"
+            android:inputType="textEmailAddress"
+            android:textColorHint="@color/preto" />
 
         <EditText
             android:id="@+id/registerPassword"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/registerEmail"
+            android:layout_below="@+id/registerEmail"
+            android:ems="10"
             android:hint="@string/edtSenha"
             android:inputType="textPassword"
-            android:maxLength="14" />
-
-        <TextView
-            android:id="@+id/tvRegistroErro"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="10dip"
-            android:textColor="#e30000"
-            android:textStyle="bold" />
+            android:maxLength="14"
+            android:textColorHint="@color/preto" />
 
         <Button
             android:id="@+id/btnRegister"
-            android:layout_width="fill_parent"
+            style="@style/botaoCustomizadoNormal"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dip"
-            android:background="#ff6347"
+            android:layout_alignLeft="@+id/registerPassword"
+            android:layout_below="@+id/registerPassword"
             android:onClick="registerUser"
-            android:text="@string/btnRegister"
-            android:textColor="#fff" />
-
-        <!-- Link to Login Screen -->
+            android:text="@string/btnRegister" />
 
         <Button
             android:id="@+id/btnLinkToLoginScreen"
-            android:layout_width="fill_parent"
+            style="@style/botaoCustomizadoNormal"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dip"
-            android:background="@null"
+            android:layout_alignRight="@+id/registerPassword"
+            android:layout_below="@+id/registerPassword"
             android:onClick="navigatetoLoginActivity"
-            android:text="@string/btnLogin"
-            android:textColor="#228b22"
-            android:textStyle="bold" />
-    </LinearLayout>
+            android:text="@string/btnLogin" />
+    </RelativeLayout>
 
 </ScrollView>

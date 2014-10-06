@@ -35,7 +35,6 @@ public class CadastroActivity extends Activity {
 	int[] arrEspecialidades = new int[5];
 
 	ProgressDialog prgDialog;
-	TextView errorMsg;
 	EditText nameET;
 	EditText lastNameET;
 	EditText cpfET;
@@ -49,7 +48,6 @@ public class CadastroActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_cadastro);
 
-		errorMsg = (TextView) findViewById(R.id.tvRegistroErro);
 		nameET = (EditText) findViewById(R.id.registerName1);
 		lastNameET = (EditText) findViewById(R.id.registerName2);
 		cpfET = (EditText) findViewById(R.id.registerCPF);
@@ -85,28 +83,29 @@ public class CadastroActivity extends Activity {
 
 		// Spinner
 
-//		 Spinner spiCidade = (Spinner) findViewById(R.id.spinner1);
-//		 spiCidade.setOnItemSelectedListener(spiCidadeOnItemSelectedListener);
+		// Spinner spiCidade = (Spinner) findViewById(R.id.spinner1);
+		// spiCidade.setOnItemSelectedListener(spiCidadeOnItemSelectedListener);
 
 	}
 
-//	OnItemSelectedListener spiCidadeOnItemSelectedListener = new OnItemSelectedListener() {
-//
-//		@Override
-//		public void onItemSelected(AdapterView<?> parent, View view, 
-//	            int pos, long id) {
-//			
-//			Util.criarToast(getApplicationContext(), pos + " - " + id);
-//
-//		}
-//
-//		@Override
-//		public void onNothingSelected(AdapterView<?> arg0) {
-//			// TODO Auto-generated method stub
-//
-//		}
-//
-//	};
+	// OnItemSelectedListener spiCidadeOnItemSelectedListener = new
+	// OnItemSelectedListener() {
+	//
+	// @Override
+	// public void onItemSelected(AdapterView<?> parent, View view,
+	// int pos, long id) {
+	//
+	// Util.criarToast(getApplicationContext(), pos + " - " + id);
+	//
+	// }
+	//
+	// @Override
+	// public void onNothingSelected(AdapterView<?> arg0) {
+	// // TODO Auto-generated method stub
+	//
+	// }
+	//
+	// };
 
 	OnClickListener checkBoxOnClickListener = new OnClickListener() {
 

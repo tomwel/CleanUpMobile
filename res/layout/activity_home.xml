@@ -1,25 +1,34 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SlidingPaneLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sliding_pane_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="${relativePackage}.${activityClass}" >
+    android:layout_height="match_parent" >
+
+    <!-- Menu Lateral -->
 
     <FrameLayout
-        android:id="@+id/frameTopo"
-        android:layout_width="match_parent"
-        android:layout_height="200dp" >
-    </FrameLayout>
-    <FrameLayout
-        android:id="@+id/frameCentro"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-    </FrameLayout>
-    
-    <FrameLayout
-        android:id="@+id/frameRodape"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:id="@+id/frameLayoutMenu"
+        android:layout_width="280dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:background="@drawable/gradient_menu" >
     </FrameLayout>
 
-</LinearLayout>
+    <!-- Conteúdo da tela -->
+
+    <RelativeLayout
+        android:id="@+id/rightPane"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <FrameLayout
+            android:id="@+id/frameLayoutCentro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="174dp" >
+        </FrameLayout>
+    </RelativeLayout>
+
+</android.support.v4.widget.SlidingPaneLayout>

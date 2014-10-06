@@ -1,20 +1,19 @@
 package br.com.clean_up_mobile.fragment;
 
 import br.com.clean_up_mobile.R;
-import android.app.Fragment;
+import android.app.ActionBar;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.support.v4.app.FragmentActivity;
 
-public class ClienteFragment extends Fragment {
+public class ClienteFragment extends FragmentActivity {
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_cliente, container, false);
+	public void onCreate(Bundle savedInstanceState) {
+		setContentView(R.layout.fragment_cliente);
 
-		return view;
+		ActionBar ab = getActionBar();
+		ab.setDisplayHomeAsUpEnabled(true);
+
 	}
 
 }
