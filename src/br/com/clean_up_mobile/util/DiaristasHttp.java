@@ -48,10 +48,10 @@ public class DiaristasHttp {
 					.getString("codigo")));
 			diarista.setNome(jsonDiarista.getString("nome"));
 			JSONObject jsonCidade = jsonDiarista.getJSONObject("cidade");
-			cidade.setCodigoCidade(Integer.getInteger(jsonCidade.getString("codigoCidade")));
+			cidade.setCodigoCidade(jsonCidade.getInt("codigoCidade"));
 			cidade.setNomeCidade(jsonCidade.getString("nomeCidade"));
 			diarista.setCidade(cidade);
-			JSONArray  jsonEspecialidades = jsonDiarista.getJSONArray("Especialidades");
+			JSONArray jsonEspecialidades = jsonDiarista.getJSONArray("especialidades");
 			for (int j = 0; j < jsonEspecialidades.length(); j++) {
 				Especialidade especialidade = new Especialidade();
 				JSONObject jsonEspecialidade = jsonEspecialidades.getJSONObject(j);
