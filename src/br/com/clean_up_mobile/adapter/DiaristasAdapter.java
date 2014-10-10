@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.com.clean_up_mobile.R;
 import br.com.clean_up_mobile.model.Diarista;
+import br.com.clean_up_mobile.model.Especialidade;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +24,13 @@ public class DiaristasAdapter extends ArrayAdapter<Diarista>{
 
 		ViewHolder holder;
 		Diarista diarista = getItem(position);
-		
+		List<Especialidade> especialidades = diarista.getEspecialidade();
+		Especialidade especialidade = new Especialidade();
+		String listaEspecialidades= "";
+		for (int i=0;i<especialidades.size();i++){
+			especialidade = especialidades.get(i);
+			listaEspecialidades = especialidade.getNomeEspecialidade() + ",";
+		}
 		if (convertView == null) {
 			convertView = LayoutInflater.from(getContext()).inflate(
 					R.layout.item_lista_diarista, null);
@@ -31,8 +38,11 @@ public class DiaristasAdapter extends ArrayAdapter<Diarista>{
 			holder.nomeDiarista = (TextView) convertView
 					.findViewById(R.id.textViewNomeListDiarista);
 
-			holder.valorDiarista = (TextView) convertView
-					.findViewById(R.id.textViewValorListDiarista);
+			holder.cidadeDiarista = (TextView) convertView
+					.findViewById(R.id.textViewCidadeListDiarista);
+			
+			holder.especialidadesDiarista = (TextView) convertView
+					.findViewById(R.id.textViewEspecialidadesListDiarista);
 			
 			convertView.setTag(holder);
 		} else {
@@ -40,13 +50,15 @@ public class DiaristasAdapter extends ArrayAdapter<Diarista>{
 		}
 		System.out.println(diarista.getNome());
 		holder.nomeDiarista.setText(diarista.getNome());
-		holder.valorDiarista.setText(Double.toString(diarista.getValor()));
+		holder.cidadeDiarista.setText(diarista.getCidade().getNomeCidade());
+		holder.especialidadesDiarista.setText(listaEspecialidades);
 		
 		return convertView;
 	}
 
 	static class ViewHolder {
 		TextView nomeDiarista;
-		TextView valorDiarista;
+		TextView cidadeDiarista;
+		TextView especialidadesDiarista;
 	}
 }

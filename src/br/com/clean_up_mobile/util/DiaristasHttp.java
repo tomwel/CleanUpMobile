@@ -12,7 +12,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import br.com.clean_up_mobile.model.Cidade;
 import br.com.clean_up_mobile.model.Diarista;
+import br.com.clean_up_mobile.model.Especialidade;
 
 public class DiaristasHttp {
 
@@ -36,15 +38,30 @@ public class DiaristasHttp {
 			throws JSONException, IOException {
 		List<Diarista> diaristas = new ArrayList<Diarista>();
 		JSONArray jsonDiaristas;
-
+		List<Especialidade> especialidades = new ArrayList<Especialidade>();
 		jsonDiaristas = new JSONArray(bytesToString(is));
 		for (int i = 0; i < jsonDiaristas.length(); i++) {
 			Diarista diarista = new Diarista();
+			Cidade cidade = new Cidade();
 			JSONObject jsonDiarista = jsonDiaristas.getJSONObject(i);
 			diarista.setCodigo(Integer.getInteger(jsonDiarista
 					.getString("codigo")));
 			diarista.setNome(jsonDiarista.getString("nome"));
-			diarista.setValor(jsonDiarista.getDouble("valor"));
+			JSONObject jsonCidade = jsonDiarista.getJSONObject("cidade");
+			cidade.setCodigoCidade(Integer.getInteger(jsonCidade.getString("codigoCidade")));
+			cidade.setNomeCidade(jsonCidade.getString("nomeCidade"));
+			diarista.setCidade(cidade);
+			JSONArray  jsonEspecialidades = jsonDiarista.getJSONArray("Especialidades");
+			for (int j = 0; j < jsonEspecialidades.length(); j++) {
+				Especialidade especialidade = new Especialidade();
+				JSONObject jsonEspecialidade = jsonEspecialidades.getJSONObject(j);
+				especialidade.setCodigoEspecialidade(Integer.getInteger(jsonEspecialidade.getString("codigoEspecialidade")));
+				especialidade.setNomeEspecialidade(jsonEspecialidade.getString("nomeEspecialidade"));
+				especialidades.add(especialidade);
+				diarista.setEspecialidade(especialidades);
+			}
+			
+			
 			diaristas.add(diarista);
 		}
 

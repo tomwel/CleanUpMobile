@@ -70,7 +70,7 @@ public class ClienteFragment extends ListFragment {
 				false);
 
 		progress = (ProgressBar) view.findViewById(R.id.progressBar1);
-		txtMensagem = (TextView) view.findViewById(R.id.textView1);
+		txtMensagem = (TextView) view.findViewById(R.id.textViewCidadeListDiarista);
 
 		return view;
 	}
