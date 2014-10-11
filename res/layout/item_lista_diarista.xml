@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/textViewEspecialidadesListDiarista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textViewEspecialidades"
+        android:layout_alignBottom="@+id/textViewEspecialidades"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/textViewEspecialidades"
+        android:text="ListEspecialidades" />
+
+    <TextView
+        android:id="@+id/textViewNomeListDiarista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="64dp"
+        android:text="Diarista"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textViewCidadeListDiarista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewNomeListDiarista"
+        android:layout_below="@+id/textViewNomeListDiarista"
+        android:text="Medium Text"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textViewEspecialidades"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewCidadeListDiarista"
+        android:layout_below="@+id/textViewCidadeListDiarista"
+        android:text="Especialidades:" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textViewEspecialidades"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/textViewCidadeListDiarista"
+        android:src="@drawable/ic_diarista" />
+
+</RelativeLayout>

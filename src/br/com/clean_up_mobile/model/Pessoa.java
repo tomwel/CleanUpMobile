@@ -18,6 +18,20 @@ public class Pessoa {
 		this.usuario = new Usuario();
 	}
 
+	public Pessoa(Integer codigo, String nome, String cpf, String rg,
+			String telefone, Date dataNascimento, Endereco endereco,
+			Usuario usuario) {
+		super();
+		this.codigo = codigo;
+		this.nome = nome;
+		this.cpf = cpf;
+		this.rg = rg;
+		this.telefone = telefone;
+		this.dataNascimento = dataNascimento;
+		this.endereco = endereco;
+		this.usuario = usuario;
+	}
+	
 	public Integer getCodigo() {
 		return codigo;
 	}
