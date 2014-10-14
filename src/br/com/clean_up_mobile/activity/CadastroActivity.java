@@ -23,11 +23,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import br.com.clean_up_mobile.R;
-import br.com.clean_up_mobile.model.PessoaVO;
+import br.com.clean_up_mobile.task.WebService;
 import br.com.clean_up_mobile.util.Constantes;
 import br.com.clean_up_mobile.util.Mask;
 import br.com.clean_up_mobile.util.Util;
-import br.com.clean_up_mobile.util.WebService;
+import br.com.clean_up_mobile.vo.PessoaVO;
 
 public class CadastroActivity extends Activity {
 

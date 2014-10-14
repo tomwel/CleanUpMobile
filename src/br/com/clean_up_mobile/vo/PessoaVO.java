@@ -1,4 +1,4 @@
-package br.com.clean_up_mobile.model;
+package br.com.clean_up_mobile.vo;
 
 public class PessoaVO {
 

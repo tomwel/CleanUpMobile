@@ -1,12 +1,11 @@
 package br.com.clean_up_mobile.activity;
 
 import br.com.clean_up_mobile.R;
+import br.com.clean_up_mobile.db.UsuarioDB;
 import br.com.clean_up_mobile.model.Usuario;
-import br.com.clean_up_mobile.util.UsuarioDB;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Window;
 
 public class MainActivity extends Activity {
 	UsuarioDB db;
@@ -29,20 +28,12 @@ public class MainActivity extends Activity {
 					usuario = db.listaUsuario();
 					if (usuario.getEmail() != null) {
 
-						Intent homeDiaristIntent = new Intent(
-								getApplicationContext(), HomeActivity.class);
-						homeDiaristIntent.putExtra("usuario", usuario);
-						homeDiaristIntent
-								.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-						startActivity(homeDiaristIntent);
+						Intent homeIntent = new Intent(getApplicationContext(),
+								HomeActivity.class);
+						homeIntent.putExtra("usuario", usuario);
+						homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+						startActivity(homeIntent);
 						finish();
-
-						// if (usuario.getPerfil().equals("ROLE_CLIENT")) {
-						// navigatetoHomeClientActivity();
-						// } else if
-						// (usuario.getPerfil().equals("ROLE_DIARIST")) {
-						// navigatetoHomeDiaristActivity();
-						// }
 					} else {
 						Intent homeLoginIntent = new Intent(
 								getApplicationContext(), LoginActivity.class);
@@ -65,23 +56,5 @@ public class MainActivity extends Activity {
 
 		super.onDestroy();
 
-	}
-
-	public void navigatetoHomeClientActivity() {
-		Intent homeClientIntent = new Intent(getApplicationContext(),
-				HomeClientActivity.class);
-		homeClientIntent.putExtra("usuario", usuario);
-		homeClientIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		startActivity(homeClientIntent);
-		finish();
-	}
-
-	public void navigatetoHomeDiaristActivity() {
-		Intent homeDiaristIntent = new Intent(getApplicationContext(),
-				HomeDiaristActivity.class);
-		homeDiaristIntent.putExtra("usuario", usuario);
-		homeDiaristIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		startActivity(homeDiaristIntent);
-		finish();
 	}
 }

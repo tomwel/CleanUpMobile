@@ -1,4 +1,4 @@
-package br.com.clean_up_mobile.util;
+package br.com.clean_up_mobile.task;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -12,6 +12,8 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+
+import br.com.clean_up_mobile.util.Util;
 
 import android.util.Log;
 

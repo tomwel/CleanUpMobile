@@ -15,11 +15,11 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import br.com.clean_up_mobile.R;
+import br.com.clean_up_mobile.db.UsuarioDB;
 import br.com.clean_up_mobile.model.Usuario;
+import br.com.clean_up_mobile.task.WebService;
 import br.com.clean_up_mobile.util.Constantes;
-import br.com.clean_up_mobile.util.UsuarioDB;
 import br.com.clean_up_mobile.util.Util;
-import br.com.clean_up_mobile.util.WebService;
 import android.content.SharedPreferences;
 
 public class LoginActivity extends Activity {
@@ -101,10 +101,11 @@ public class LoginActivity extends Activity {
 	}
 
 	public void navigatetoHome() {
-		Intent loginIntent = new Intent(getApplicationContext(),
+		Intent homeIntent = new Intent(getApplicationContext(),
 				HomeActivity.class);
-		loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		startActivity(loginIntent);
+		homeIntent.putExtra("usuario", usuario);
+		homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(homeIntent);
 	}
 
 	private class HttpAsyncTask extends AsyncTask<Void, Void, String> {

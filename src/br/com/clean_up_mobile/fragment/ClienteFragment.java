@@ -4,7 +4,7 @@ import java.util.List;
 import br.com.clean_up_mobile.R;
 import br.com.clean_up_mobile.adapter.DiaristasAdapter;
 import br.com.clean_up_mobile.model.Diarista;
-import br.com.clean_up_mobile.util.DiaristasHttp;
+import br.com.clean_up_mobile.task.DiaristasHttp;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;

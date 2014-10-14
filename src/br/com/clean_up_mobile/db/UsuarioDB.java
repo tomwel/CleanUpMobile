@@ -1,4 +1,4 @@
-package br.com.clean_up_mobile.util;
+package br.com.clean_up_mobile.db;
 
 import br.com.clean_up_mobile.model.Usuario;
 import android.content.ContentValues;

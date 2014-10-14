@@ -1,4 +1,4 @@
-package br.com.clean_up_mobile.util;
+package br.com.clean_up_mobile.task;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import br.com.clean_up_mobile.model.Cidade;
 import br.com.clean_up_mobile.model.Diarista;
 import br.com.clean_up_mobile.model.Especialidade;
+import br.com.clean_up_mobile.util.Constantes;
 
 public class DiaristasHttp {
 
