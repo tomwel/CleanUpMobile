@@ -1,6 +1,7 @@
 package br.com.clean_up_mobile.activity;
 
 import br.com.clean_up_mobile.R;
+import br.com.clean_up_mobile.controller.NotificacaoController;
 import br.com.clean_up_mobile.db.UsuarioDB;
 import br.com.clean_up_mobile.model.Usuario;
 import android.content.Intent;
@@ -16,12 +17,20 @@ public class MainActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		final NotificacaoController n = new NotificacaoController();
+
+		n.exibeNotificacao(getApplicationContext());
+
 		Thread background = new Thread() {
 			public void run() {
+
+				n.atulizaNotificacao(getApplicationContext());
 
 				try {
 					// Thread will sleep for 5 seconds
 					sleep(3 * 1000);
+					
+//					n.cancelaNotificacao();
 
 					// After 5 seconds redirect to another intent
 					db = new UsuarioDB(getApplicationContext());
@@ -34,7 +43,7 @@ public class MainActivity extends ActionBarActivity {
 						homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 						startActivity(homeIntent);
 						finish();
-					}else{
+					} else {
 						Intent homeLoginIntent = new Intent(
 								getApplicationContext(), LoginActivity.class);
 						homeLoginIntent
