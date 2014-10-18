@@ -1,14 +1,10 @@
 package br.com.clean_up_mobile.activity;
 
 import br.com.clean_up_mobile.R;
-import br.com.clean_up_mobile.fragment.ClienteFragment;
-import br.com.clean_up_mobile.fragment.DiaristaFragment;
-import br.com.clean_up_mobile.fragment.MenuFragment;
 import br.com.clean_up_mobile.model.Usuario;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v4.widget.SlidingPaneLayout.PanelSlideListener;
 import android.view.View;
@@ -19,9 +15,8 @@ import android.widget.AdapterView.OnItemClickListener;
 public class HomeActivity extends FragmentActivity implements
 		OnItemClickListener, PanelSlideListener {
 
-	private SlidingPaneLayout mSlidingLayout;
+	//private SlidingPaneLayout mSlidingLayout;
 	Usuario usuario;
-	Fragment f;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,37 +30,39 @@ public class HomeActivity extends FragmentActivity implements
 		usuario = (Usuario) getIntent().getSerializableExtra("usuario");
 
 		if (usuario.getPerfil().equals("ROLE_CLIENT")) {
-			f = new ClienteFragment();
+			Intent homeClienteIntent = new Intent(
+					getApplicationContext(), HomeClienteActivity.class);
+			homeClienteIntent.putExtra("usuario", usuario);
+			homeClienteIntent
+			.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(homeClienteIntent);
+			finish();
 		} else if (usuario.getPerfil().equals("ROLE_DIARIST")) {
-			f = new DiaristaFragment();
+			Intent homeDiaristaIntent = new Intent(
+					getApplicationContext(), HomeDiaristaActivity.class);
+			homeDiaristaIntent.putExtra("usuario", usuario);
+			homeDiaristaIntent
+			.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(homeDiaristaIntent);
+			finish();
 		}
 
-		// centro
-		FragmentTransaction transactionCentro = getSupportFragmentManager()
-				.beginTransaction();
-		transactionCentro.replace(R.id.frameLayoutCentro, f);
-		transactionCentro.commit();
-
-		// menu
-		FragmentTransaction transactionMenu = getSupportFragmentManager()
-				.beginTransaction();
-		transactionMenu.replace(R.id.frameLayoutMenu, new MenuFragment());
-		transactionMenu.commit();
-
-		mSlidingLayout = (SlidingPaneLayout) findViewById(R.id.sliding_pane_layout);
-		mSlidingLayout.setPanelSlideListener(this);
-
+//		// centro
+//		FragmentTransaction transactionCentro = getSupportFragmentManager()
+//				.beginTransaction();
+//		transactionCentro.replace(R.id.frameLayoutCentro, f);
+//		transactionCentro.commit();
+//
+//		// menu
+//		FragmentTransaction transactionMenu = getSupportFragmentManager()
+//				.beginTransaction();
+//		transactionMenu.replace(R.id.frameLayoutMenu, new MenuFragment());
+//		transactionMenu.commit();
+//
+//		mSlidingLayout = (SlidingPaneLayout) findViewById(R.id.sliding_pane_layout);
+//		mSlidingLayout.setPanelSlideListener(this);
+//
 	}
-
-	// // Evento de clique do botão
-	// public void abrirMenu(View v) {
-	// // Se estive aberto, feche. Senão abra.
-	// if (mSlidingLayout.isOpen()) {
-	// mSlidingLayout.closePane();
-	// } else {
-	// mSlidingLayout.openPane();
-	// }
-	// }
 
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view,

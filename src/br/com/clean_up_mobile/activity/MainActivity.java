@@ -3,11 +3,11 @@ package br.com.clean_up_mobile.activity;
 import br.com.clean_up_mobile.R;
 import br.com.clean_up_mobile.db.UsuarioDB;
 import br.com.clean_up_mobile.model.Usuario;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 
-public class MainActivity extends Activity {
+public class MainActivity extends ActionBarActivity {
 	UsuarioDB db;
 	Usuario usuario;
 
@@ -34,7 +34,7 @@ public class MainActivity extends Activity {
 						homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 						startActivity(homeIntent);
 						finish();
-					} else {
+					}else{
 						Intent homeLoginIntent = new Intent(
 								getApplicationContext(), LoginActivity.class);
 						homeLoginIntent

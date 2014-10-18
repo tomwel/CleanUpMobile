@@ -6,6 +6,7 @@
     <string name="address">Address</string>
     <string name="carregando">Carregando</string>
     <string name="conexao">Falha na conexão!</string>
+    <string name="logout">Logout</string>
 
     <!-- Mensagens -->
     <string name="msgFormularioVazio">Favor preencher o formulário </string>
@@ -84,5 +85,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
+    <string name="title_activity_home_tabs">HomeTabsActivity</string>
+    <string name="title_activity_home_diarista">HomeDiaristaActivity</string>
 
 </resources>
