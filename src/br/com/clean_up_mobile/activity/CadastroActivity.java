@@ -193,10 +193,16 @@ public class CadastroActivity extends Activity {
 		String email = emailET.getText().toString();
 		String password = pwdET.getText().toString();
 
-		if (Util.isNotNull(name) && Util.isNotNull(lastname)
+		if (((Util.isNotNull(name) && Util.isNotNull(lastname)
 				&& Util.isNotNull(cpf) && Util.isNotNull(phone)
-				&& Util.isNotNull(address) && Util.isNotNull(email)
-				&& Util.isNotNull(password)) {
+				&& Util.isNotNull(address) && Util.isNotNull(email) && Util
+					.isNotNull(password)))
+				||
+
+				(tipoUsuario == 1 && (Util.isNotNull(name)
+						&& Util.isNotNull(lastname) && Util.isNotNull(cpf)
+						&& Util.isNotNull(phone) && Util.isNotNull(email) && Util
+							.isNotNull(password)))) {
 
 			// Valida email
 			if (!Util.validate(email)) {

@@ -57,7 +57,7 @@
             android:layout_below="@+id/linearLayout1"
             android:ems="10"
             android:hint="@string/tvNome"
-            android:textColorHint="@color/preto" />
+            android:textColorHint="@color/gray" />
 
         <EditText
             android:id="@+id/registerName2"
@@ -68,7 +68,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="@string/tvSobrenome"
-            android:textColorHint="@color/preto" />
+            android:textColorHint="@color/gray" />
 
         <EditText
             android:id="@+id/registerCPF"
@@ -79,25 +79,14 @@
             android:ems="10"
             android:hint="@string/tvCpf"
             android:inputType="number"
-            android:textColorHint="@color/preto" />
-
-        <EditText
-            android:id="@+id/registerAddress"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/registerCPF"
-            android:layout_below="@+id/registerCPF"
-            android:ems="10"
-            android:hint="@string/tvEndereco"
-            android:inputType="textMultiLine"
-            android:textColorHint="@color/preto" />
+            android:textColorHint="@color/gray" />
 
         <Spinner
             android:id="@+id/spinner1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/registerAddress"
-            android:layout_below="@+id/registerAddress"
+            android:layout_alignLeft="@+id/registerCPF"
+            android:layout_below="@+id/registerCPF"
             android:entries="@array/spiCidade" />
 
         <LinearLayout
@@ -108,6 +97,19 @@
             android:layout_centerHorizontal="true"
             android:orientation="vertical"
             android:visibility="gone" >
+            
+            <EditText
+            android:id="@+id/registerAddress"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/specialty"
+            android:layout_below="@+id/specialty"
+            android:ems="10"
+            android:hint="@string/tvEndereco"
+            android:inputType="textMultiLine"
+            android:textColorHint="@color/gray" />
+            
+        
 
             <CheckBox
                 android:id="@+id/checkBox1"
@@ -150,7 +152,7 @@
             android:ems="10"
             android:hint="@string/tvTelefone"
             android:inputType="phone"
-            android:textColorHint="@color/preto" />
+            android:textColorHint="@color/gray" />
 
         <EditText
             android:id="@+id/registerEmail"
@@ -161,7 +163,7 @@
             android:ems="10"
             android:hint="@string/tvEmail"
             android:inputType="textEmailAddress"
-            android:textColorHint="@color/preto" />
+            android:textColorHint="@color/gray" />
 
         <EditText
             android:id="@+id/registerPassword"
@@ -173,11 +175,10 @@
             android:hint="@string/edtSenha"
             android:inputType="textPassword"
             android:maxLength="14"
-            android:textColorHint="@color/preto" />
+            android:textColorHint="@color/gray" />
 
         <Button
             android:id="@+id/btnRegister"
-            style="@style/botaoCustomizadoNormal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/registerPassword"
@@ -187,7 +188,6 @@
 
         <Button
             android:id="@+id/btnLinkToLoginScreen"
-            style="@style/botaoCustomizadoNormal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignRight="@+id/registerPassword"
