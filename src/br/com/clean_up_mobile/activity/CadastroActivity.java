@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -29,7 +30,8 @@ import br.com.clean_up_mobile.util.Mask;
 import br.com.clean_up_mobile.util.Util;
 import br.com.clean_up_mobile.vo.PessoaVO;
 
-public class CadastroActivity extends Activity {
+public class CadastroActivity extends ActionBarActivity
+{
 
 	int tipoUsuario = 1;
 	int[] arrEspecialidades = new int[5];
@@ -42,7 +44,7 @@ public class CadastroActivity extends Activity {
 	EditText addressET;
 	EditText emailET;
 	EditText pwdET;
-
+//teste
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
