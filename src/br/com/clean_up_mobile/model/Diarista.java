@@ -6,7 +6,7 @@ import java.util.List;
 public class Diarista extends Pessoa implements Serializable{
 	private double valor;
 	private Cidade cidade;
-	private List<Especialidade> especialidade;
+	private List<Especialidade> especialidades;
 
 	public double getValor() {
 		return valor;
@@ -24,12 +24,12 @@ public class Diarista extends Pessoa implements Serializable{
 		this.cidade = cidade;
 	}
 	
-	public List<Especialidade> getEspecialidade() {
-		return especialidade;
+	public List<Especialidade> getEspecialidades() {
+		return especialidades;
 	}
 
-	public void setEspecialidade(List<Especialidade> especialidade) {
-		this.especialidade = especialidade;
+	public void setEspecialidades(List<Especialidade> especialidades) {
+		this.especialidades = especialidades;
 	}
 
 }
