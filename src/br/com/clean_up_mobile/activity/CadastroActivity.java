@@ -44,7 +44,7 @@ public class CadastroActivity extends ActionBarActivity
 	EditText addressET;
 	EditText emailET;
 	EditText pwdET;
-//teste
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
