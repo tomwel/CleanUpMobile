@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -29,7 +30,8 @@ import br.com.clean_up_mobile.util.Mask;
 import br.com.clean_up_mobile.util.Util;
 import br.com.clean_up_mobile.vo.PessoaVO;
 
-public class CadastroActivity extends Activity {
+public class CadastroActivity extends ActionBarActivity
+{
 
 	int tipoUsuario = 1;
 	int[] arrEspecialidades = new int[5];
@@ -193,10 +195,16 @@ public class CadastroActivity extends Activity {
 		String email = emailET.getText().toString();
 		String password = pwdET.getText().toString();
 
-		if (Util.isNotNull(name) && Util.isNotNull(lastname)
+		if (((Util.isNotNull(name) && Util.isNotNull(lastname)
 				&& Util.isNotNull(cpf) && Util.isNotNull(phone)
-				&& Util.isNotNull(address) && Util.isNotNull(email)
-				&& Util.isNotNull(password)) {
+				&& Util.isNotNull(address) && Util.isNotNull(email) && Util
+					.isNotNull(password)))
+				||
+
+				(tipoUsuario == 1 && (Util.isNotNull(name)
+						&& Util.isNotNull(lastname) && Util.isNotNull(cpf)
+						&& Util.isNotNull(phone) && Util.isNotNull(email) && Util
+							.isNotNull(password)))) {
 
 			// Valida email
 			if (!Util.validate(email)) {
