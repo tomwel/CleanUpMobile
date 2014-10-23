@@ -39,11 +39,11 @@ public class DiaristasHttp {
 			throws JSONException, IOException {
 		List<Diarista> diaristas = new ArrayList<Diarista>();
 		JSONArray jsonDiaristas;
-		List<Especialidade> especialidades = new ArrayList<Especialidade>();
 		jsonDiaristas = new JSONArray(bytesToString(is));
 		for (int i = 0; i < jsonDiaristas.length(); i++) {
 			Diarista diarista = new Diarista();
 			Cidade cidade = new Cidade();
+			List<Especialidade> especialidades = new ArrayList<Especialidade>();
 			JSONObject jsonDiarista = jsonDiaristas.getJSONObject(i);
 			diarista.setCodigo(Integer.getInteger(jsonDiarista
 					.getString("codigo")));
@@ -56,10 +56,10 @@ public class DiaristasHttp {
 			for (int j = 0; j < jsonEspecialidades.length(); j++) {
 				Especialidade especialidade = new Especialidade();
 				JSONObject jsonEspecialidade = jsonEspecialidades.getJSONObject(j);
-				especialidade.setCodigoEspecialidade(Integer.getInteger(jsonEspecialidade.getString("codigoEspecialidade")));
+				especialidade.setCodigoEspecialidade(jsonEspecialidade.getInt("codigoEspecialidade"));
 				especialidade.setNomeEspecialidade(jsonEspecialidade.getString("nomeEspecialidade"));
 				especialidades.add(especialidade);
-				diarista.setEspecialidade(especialidades);
+				diarista.setEspecialidades(especialidades);
 			}
 			
 			

@@ -30,7 +30,7 @@ import br.com.clean_up_mobile.util.Mask;
 import br.com.clean_up_mobile.util.Util;
 import br.com.clean_up_mobile.vo.PessoaVO;
 
-public class CadastroActivity extends ActionBarActivity
+public class CadastroActivity extends Activity
 {
 
 	int tipoUsuario = 1;
