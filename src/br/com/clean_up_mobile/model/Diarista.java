@@ -8,7 +8,7 @@ public class Diarista {
 	private String nome;
 	private String telefone;
 	private Cidade cidade;
-	private List<Especialidade> especialidade;
+	private List<Especialidade> especialidades;
 
 	public Integer getCodigo() {
 		return codigo;
@@ -26,12 +26,12 @@ public class Diarista {
 		this.cidade = cidade;
 	}
 
-	public List<Especialidade> getEspecialidade() {
-		return especialidade;
+	public List<Especialidade> getEspecialidades() {
+		return especialidades;
 	}
 
-	public void setEspecialidade(List<Especialidade> especialidade) {
-		this.especialidade = especialidade;
+	public void setEspecialidades(List<Especialidade> especialidades) {
+		this.especialidades = especialidades;
 	}
 
 	public String getNome() {

@@ -22,7 +22,8 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 public class HomeClienteActivity extends ActionBarActivity implements
-		TabListener {
+		TabListener{
+	
 	Fragment fragment1;
 	Fragment fragment2;
 	ViewPager pager;
@@ -36,8 +37,7 @@ public class HomeClienteActivity extends ActionBarActivity implements
 		db = new UsuarioDB(getApplicationContext());
 		usuario = (Usuario) getIntent().getSerializableExtra("usuario");
 		fragment1 = new ClienteFragment();
-		fragment2 = new ClienteFragment();
-
+		fragment2 = new ClienteFragment()		;
 		final ActionBar actionBar = getSupportActionBar();
 
 		pager = (ViewPager) findViewById(R.id.viewPager);
@@ -69,6 +69,7 @@ public class HomeClienteActivity extends ActionBarActivity implements
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.home_cliente, menu);
+		
 		return true;
 	}
 
@@ -76,6 +77,7 @@ public class HomeClienteActivity extends ActionBarActivity implements
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		// action with ID action_refresh was selected
+            
 		case R.id.logout:
 			try {
 				db.excluir(usuario);
@@ -92,7 +94,7 @@ public class HomeClienteActivity extends ActionBarActivity implements
 
 		return true;
 	}
-
+	
 	public void navigatetoLoginActivity() {
 		Intent loginIntent = new Intent(getApplicationContext(),
 				LoginActivity.class);

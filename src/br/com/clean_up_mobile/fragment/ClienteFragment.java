@@ -1,6 +1,7 @@
 package br.com.clean_up_mobile.fragment;
 
 import java.util.List;
+
 import br.com.clean_up_mobile.R;
 import br.com.clean_up_mobile.adapter.DiaristasAdapter;
 import br.com.clean_up_mobile.model.Diarista;
@@ -11,22 +12,24 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.AsyncTask.Status;
 import android.support.v4.app.ListFragment;
+import android.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class ClienteFragment extends ListFragment {
+public class ClienteFragment extends ListFragment implements SearchView.OnQueryTextListener{
 
 	DiaristasTask mTask;
 	List<Diarista> mDiaristas;
 	ProgressBar progress;
 	TextView txtMensagem;
-	
+	private SearchView mSearchView;
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+
 		if (mDiaristas != null) {
 			txtMensagem.setVisibility(View.GONE);
 			progress.setVisibility(View.GONE);
@@ -53,31 +56,38 @@ public class ClienteFragment extends ListFragment {
 
 			mTask = new DiaristasTask();
 			mTask.execute();
-
-		/*} else {
-			progress.setVisibility(View.GONE);
-			txtMensagem.setVisibility(View.VISIBLE);
-			txtMensagem.setText("Sem conexão com a Internet");
-			txtMensagem.setText(R.string.conexao);
-			*/
 		}
 	}
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_cliente, container,
 				false);
-
 		progress = (ProgressBar) view.findViewById(R.id.progressBar1);
-		txtMensagem = (TextView) view.findViewById(R.id.textViewCidadeListDiarista);
-
+		txtMensagem = (TextView) view.findViewById(R.id.textViewLoading);
+	     mSearchView = (SearchView) view.findViewById(R.id.searchview);
+	     mSearchView.setQueryHint("Procurar Diarista");
+	     mSearchView.setIconifiedByDefault(false);
+	     mSearchView.setOnQueryTextListener(this);
 		return view;
 	}
 
+	@Override
+	public boolean onQueryTextChange(String text) {
+		System.out.println(text);
+		return false;
+	}
+
+	@Override
+	public boolean onQueryTextSubmit(String text) {
+		
+		return false;
+	}
 	
 	private void refreshList() {
-		DiaristasAdapter adapter = new DiaristasAdapter(getActivity(), mDiaristas);
+		DiaristasAdapter adapter = new DiaristasAdapter(getActivity(),
+				mDiaristas);
 		setListAdapter(adapter);
 	}
 
