@@ -87,5 +87,10 @@
     <string name="action_example">Example action</string>
     <string name="title_activity_home_tabs">HomeTabsActivity</string>
     <string name="title_activity_home_diarista">HomeDiaristaActivity</string>
+    <string name="cliente">Cliente</string>
+    <string name="diarista">Diarista</string>
+    <string name="endereco">Endereço</string>
+    <string name="descricao">Descrição</string>
+    <string name="valor">Valor</string>
 
 </resources>
