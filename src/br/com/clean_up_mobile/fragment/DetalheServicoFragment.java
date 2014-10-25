@@ -80,9 +80,9 @@ public class DetalheServicoFragment extends Fragment implements OnClickListener{
       }
 	}
 	
-	public void cancelaServico(Servico servico) {
-		if (Util.existeConexao(getApplicationContext()))
-			new HttpAsyncTask(Constantes.GET_CANCELASERVICO, servico).execute();
-	}
+//	public void cancelaServico(Servico servico) {
+//		if (Util.existeConexao(getApplicationContext()))
+//			new HttpAsyncTask(Constantes.GET_CANCELASERVICO, servico).execute();
+//	}
 	
 }
