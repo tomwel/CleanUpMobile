@@ -17,6 +17,28 @@ public class DBHelper extends SQLiteOpenHelper {
 		db.execSQL("create TABLE usuario (id INTEGER PRIMARY KEY,"
 				+ "email TEXT, ativo INTEGER, apelido TEXT,"
 				+ "senha TEXT, perfil TEXT)");
+
+		// Tabela de clientes
+
+		db.execSQL("create TABLE cliente (codigo INTEGER PRIMARY KEY,"
+				+ "nome TEXT, telefone TEXT)");
+
+		// tabela de especialidade
+		db.execSQL("create TABLE especialidade (codigo INTEGER PRIMARY KEY,"
+				+ "nome TEXT)");
+
+		// tabela de ralacionamento diarista x especialidade
+		db.execSQL("create TABLE relacionamento_especialidade_diarista (id INTEGER PRIMARY KEY,"
+				+ "diarista INTEGER, especialidade INTEGER)");
+
+		// tabela diarista
+		db.execSQL("create TABLE diarista (codigo INTEGER PRIMARY KEY,"
+				+ "nome TEXT, telefone TEXT)");
+
+		// tabela servico
+		db.execSQL("create TABLE servico (codigo INTEGER PRIMARY KEY,"
+				+ "tipo TEXT, descricao TEXT, cliente INTEGER, diarista INTEGER"
+				+ "endereco TEXT, data TEXT, valor TEXT, status TEXT)");
 	}
 
 	@Override
