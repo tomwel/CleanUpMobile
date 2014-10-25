@@ -55,7 +55,7 @@ public class DiaristasAdapter extends ArrayAdapter<Diarista>{
 			holder = (ViewHolder) convertView.getTag();
 		}
 		holder.nomeDiarista.setText(diarista.getNome());
-		holder.cidadeDiarista.setText(diarista.getCidade().getNomeCidade());
+		holder.cidadeDiarista.setText(diarista.getCidade());
 		holder.especialidadesDiarista.setText(listaEspecialidades);
 		
 		return convertView;
