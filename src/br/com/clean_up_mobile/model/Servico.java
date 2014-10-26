@@ -1,8 +1,9 @@
 package br.com.clean_up_mobile.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Servico {
+public class Servico implements Serializable{
 
 	private Integer codServico;
 	private String tipoServico;
