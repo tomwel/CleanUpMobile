@@ -1,6 +1,8 @@
 package br.com.clean_up_mobile.model;
 
-public class Cidade {
+import java.io.Serializable;
+
+public class Cidade implements Serializable{
 	
 	private int codigoCidade;
 	private String cidade;

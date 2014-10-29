@@ -3,6 +3,7 @@ package br.com.clean_up_mobile.fragment;
 import java.util.List;
 
 import br.com.clean_up_mobile.R;
+import br.com.clean_up_mobile.activity.OnClickDiarista;
 import br.com.clean_up_mobile.adapter.DiaristasAdapter;
 import br.com.clean_up_mobile.model.Diarista;
 import br.com.clean_up_mobile.task.DiaristasHttp;
@@ -16,6 +17,7 @@ import android.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -73,6 +75,15 @@ public class ClienteFragment extends ListFragment implements SearchView.OnQueryT
 		return view;
 	}
 
+	@Override
+	public void onListItemClick(ListView l, View v, int position, long id) {
+		super.onListItemClick(l, v, position, id);
+
+		if (getActivity() instanceof OnClickDiarista) {
+			((OnClickDiarista) getActivity()).clickedDiarista(mDiaristas.get(position));
+		}
+	}
+	
 	@Override
 	public boolean onQueryTextChange(String text) {
 		System.out.println(text);

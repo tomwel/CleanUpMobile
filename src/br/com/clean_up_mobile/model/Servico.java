@@ -6,34 +6,34 @@ import java.util.Date;
 public class Servico implements Serializable{
 
 	private Integer codServico;
-	private String tipoServico;
+	private TipoServico tipoServico;
 	private String descricao;
 	private Cliente cliente;
 	private Diarista diarista;
 	private Endereco endereco;
 	private Date dataServico;
 	private double valor;
-	private String status;
+	private StatusServico status;
+	private Notificacao notificacao;
 	
 	public  Servico() {
 		this.diarista = new Diarista();
 		this.cliente = new Cliente();
 		this.endereco = new Endereco();
+		this.notificacao = new Notificacao();
 	}
 	
-	public Servico(Integer codServico, String tipoServico, String descricao,
-			Cliente cliente, Diarista diarista, Endereco endereco,
-			Date dataServico, double valor, String status) {
+	public Servico(Integer codServico, TipoServico tipoServico,
+			String descricao, Cliente codCliente, Diarista codDiarista,
+			Date dataServico, float valor) {
 		super();
 		this.codServico = codServico;
 		this.tipoServico = tipoServico;
 		this.descricao = descricao;
-		this.cliente = cliente;
-		this.diarista = diarista;
-		this.endereco = endereco;
+		this.cliente = codCliente;
+		this.diarista = codDiarista;
 		this.dataServico = dataServico;
 		this.valor = valor;
-		this.status = status;
 	}
 
 	public Integer getCodServico() {
@@ -44,11 +44,11 @@ public class Servico implements Serializable{
 		this.codServico = codServico;
 	}
 
-	public String getTipoServico() {
+	public TipoServico getTipoServico() {
 		return tipoServico;
 	}
 
-	public void setTipoServico(String tipoServico) {
+	public void setTipoServico(TipoServico tipoServico) {
 		this.tipoServico = tipoServico;
 	}
 
@@ -58,6 +58,22 @@ public class Servico implements Serializable{
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+	public Date getDataServico() {
+		return dataServico;
+	}
+
+	public void setDataServico(Date dataServico) {
+		this.dataServico = dataServico;
+	}
+
+	public double getValor() {
+		return valor;
+	}
+
+	public void setValor(double valor) {
+		this.valor = valor;
 	}
 
 	public Cliente getCliente() {
@@ -84,27 +100,20 @@ public class Servico implements Serializable{
 		this.endereco = endereco;
 	}
 
-	public Date getDataServico() {
-		return dataServico;
-	}
-
-	public void setDataServico(Date dataServico) {
-		this.dataServico = dataServico;
-	}
-
-	public double getValor() {
-		return valor;
-	}
-
-	public void setValor(double valor) {
-		this.valor = valor;
-	}
-
-	public String getStatus() {
+	public StatusServico getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(StatusServico status) {
 		this.status = status;
-	}	
+	}
+
+	public Notificacao getNotificacao() {
+		return notificacao;
+	}
+
+	public void setNotificacao(Notificacao notificacao) {
+		this.notificacao = notificacao;
+	}
+	
 }

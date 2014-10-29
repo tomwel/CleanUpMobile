@@ -3,6 +3,8 @@ package br.com.clean_up_mobile.activity;
 import br.com.clean_up_mobile.R;
 import br.com.clean_up_mobile.db.UsuarioDB;
 import br.com.clean_up_mobile.fragment.ClienteFragment;
+import br.com.clean_up_mobile.fragment.DiaristaServicoFragment;
+import br.com.clean_up_mobile.model.Diarista;
 import br.com.clean_up_mobile.model.Usuario;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,8 +24,8 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 public class HomeClienteActivity extends ActionBarActivity implements
-		TabListener{
-	
+		TabListener, OnClickDiarista {
+
 	Fragment fragment1;
 	Fragment fragment2;
 	ViewPager pager;
@@ -37,7 +39,7 @@ public class HomeClienteActivity extends ActionBarActivity implements
 		db = new UsuarioDB(getApplicationContext());
 		usuario = (Usuario) getIntent().getSerializableExtra("usuario");
 		fragment1 = new ClienteFragment();
-		fragment2 = new ClienteFragment()		;
+		fragment2 = new DiaristaServicoFragment();
 		final ActionBar actionBar = getSupportActionBar();
 
 		pager = (ViewPager) findViewById(R.id.viewPager);
@@ -54,11 +56,11 @@ public class HomeClienteActivity extends ActionBarActivity implements
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
 		Tab aba1 = actionBar.newTab();
-		aba1.setText("Fragment Cliente");
+		aba1.setIcon(R.drawable.ic_home);
 		aba1.setTabListener(this);
 
 		Tab aba2 = actionBar.newTab();
-		aba2.setText("Fragment Cliente");
+		aba2.setIcon(R.drawable.ic_notas);
 		aba2.setTabListener(this);
 
 		actionBar.addTab(aba1);
@@ -66,10 +68,23 @@ public class HomeClienteActivity extends ActionBarActivity implements
 	}
 
 	@Override
+	public void clickedDiarista(Diarista diarista) {
+
+//		DetalheDiaristaFragment d = DetalheDiaristaFragment
+//				.novaInstancia(diarista);
+//
+//		getSupportFragmentManager().beginTransaction().replace(R.id.detail, d)
+//				.commit();
+		Intent it = new Intent(this, DetalheDiaristaActivity.class);
+		it.putExtra("diarista", diarista);
+		startActivity(it);
+	}
+
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.home_cliente, menu);
-		
+
 		return true;
 	}
 
@@ -77,7 +92,7 @@ public class HomeClienteActivity extends ActionBarActivity implements
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		// action with ID action_refresh was selected
-            
+
 		case R.id.logout:
 			try {
 				db.excluir(usuario);
@@ -88,13 +103,14 @@ public class HomeClienteActivity extends ActionBarActivity implements
 				e.getMessage();
 			}
 		case R.id.action_settings:
-			Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT)
+					.show();
 			break;
 		}
 
 		return true;
 	}
-	
+
 	public void navigatetoLoginActivity() {
 		Intent loginIntent = new Intent(getApplicationContext(),
 				LoginActivity.class);
@@ -102,7 +118,7 @@ public class HomeClienteActivity extends ActionBarActivity implements
 		startActivity(loginIntent);
 		finish();
 	}
-	
+
 	@Override
 	public void onTabReselected(Tab arg0, FragmentTransaction arg1) {
 

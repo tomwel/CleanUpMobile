@@ -8,11 +8,10 @@
         android:id="@+id/textViewCliente"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
         android:paddingTop="10dp"
         android:text="@string/cliente"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
+<!--android:paddingLeft="10dp"  --> 
     <TextView
         android:id="@+id/textViewNomeCliente"
         android:layout_width="wrap_content"
@@ -20,7 +19,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/textViewCliente"
-        android:paddingLeft="10dp"
         android:paddingTop="5dp"
         android:text="@null"
         android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -32,19 +30,17 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/textViewNomeCliente"
-        android:paddingLeft="10dp"
         android:paddingTop="10dp"
         android:text="@string/diarista"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
-        android:id="@+id/textViewNomeDiarista"
+        android:id="@+id/textViewNomeDiaristaDetalhe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/textViewDiarista"
-        android:paddingLeft="10dp"
         android:paddingTop="5dp"
         android:text="@null"
         android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -55,8 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/textViewNomeDiarista"
-        android:paddingLeft="10dp"
+        android:layout_below="@+id/textViewNomeDiaristaDetalhe"
         android:paddingTop="10dp"
         android:text="@null"
         android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -68,7 +63,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/textViewData"
-        android:paddingLeft="10dp"
         android:paddingTop="10dp"
         android:text="@string/endereco"
         android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -80,7 +74,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/textViewEndereco"
-        android:paddingLeft="10dp"
         android:paddingTop="5dp"
         android:text="@null"
         android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -110,20 +103,18 @@
         android:layout_above="@+id/textViewValor"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/textView1"
-        android:paddingLeft="10dp"
+        android:layout_below="@+id/textViewCidadeDiaristaDetalhe"
         android:paddingTop="5dp"
         android:text="@null"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/textViewCidadeDiaristaDetalhe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/textViewEnderecoCliente"
-        android:paddingLeft="10dp"
         android:paddingTop="10dp"
         android:text="@string/descricao"
         android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -136,7 +127,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:paddingBottom="5dp"
-        android:paddingLeft="10dp"
         android:paddingTop="5dp"
         android:text="@string/valor"
         android:textAppearance="?android:attr/textAppearanceMedium" />

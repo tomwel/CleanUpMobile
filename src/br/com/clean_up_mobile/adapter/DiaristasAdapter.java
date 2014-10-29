@@ -1,6 +1,7 @@
 package br.com.clean_up_mobile.adapter;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import br.com.clean_up_mobile.R;
 import br.com.clean_up_mobile.model.Diarista;
@@ -31,7 +32,7 @@ public class DiaristasAdapter extends ArrayAdapter<Diarista>{
 		for (int i=0;i<especialidades.size();i++){
 			if (especialidades.get(i) != null){
 				especialidade = especialidades.get(i);
-				listaEspecialidades = listaEspecialidades +","+especialidade.getNomeEspecialidade();
+				listaEspecialidades = listaEspecialidades + ","+ especialidade.getNomeEspecialidade();
 			}else{
 				break;
 			}
@@ -54,8 +55,9 @@ public class DiaristasAdapter extends ArrayAdapter<Diarista>{
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
+		
 		holder.nomeDiarista.setText(diarista.getNome());
-		holder.cidadeDiarista.setText(diarista.getCidade());
+		holder.cidadeDiarista.setText(diarista.getCidade().getNomeCidade());
 		holder.especialidadesDiarista.setText(listaEspecialidades);
 		
 		return convertView;

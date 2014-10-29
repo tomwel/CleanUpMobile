@@ -24,7 +24,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
-        android:id="@+id/textViewCidadeListDiarista"
+        android:id="@+id/textViewLoading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textViewNomeListDiarista"
@@ -36,18 +36,18 @@
         android:id="@+id/textViewEspecialidades"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textViewCidadeListDiarista"
-        android:layout_below="@+id/textViewCidadeListDiarista"
+        android:layout_alignLeft="@+id/textViewLoading"
+        android:layout_below="@+id/textViewLoading"
         android:text="Especialidades:" />
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/imageViewDiaristaDetalhe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/textViewEspecialidades"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/textViewCidadeListDiarista"
+        android:layout_toLeftOf="@+id/textViewLoading"
         android:src="@drawable/ic_diarista" />
 
 </RelativeLayout>
