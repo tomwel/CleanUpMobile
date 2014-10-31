@@ -46,6 +46,16 @@ public class DiaristaDB {
 
 		return rows;
 	}
+	
+	
+	public int excluirTodos() {
+		SQLiteDatabase db = helper.getWritableDatabase();
+
+		int rows = db.delete("diarista", null, null);
+		db.close();
+
+		return rows;
+	}
 
 	private ContentValues valoresPorDiarista(Diarista diarista) {
 		ContentValues values = new ContentValues();
@@ -59,7 +69,7 @@ public class DiaristaDB {
 
 		Diarista diarista = new Diarista();
 		SQLiteDatabase db = helper.getReadableDatabase();
-		Cursor cursor = db.rawQuery("select * from usuario where codigo="
+		Cursor cursor = db.rawQuery("select * from diarista where codigo="
 				+ codigoDaDiarista, null);
 
 		while (cursor.moveToNext()) {

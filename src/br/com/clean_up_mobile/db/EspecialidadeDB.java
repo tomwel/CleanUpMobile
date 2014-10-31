@@ -20,7 +20,6 @@ public class EspecialidadeDB {
 
 		SQLiteDatabase db = helper.getWritableDatabase();
 
-
 		int i = 0;
 		while (i < listaEspecialidades.size()) {
 
@@ -36,8 +35,8 @@ public class EspecialidadeDB {
 			// exclui todos relacionamentos
 			excluirRelacionamento(codigoDiarista);
 			// add todos os relacionamentos
-			inserirRelacionamento(codigoDiarista, listaEspecialidades
-					.get(i).getCodigoEspecialidade());
+			inserirRelacionamento(codigoDiarista, listaEspecialidades.get(i)
+					.getCodigoEspecialidade());
 			i++;
 		}
 
@@ -59,7 +58,7 @@ public class EspecialidadeDB {
 
 		cursor.close();
 		db.close();
-		
+
 		if (cursor == null)
 			return false;
 		return true;
@@ -98,15 +97,34 @@ public class EspecialidadeDB {
 		return especialidade;
 	}
 
+	public int excluirTodasEspecialidades() {
+
+		SQLiteDatabase db = helper.getWritableDatabase();
+		int rows = db.delete("especialidade", null, null);
+		db.close();
+
+		return rows;
+	}
+
 	// relacionamento diarista X especialidade
 
 	public int excluirRelacionamento(Integer idDiarista) {
 
 		SQLiteDatabase db = helper.getWritableDatabase();
 		int rows = db.delete("relacionamento_especialidade_diarista",
-				        			"diarista = " + idDiarista, null);
+				"diarista = " + idDiarista, null);
 		db.close();
-		
+
+		return rows;
+	}
+
+	public int excluirTodosRelacionamento() {
+
+		SQLiteDatabase db = helper.getWritableDatabase();
+		int rows = db.delete("relacionamento_especialidade_diarista", null,
+				null);
+		db.close();
+
 		return rows;
 	}
 
@@ -121,7 +139,7 @@ public class EspecialidadeDB {
 
 		long id = db.insert("relacionamento_especialidade_diarista", null,
 				values);
-		
+
 		db.close();
 
 		if (id == 0)

@@ -3,6 +3,7 @@ package br.com.clean_up_mobile.db;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -65,6 +66,15 @@ public class ServicoDB {
 
 		return rows;
 	}
+	
+	public int excluirTodos() {
+		SQLiteDatabase db = helper.getWritableDatabase();
+
+		int rows = db.delete("servico", null, null);
+		db.close();
+
+		return rows;
+	}
 
 	
 	public Servico  pegarServico(Integer codigoDoServico) throws ParseException {
@@ -85,9 +95,9 @@ public class ServicoDB {
 	
 	
 
-	public List<Servico> listaServico() throws ParseException {
+	public List<Servico> listarServico() throws ParseException {
 		
-		List<Servico> listaServico = null;
+		List<Servico> listaServico = new ArrayList<Servico>();
 		
 		SQLiteDatabase db = helper.getReadableDatabase();
 
@@ -115,7 +125,7 @@ public class ServicoDB {
 		Integer codigoDoCliente = cursor.getInt(3);
 		Integer codigoDaDiarista = cursor.getInt(4);
 		String endereco = cursor.getString(5);
-		Date data = formatter.parse(cursor.getString(6));
+		Date data = new Date();
 		double valor = Double.parseDouble(cursor.getString(7));
 		String status = cursor.getString(8);
 		

@@ -18,7 +18,7 @@ public class ClienteDB {
 
 		ContentValues values = valoresPorCliente(cliente);
 
-		long id = db.insert("usuario", null, values);
+		long id = db.insert("cliente", null, values);
 		cliente.setCodigo((int) id);
 
 		db.close();
@@ -36,6 +36,15 @@ public class ClienteDB {
 		return rows;
 	}
 
+	public int excluirTodos() {
+		SQLiteDatabase db = helper.getWritableDatabase();
+
+		int rows = db.delete("cliente", null, null);
+		db.close();
+
+		return rows;
+	}
+
 	private ContentValues valoresPorCliente(Cliente cliente) {
 		ContentValues values = new ContentValues();
 		values.put("codigo", cliente.getCodigo());
@@ -48,7 +57,7 @@ public class ClienteDB {
 
 		Cliente cliente = new Cliente();
 		SQLiteDatabase db = helper.getReadableDatabase();
-		Cursor cursor = db.rawQuery("select * from usuario where codigo="
+		Cursor cursor = db.rawQuery("select * from cliente where codigo="
 				+ idDoCliente, null);
 
 		while (cursor.moveToNext()) {
