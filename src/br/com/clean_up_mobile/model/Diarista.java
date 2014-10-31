@@ -1,20 +1,29 @@
 package br.com.clean_up_mobile.model;
 
-import java.io.Serializable;
 import java.util.List;
 
-public class Diarista implements Serializable{
+public class Diarista {
 
 	private Integer codigo;
 	private String nome;
 	private String telefone;
-	private Cidade cidade;
-	private List<Especialidade> especialidades;
-
-	public Diarista(){
-		
-	}
+	private String cidade;
+	private List<Especialidade> especialidade;
 	
+	public Diarista() {
+		//
+	}
+
+	public Diarista(Integer codigo, String nome, String telefone,
+			String cidade, List<Especialidade> especialidade) {
+		super();
+		this.codigo = codigo;
+		this.nome = nome;
+		this.telefone = telefone;
+		this.cidade = cidade;
+		this.especialidade = especialidade;
+	}
+
 	public Integer getCodigo() {
 		return codigo;
 	}
@@ -23,20 +32,20 @@ public class Diarista implements Serializable{
 		this.codigo = codigo;
 	}
 
-	public Cidade getCidade() {
+	public String getCidade() {
 		return cidade;
 	}
 
-	public void setCidade(Cidade cidade) {
+	public void setCidade(String cidade) {
 		this.cidade = cidade;
 	}
 
 	public List<Especialidade> getEspecialidades() {
-		return especialidades;
+		return especialidade;
 	}
 
-	public void setEspecialidades(List<Especialidade> especialidades) {
-		this.especialidades = especialidades;
+	public void setEspecialidades(List<Especialidade> especialidade) {
+		this.especialidade = especialidade;
 	}
 
 	public String getNome() {
