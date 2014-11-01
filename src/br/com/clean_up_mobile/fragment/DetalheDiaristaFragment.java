@@ -93,7 +93,7 @@ public class DetalheDiaristaFragment extends Fragment{
 			}
 		}
 		txtNome.setText(diarista.getNome());
-		txtCidade.setText(diarista.getCidade().getNomeCidade());
+		txtCidade.setText(diarista.getCidade());
 		txtEspecialidades.setText(listaEspecialidades);
 		
 		

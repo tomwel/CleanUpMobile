@@ -58,15 +58,16 @@ public class DetalheServicoFragment extends Fragment implements OnClickListener{
 		nomeCliente.setText("joao");//serv.getCliente().getNome()
 		nomeDiarista.setText(serv.getDiarista().getNome());
 		//data.setText();
-		endereco.setText(serv.getEndereco().getRua()+" #"+ serv.getEndereco().getNumero() 
-				+" - "+ serv.getEndereco().getBairro()+ ", " + serv.getEndereco().getCidade());
+		endereco.setText(serv.getEndereco());
+//		endereco.setText(serv.getEndereco().getRua()+" #"+ serv.getEndereco().getNumero() 
+//				+" - "+ serv.getEndereco().getBairro()+ ", " + serv.getEndereco().getCidade());
 		descricao.setText(serv.getDescricao());
 		valor.setText(String.valueOf(serv.getValor()));
 		
-		if(serv.getStatus() == status.PENDENTE){
+		if(serv.getStatus().equals("PENDENTE")){
 			buttonCancel.setText("Recusar");
 			buttonOk.setText("Aceitar");
-		}else if(serv.getStatus() == status.ATIVO){
+		}else if(serv.getStatus().equals("ATIVO")){
 			buttonCancel.setVisibility(View.GONE);
 			buttonOk.setText("Cancelar");
 		}else{

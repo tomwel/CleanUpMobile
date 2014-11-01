@@ -1,15 +1,16 @@
 package br.com.clean_up_mobile.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Diarista {
+public class Diarista implements Serializable {
 
 	private Integer codigo;
 	private String nome;
 	private String telefone;
 	private String cidade;
 	private List<Especialidade> especialidade;
-	
+
 	public Diarista() {
 		//
 	}
