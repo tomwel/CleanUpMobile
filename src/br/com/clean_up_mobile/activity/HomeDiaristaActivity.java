@@ -2,7 +2,7 @@ package br.com.clean_up_mobile.activity;
 
 import br.com.clean_up_mobile.R;
 import br.com.clean_up_mobile.db.UsuarioDB;
-import br.com.clean_up_mobile.fragment.DiaristaFragment;
+import br.com.clean_up_mobile.fragment.ServicoFragment;
 import br.com.clean_up_mobile.model.Usuario;
 
 import android.support.v7.app.ActionBar.Tab;
@@ -36,8 +36,8 @@ public class HomeDiaristaActivity extends ActionBarActivity implements
 		setContentView(R.layout.activity_home_diarista);
 		db = new UsuarioDB(getApplicationContext());
 		usuario = (Usuario) getIntent().getSerializableExtra("usuario");
-		fragment1 = new DiaristaFragment();
-		fragment2 = new DiaristaFragment();
+		fragment1 = new ServicoFragment(true, usuario.getPerfil(), usuario.getId());
+		fragment2 = new ServicoFragment(false);
 
 		final ActionBar actionBar = getSupportActionBar();
 
@@ -55,11 +55,11 @@ public class HomeDiaristaActivity extends ActionBarActivity implements
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
 		Tab aba1 = actionBar.newTab();
-		aba1.setText("Fragment Diarista");
+		aba1.setText("Próximas");
 		aba1.setTabListener(this);
 
 		Tab aba2 = actionBar.newTab();
-		aba2.setText("Fragment Diarista");
+		aba2.setText("Todas");
 		aba2.setTabListener(this);
 
 		actionBar.addTab(aba1);
