@@ -5,15 +5,18 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import br.com.clean_up_mobile.model.Cliente;
 import br.com.clean_up_mobile.model.Diarista;
+import br.com.clean_up_mobile.model.Especialidade;
 import br.com.clean_up_mobile.model.Servico;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteStatement;
 
 public class ServicoDB {
 	private DBHelper helper;
@@ -24,24 +27,55 @@ public class ServicoDB {
 		helper = new DBHelper(contexto);
 	}
 
-	public long inserir(Servico servico) {
+	public void inserir(List<Servico> listaServicos) {
 
-		SQLiteDatabase db = helper.getWritableDatabase();
-		DiaristaDB diaristaDB = new DiaristaDB(contexto);
+		List<Especialidade> especialidades = new ArrayList<Especialidade>();
+
 		ClienteDB clienteDB = new ClienteDB(contexto);
+		DiaristaDB diaristaDB = new DiaristaDB(contexto);
+		EspecialidadeDB especialidadeDB = new EspecialidadeDB(contexto);
 
-		ContentValues values = valoresPorServico(servico);
-		long id = db.insert("servico", null, values);
-		servico.setCodServico((int) id);
+		SQLiteDatabase db = helper.getReadableDatabase();
+		db.beginTransaction();
 
-		// Cadastra a diarista
-		clienteDB.inserir(servico.getCliente());
-		// cadastra o cliente
-		diaristaDB.inserir(servico.getDiarista());
+		for (Iterator<Servico> it = listaServicos.iterator(); it.hasNext();) {
+			Servico servico = it.next();
+			Cliente cliente = servico.getCliente();
+			Diarista diarista = servico.getDiarista();
 
-		db.close();
+			ContentValues valuesServico = valoresPorServico(servico);
+			ContentValues valuesCliente = clienteDB.valoresPorCliente(cliente);
+			ContentValues valuesDiarista = diaristaDB.valoresPorDiarista(diarista);
 
-		return id;
+			db.insert("servico", null, valuesServico);
+			db.insert("cliente", null, valuesCliente);
+			db.insert("diarista", null, valuesDiarista);
+
+			especialidades.clear();
+			especialidades = diarista.getEspecialidades();
+
+			for (Iterator<Especialidade> es = especialidades.iterator(); es
+					.hasNext();) {
+
+				Especialidade especialidade = es.next();
+
+				ContentValues valuesEspecialidade = especialidadeDB
+						.valoresPorEspecialidade(especialidade);
+
+				db.insert("especialidade", null, valuesEspecialidade);
+
+				// insert relacionamentos
+				ContentValues valuesRelacionamento = especialidadeDB
+						.valoresPorRelacionamento(diarista.getCodigo(), 
+								especialidade.getCodigoEspecialidade());
+
+				db.insert("relacionamento_especialidade_diarista", null,
+						valuesRelacionamento);
+			}
+		}
+
+		db.setTransactionSuccessful();
+		db.endTransaction();
 	}
 
 	private ContentValues valoresPorServico(Servico servico) {
@@ -61,12 +95,13 @@ public class ServicoDB {
 	public int excluir(Servico servico) {
 		SQLiteDatabase db = helper.getWritableDatabase();
 
-		int rows = db.delete("servico", "id = " + servico.getCodServico(), null);
+		int rows = db
+				.delete("servico", "id = " + servico.getCodServico(), null);
 		db.close();
 
 		return rows;
 	}
-	
+
 	public int excluirTodos() {
 		SQLiteDatabase db = helper.getWritableDatabase();
 
@@ -76,8 +111,7 @@ public class ServicoDB {
 		return rows;
 	}
 
-	
-	public Servico  pegarServico(Integer codigoDoServico) throws ParseException {
+	public Servico pegarServico(Integer codigoDoServico) throws ParseException {
 
 		Servico servico = new Servico();
 		SQLiteDatabase db = helper.getReadableDatabase();
@@ -89,16 +123,14 @@ public class ServicoDB {
 		}
 		cursor.close();
 		db.close();
-		
+
 		return servico;
 	}
-	
-	
 
 	public List<Servico> listarServico() throws ParseException {
-		
+
 		List<Servico> listaServico = new ArrayList<Servico>();
-		
+
 		SQLiteDatabase db = helper.getReadableDatabase();
 
 		Cursor cursor = db.rawQuery("select * from servico where 1=1", null);
@@ -106,19 +138,18 @@ public class ServicoDB {
 		while (cursor.moveToNext()) {
 			listaServico.add(preencherServico(cursor));
 		}
-		
+
 		cursor.close();
 		db.close();
 		return listaServico;
 	}
-	
+
 	private Servico preencherServico(Cursor cursor) throws ParseException {
-		
-		DateFormat formatter = new SimpleDateFormat("MM/dd/yy");  
+
+		DateFormat formatter = new SimpleDateFormat("MM/dd/yy");
 		ClienteDB clienteDB = new ClienteDB(contexto);
-		DiaristaDB  diaristaDB = new DiaristaDB(contexto);
-		
-		
+		DiaristaDB diaristaDB = new DiaristaDB(contexto);
+
 		Integer codigo = cursor.getInt(0);
 		String tipo = cursor.getString(1);
 		String descricao = cursor.getString(2);
@@ -128,11 +159,12 @@ public class ServicoDB {
 		Date data = new Date();
 		double valor = Double.parseDouble(cursor.getString(7));
 		String status = cursor.getString(8);
-		
+
 		Cliente cliente = clienteDB.pegarCliente(codigoDoCliente);
 		Diarista diarista = diaristaDB.pegarDiarista(codigoDaDiarista);
-		
-		Servico servico = new Servico(codigo, tipo, descricao, cliente, diarista, null, data, valor, status);
+
+		Servico servico = new Servico(codigo, tipo, descricao, cliente,
+				diarista, null, data, valor, status);
 
 		return servico;
 	}

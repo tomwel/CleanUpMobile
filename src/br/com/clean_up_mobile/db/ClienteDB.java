@@ -13,19 +13,6 @@ public class ClienteDB {
 		helper = new DBHelper(contexto);
 	}
 
-	public long inserir(Cliente cliente) {
-		SQLiteDatabase db = helper.getWritableDatabase();
-
-		ContentValues values = valoresPorCliente(cliente);
-
-		long id = db.insert("cliente", null, values);
-		cliente.setCodigo((int) id);
-
-		db.close();
-
-		return id;
-	}
-
 	public int excluir(Cliente cliente) {
 		SQLiteDatabase db = helper.getWritableDatabase();
 
@@ -45,7 +32,7 @@ public class ClienteDB {
 		return rows;
 	}
 
-	private ContentValues valoresPorCliente(Cliente cliente) {
+	public ContentValues valoresPorCliente(Cliente cliente) {
 		ContentValues values = new ContentValues();
 		values.put("codigo", cliente.getCodigo());
 		values.put("nome", cliente.getNome());

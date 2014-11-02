@@ -20,6 +20,7 @@ import br.com.clean_up_mobile.model.Servico;
 import br.com.clean_up_mobile.task.WebService;
 import br.com.clean_up_mobile.util.Constantes;
 import android.content.Context;
+import android.util.Log;
 
 public class ServicoController {
 
@@ -45,49 +46,45 @@ public class ServicoController {
 
 	}
 
-	public long inserirServicos(List<Servico> listaServicos) {
+	public void inserirServicos(List<Servico> listaServicos) {
 
-		long total = 0;
 		listaServicos.remove(null);
 
 		limpaTodosServicos();
 
-		for (int i = 0; i < listaServicos.size(); i++) {
-			total += servicoDB.inserir(listaServicos.get(i));
-		}
-		return total;
+		servicoDB.inserir(listaServicos);
 	}
 
 	public List<Servico> listarServicosLocal() {
+		List<Servico> list = new ArrayList<Servico>();
+
 		try {
-			
-			List<Servico> list = new ArrayList<Servico>();
-					list = servicoDB.listarServico();
-					list.remove(null);
-					return  list;
-					
+			list = servicoDB.listarServico();
+			list.remove(null);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+		return list;
 	}
 
 	public List<Servico> pegarListaServico(boolean atualizarWeb, String tipo,
 			int codigo) {
 
+		List<Servico> listaServicos = new ArrayList<Servico>();
+
 		if (atualizarWeb) {
 			atulizaServicosDobanco(tipo, codigo);
 		}
-		return listarServicosLocal();
+		listaServicos = listarServicosLocal();
+
+		return listaServicos;
 
 	}
 
 	public void atulizaServicosDobanco(String tipo, int codigo) {
 
 		String tipoBusca;
-		List<Servico> list = null;
-
+		List<Servico> listaServicos = new ArrayList<Servico>();
 		if (tipo.equals("ROLE_CLIENT")) {
 			tipoBusca = "cliente";
 		} else {
@@ -97,9 +94,11 @@ public class ServicoController {
 		String result = WebService.getREST(Constantes.GET_SERVICO + "/"
 				+ tipoBusca + "/" + codigo);
 
+		Log.v("FLS", result);
+
 		try {
-			list = montaListServico(result);
-			inserirServicos(list);
+			listaServicos = montaListServico(result);
+			inserirServicos(listaServicos);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

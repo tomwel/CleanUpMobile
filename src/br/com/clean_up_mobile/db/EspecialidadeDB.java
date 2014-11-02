@@ -1,5 +1,7 @@
 package br.com.clean_up_mobile.db;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import br.com.clean_up_mobile.model.Especialidade;
@@ -9,41 +11,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 public class EspecialidadeDB {
+
 	private DBHelper helper;
 
 	public EspecialidadeDB(Context contexto) {
 		helper = new DBHelper(contexto);
 	}
 
-	public void inserir(List<Especialidade> listaEspecialidades,
-			Integer codigoDiarista) {
-
-		SQLiteDatabase db = helper.getWritableDatabase();
-
-		int i = 0;
-		while (i < listaEspecialidades.size()) {
-
-			// Add a especialidade
-			if (!existeEspecialidade(listaEspecialidades.get(i)
-					.getCodigoEspecialidade())) {
-
-				ContentValues values = valoresPorEspecialidade(listaEspecialidades
-						.get(i));
-				db.insert("especialidade", null, values);
-			}
-
-			// exclui todos relacionamentos
-			excluirRelacionamento(codigoDiarista);
-			// add todos os relacionamentos
-			inserirRelacionamento(codigoDiarista, listaEspecialidades.get(i)
-					.getCodigoEspecialidade());
-			i++;
-		}
-
-		db.close();
-	}
-
-	private ContentValues valoresPorEspecialidade(Especialidade especialidade) {
+	public ContentValues valoresPorEspecialidade(Especialidade especialidade) {
 		ContentValues values = new ContentValues();
 		values.put("codigo", especialidade.getCodigoEspecialidade());
 		values.put("nome", especialidade.getNomeEspecialidade());
@@ -56,17 +31,19 @@ public class EspecialidadeDB {
 		Cursor cursor = db.rawQuery("select * from especialidade where codigo="
 				+ idDoEsepcialidade, null);
 
+		boolean resultado = false;
+		if (cursor != null && cursor.getCount() > 0) {
+			resultado = true;
+		}
 		cursor.close();
 		db.close();
+		return resultado;
 
-		if (cursor == null)
-			return false;
-		return true;
 	}
 
 	public List<Especialidade> pegarEspecialidades(Integer idDiarista) {
 
-		List<Especialidade> listaEspecialidade = null;
+		List<Especialidade> listaEspecialidade = new ArrayList<Especialidade>();
 
 		SQLiteDatabase db = helper.getReadableDatabase();
 		Cursor cursor = db
@@ -128,22 +105,11 @@ public class EspecialidadeDB {
 		return rows;
 	}
 
-	public boolean inserirRelacionamento(Integer codigoDiarista,
+	public ContentValues valoresPorRelacionamento(Integer codigoDiarista,
 			Integer codigoEspecialidade) {
-
-		SQLiteDatabase db = helper.getWritableDatabase();
-
 		ContentValues values = new ContentValues();
 		values.put("diarista", codigoDiarista);
 		values.put("especialidade", codigoEspecialidade);
-
-		long id = db.insert("relacionamento_especialidade_diarista", null,
-				values);
-
-		db.close();
-
-		if (id == 0)
-			return false;
-		return true;
+		return values;
 	}
 }
