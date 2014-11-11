@@ -11,7 +11,7 @@ public class ServicoVO {
 	private String descricao;
 	private int codigo;
 	private List<Endereco> enderecos;
-	private Date data;
+	private String data;
 	private Diarista diarista;
 	private Usuario usuario;
 	
@@ -33,10 +33,10 @@ public class ServicoVO {
 	public void setEnderecos(List<Endereco> enderecos) {
 		this.enderecos = enderecos;
 	}
-	public Date getData() {
+	public String getData() {
 		return data;
 	}
-	public void setData(Date data) {
+	public void setData(String data) {
 		this.data = data;
 	}
 	public Diarista getDiarista() {

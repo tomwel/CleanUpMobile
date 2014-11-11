@@ -23,7 +23,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/textViewCodigoDiarista"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -44,7 +44,7 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textView1"
+        android:layout_above="@+id/textViewCodigoDiarista"
         android:layout_alignParentLeft="true"
         android:text="Cidade:"
         android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -87,9 +87,7 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/textView3"
         android:ems="10"
-        android:inputType="date" >
-
-        <requestFocus />
+        android:inputType="date">
     </EditText>
 
     <TextView
@@ -118,25 +116,6 @@
         android:layout_below="@+id/editTextDescricaoServico"
         android:text="Endereço:" />
 
-    <EditText
-        android:id="@+id/editTextEnderecoServico"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/textView5"
-        android:ems="10"
-        android:inputType="textPostalAddress" />
-
-    <Button
-        android:id="@+id/buttonCancelarDiarista"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextEnderecoServico"
-        android:layout_marginTop="29dp"
-        android:layout_toRightOf="@+id/textView3"
-        android:text="Cancelar" />
-
     <Button
         android:id="@+id/buttonConfirmarDiarista"
         android:layout_width="wrap_content"
@@ -146,5 +125,24 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="31dp"
         android:text="Confirmar" />
+
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteTextEnderecoServico"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/textView5"
+        android:layout_marginTop="14dp"
+        android:ems="10" />
+
+    <Button
+        android:id="@+id/buttonCancelarDiarista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
+        android:layout_toRightOf="@+id/textView3"
+        android:text="Cancelar" />
 
 </RelativeLayout>

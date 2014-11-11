@@ -30,18 +30,22 @@ public class DiaristasAdapter extends ArrayAdapter<Diarista>{
 		Especialidade especialidade = new Especialidade();
 		String listaEspecialidades = "";
 		for (int i=0;i<especialidades.size();i++){
+			String virgula = ",";
+				
 			if (especialidades.get(i) != null){
 				especialidade = especialidades.get(i);
-				listaEspecialidades = listaEspecialidades + ","+ especialidade.getNomeEspecialidade();
-			}else{
+				listaEspecialidades = listaEspecialidades + especialidade.getNomeEspecialidade() + virgula;
+			}else{	
 				break;
 			}
 		}
+		listaEspecialidades = listaEspecialidades.substring(0, listaEspecialidades.length() - 1);
 		if (convertView == null) {
 			convertView = LayoutInflater.from(getContext()).inflate(
 					R.layout.item_lista_diarista, null);
 			
 			holder = new ViewHolder();
+			
 			holder.nomeDiarista = (TextView) convertView
 					.findViewById(R.id.textViewNomeListDiarista);
 
@@ -57,13 +61,14 @@ public class DiaristasAdapter extends ArrayAdapter<Diarista>{
 		}
 		
 		holder.nomeDiarista.setText(diarista.getNome());
-		holder.cidadeDiarista.setText(diarista.getCidade());
+		holder.cidadeDiarista.setText(diarista.getCidade().getNomeCidade());
 		holder.especialidadesDiarista.setText(listaEspecialidades);
 		
 		return convertView;
 	}
 
 	static class ViewHolder {
+		TextView codigoDiarista;
 		TextView nomeDiarista;
 		TextView cidadeDiarista;
 		TextView especialidadesDiarista;

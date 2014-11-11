@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Cidade implements Serializable{
 	
 	private int codigoCidade;
-	private String cidade;
+	private String nomeCidade;
 	
 	public int getCodigoCidade() {
 		return codigoCidade;
@@ -14,10 +14,10 @@ public class Cidade implements Serializable{
 		this.codigoCidade = codigoCidade;
 	}
 	public String getNomeCidade() {
-		return cidade;
+		return nomeCidade;
 	}
 	public void setNomeCidade(String nomeCidade) {
-		this.cidade = nomeCidade;
+		this.nomeCidade = nomeCidade;
 	}	
 
 }

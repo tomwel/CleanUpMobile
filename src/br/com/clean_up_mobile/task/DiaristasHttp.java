@@ -37,21 +37,20 @@ public class DiaristasHttp {
 
 	public static List<Diarista> carregarDiaristas(InputStream is)
 			throws JSONException, IOException {
-		List<Diarista> diaristas = new ArrayList<Diarista>();
 		JSONArray jsonDiaristas;
 		jsonDiaristas = new JSONArray(bytesToString(is));
+		List<Diarista> diaristas = new ArrayList<Diarista>(jsonDiaristas.length());
 		for (int i = 0; i < jsonDiaristas.length(); i++) {
 			Diarista diarista = new Diarista();
 			Cidade cidade = new Cidade();
 			List<Especialidade> especialidades = new ArrayList<Especialidade>();
 			JSONObject jsonDiarista = jsonDiaristas.getJSONObject(i);
-			diarista.setCodigo(Integer.getInteger(jsonDiarista
-					.getString("codigo")));
+			diarista.setCodigo(jsonDiarista.getInt("codigo"));
 			diarista.setNome(jsonDiarista.getString("nome"));
 			JSONObject jsonCidade = jsonDiarista.getJSONObject("cidade");
 			cidade.setCodigoCidade(jsonCidade.getInt("codigoCidade"));
 			cidade.setNomeCidade(jsonCidade.getString("nomeCidade"));
-			diarista.setCidade(jsonCidade.getString("nomeCidade"));
+			diarista.setCidade(cidade);
 			JSONArray jsonEspecialidades = jsonDiarista.getJSONArray("especialidades");
 			for (int j = 0; j < jsonEspecialidades.length(); j++) {
 				Especialidade especialidade = new Especialidade();
