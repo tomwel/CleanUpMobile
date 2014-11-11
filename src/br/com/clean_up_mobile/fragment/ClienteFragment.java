@@ -1,11 +1,13 @@
 package br.com.clean_up_mobile.fragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.clean_up_mobile.R;
 import br.com.clean_up_mobile.activity.OnClickDiarista;
 import br.com.clean_up_mobile.adapter.DiaristasAdapter;
 import br.com.clean_up_mobile.model.Diarista;
+import br.com.clean_up_mobile.model.Especialidade;
 import br.com.clean_up_mobile.task.DiaristasHttp;
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -86,8 +88,22 @@ public class ClienteFragment extends ListFragment implements SearchView.OnQueryT
 	
 	@Override
 	public boolean onQueryTextChange(String text) {
-		System.out.println(text);
-		return false;
+		//System.out.println(text);
+		ArrayList<Diarista> list = new ArrayList<Diarista>();  
+        Diarista diarista = null;  
+        int pos = 0;  
+        while(pos< mDiaristas.size()){  
+            diarista = mDiaristas.get(pos); 
+            if(diarista.getNome().toLowerCase().contains(text.toLowerCase()) || diarista.getCidade().getNomeCidade().toLowerCase().contains(text.toLowerCase())){  
+                list.add(diarista); 
+            }  
+            pos++;  
+        }  
+        DiaristasAdapter adapter = new DiaristasAdapter(getActivity(),
+				list);
+		setListAdapter(adapter);
+		
+		return true;
 	}
 
 	@Override
