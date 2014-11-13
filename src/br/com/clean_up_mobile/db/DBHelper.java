@@ -1,5 +1,6 @@
 package br.com.clean_up_mobile.db;
 
+import br.com.clean_up_mobile.util.Constantes;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -39,6 +40,10 @@ public class DBHelper extends SQLiteOpenHelper {
 		db.execSQL("create TABLE servico (codigo INTEGER PRIMARY KEY,"
 				+ "tipo TEXT, descricao TEXT, cliente INTEGER, diarista INTEGER,"
 				+ "endereco TEXT, data TEXT, valor TEXT, status TEXT)");
+		
+		// tabela cidade
+				db.execSQL("create TABLE " + Constantes.TABELA_CIDADE
+						+ " (codigo INTEGER PRIMARY KEY," + "nome TEXT)");
 	}
 
 	@Override
