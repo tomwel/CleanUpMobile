@@ -12,7 +12,7 @@ public class ServicoVO {
 	private int codigo;
 	private List<Endereco> enderecos;
 	private String data;
-	private Diarista diarista;
+	private DiaristaVO diarista;
 	private Usuario usuario;
 	
 	public String getDescricao() {
@@ -39,10 +39,10 @@ public class ServicoVO {
 	public void setData(String data) {
 		this.data = data;
 	}
-	public Diarista getDiarista() {
+	public DiaristaVO getDiarista() {
 		return diarista;
 	}
-	public void setDiarista(Diarista diarista) {
+	public void setDiarista(DiaristaVO diarista) {
 		this.diarista = diarista;
 	}
 	public Usuario getUsuario() {

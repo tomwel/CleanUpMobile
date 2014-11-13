@@ -1,6 +1,8 @@
 package br.com.clean_up_mobile.model;
 
-public class Especialidade {
+import java.io.Serializable;
+
+public class Especialidade implements Serializable {
 	private Integer codigoEspecialidade;
 	private String nomeEspecialidade;
 

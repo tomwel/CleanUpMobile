@@ -54,7 +54,7 @@ public class ClassificaServicoFragment extends Fragment implements OnClickListen
 	
 	@Override
 	public void onClick(View v) {
-		serv.set
+//		serv.set
 		if (Util.existeConexao(getActivity().getApplicationContext())){
 			new HttpAsyncTask(Constantes.POST_CLASSIFICASERVICO, serv).execute();
 		}

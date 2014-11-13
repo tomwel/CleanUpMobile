@@ -4,14 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <ListView
-        android:id="@android:id/list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/searchview" >
-    </ListView>
-
     <ProgressBar
         android:id="@+id/progressBar1"
         style="?android:attr/progressBarStyleLarge"
@@ -28,5 +20,24 @@
         android:layout_below="@+id/progressBar1"
         android:layout_centerHorizontal="true"
         android:text="TextView" />
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textAviso" >
+
+    </ListView>
+
+    <TextView
+        android:id="@+id/textAviso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/orange"
+        android:gravity="center"
+        android:text="@string/tvErroAtualizar" 
+        android:visibility="gone"/>
 
 </RelativeLayout>

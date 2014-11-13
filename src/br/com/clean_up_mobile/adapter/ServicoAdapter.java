@@ -5,10 +5,12 @@ import java.util.List;
 import br.com.clean_up_mobile.R;
 import br.com.clean_up_mobile.model.Servico;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ServicoAdapter extends ArrayAdapter<Servico> {
@@ -22,36 +24,52 @@ public class ServicoAdapter extends ArrayAdapter<Servico> {
 	public View getView(int position, View convertView, ViewGroup parent) {
 
 		ViewHolder holder;
-		Servico servico = getItem(position);
+
+		Servico s = getItem(position);
 
 		if (convertView == null) {
 			convertView = LayoutInflater.from(getContext()).inflate(
 					R.layout.item_lista_servico, null);
 
 			holder = new ViewHolder();
-			holder.dia = (TextView) convertView
-					.findViewById(R.id.textDia);
+			holder.textDia = (TextView) convertView.findViewById(R.id.textDia);
 
-			holder.mes = (TextView) convertView
-					.findViewById(R.id.textMes);
+			holder.textMes = (TextView) convertView.findViewById(R.id.textMes);
 
-			holder.endereco = (TextView) convertView
+			holder.textEndereco = (TextView) convertView
 					.findViewById(R.id.textEndereco);
+
+			holder.imageStatus = (ImageView) convertView
+					.findViewById(R.id.imageStatus);
 
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		holder.dia.setText(12);
-		holder.mes.setText("out");
-		holder.endereco.setText("Casa de cassete");
+		holder.textDia.setText("12");
+		holder.textMes.setText("out");
+		holder.textEndereco.setText(s.getEndereco());
+		
+		Log.v("FLS", s.getStatus());
+		
+		if (s.getStatus().equals("PENDENTE")) {
+			holder.imageStatus.setImageResource(R.drawable.ic_status_servico_pendente);
+		} else if (s.getStatus().equals("ATIVO")) {
+			holder.imageStatus.setImageResource(R.drawable.ic_status_servico_ativo);
+		} else if (s.getStatus().equals("INATIVO")) {
+			holder.imageStatus.setImageResource(R.drawable.ic_status_servico_inativo);
+		} else {
+			holder.imageStatus.setImageResource(R.drawable.ic_status_servico_sem_imagem);
+		}
 
 		return convertView;
 	}
 
 	static class ViewHolder {
-		TextView dia;
-		TextView mes;
-		TextView endereco;
+		TextView textDia;
+		TextView textMes;
+		TextView textEndereco;
+		ImageView imageStatus;
+
 	}
 }

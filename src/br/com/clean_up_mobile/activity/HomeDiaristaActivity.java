@@ -34,10 +34,12 @@ public class HomeDiaristaActivity extends ActionBarActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home_diarista);
+		
 		db = new UsuarioDB(getApplicationContext());
 		usuario = (Usuario) getIntent().getSerializableExtra("usuario");
-		fragment1 = new ServicoFragment(true, usuario.getPerfil(), usuario.getId());
-		fragment2 = new ServicoFragment(false);
+		
+		fragment1 = new ServicoFragment(true, getApplicationContext());
+		fragment2 = new ServicoFragment(false, getApplicationContext());
 
 		final ActionBar actionBar = getSupportActionBar();
 
@@ -51,7 +53,7 @@ public class HomeDiaristaActivity extends ActionBarActivity implements
 				actionBar.setSelectedNavigationItem(position);
 			}
 		});
-
+		
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
 		Tab aba1 = actionBar.newTab();
@@ -65,14 +67,14 @@ public class HomeDiaristaActivity extends ActionBarActivity implements
 		actionBar.addTab(aba1);
 		actionBar.addTab(aba2);
 	}
-
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.home_diarista, menu);
 		return true;
 	}
-
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {

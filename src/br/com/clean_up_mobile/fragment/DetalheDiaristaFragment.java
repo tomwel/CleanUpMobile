@@ -10,6 +10,7 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 import br.com.clean_up_mobile.R;
+import br.com.clean_up_mobile.activity.HomeActivity;
 import br.com.clean_up_mobile.db.UsuarioDB;
 import br.com.clean_up_mobile.model.Diarista;
 import br.com.clean_up_mobile.model.Endereco;
@@ -21,8 +22,10 @@ import br.com.clean_up_mobile.util.Constantes;
 import br.com.clean_up_mobile.util.Mask;
 import br.com.clean_up_mobile.util.PlaceHolder;
 import br.com.clean_up_mobile.util.Util;
+import br.com.clean_up_mobile.vo.DiaristaVO;
 import br.com.clean_up_mobile.vo.ServicoVO;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -120,13 +123,17 @@ public class DetalheDiaristaFragment extends Fragment implements
 			}
 		}
 		txtNome.setText(diarista.getNome());
-		txtCidade.setText(diarista.getCidade().getNomeCidade());
+//		txtCidade.setText(diarista.getCidade().getNomeCidade());
+		txtCidade.setText(diarista.getCidade());
 		txtEspecialidades.setText(listaEspecialidades);
 
 		return layout;
 	}
 
 	public void gravarServico() throws ParseException {
+		
+		DiaristaVO diaristaVO = new DiaristaVO();
+		diaristaVO.setCodigo(diarista.getCodigo());
 		
 		servicoVo = new ServicoVO();
 		usuario = db.listaUsuario();
@@ -140,7 +147,7 @@ public class DetalheDiaristaFragment extends Fragment implements
 		String strDate = ano+"-"+mes+"-"+dia;
 		servicoVo.setData(strDate);
 		servicoVo.setDescricao(descricao.getText().toString());
-		servicoVo.setDiarista(diarista);
+		servicoVo.setDiarista(diaristaVO);
 		servicoVo.setUsuario(usuario);
 		servicoVo.setEnderecos(mEnderecos);
 		contratarServico(servicoVo);
@@ -156,7 +163,12 @@ public class DetalheDiaristaFragment extends Fragment implements
 	private OnClickListener btnCancelarOnClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-
+			usuario = db.listaUsuario();
+			Intent homeIntent = new Intent(getActivity(),
+					HomeActivity.class);
+			homeIntent.putExtra("usuario", usuario);
+			homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(homeIntent);
 		}
 	};
 
@@ -189,15 +201,21 @@ public class DetalheDiaristaFragment extends Fragment implements
 		protected void onPostExecute(String result) {
 			if (result != null) {
 
-				JSONObject obj;
+				//JSONObject obj;
 				try {
-					obj = new JSONObject(result);
-					System.out.println(obj);
-				} catch (JSONException e) {
+					Util.criarToast(getActivity(),
+							R.string.msgServicoSolicitado);
+					//obj = new JSONObject(result);
+					//System.out.println(obj);
+					Intent homeIntent = new Intent(getActivity(),
+							HomeActivity.class);
+					homeIntent.putExtra("usuario", usuario);
+					homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					startActivity(homeIntent);
+				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
 			}
 		}
 	}

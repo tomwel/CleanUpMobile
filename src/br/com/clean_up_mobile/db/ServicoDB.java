@@ -16,7 +16,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteStatement;
 
 public class ServicoDB {
 	private DBHelper helper;
@@ -45,7 +44,8 @@ public class ServicoDB {
 
 			ContentValues valuesServico = valoresPorServico(servico);
 			ContentValues valuesCliente = clienteDB.valoresPorCliente(cliente);
-			ContentValues valuesDiarista = diaristaDB.valoresPorDiarista(diarista);
+			ContentValues valuesDiarista = diaristaDB
+					.valoresPorDiarista(diarista);
 
 			db.insert("servico", null, valuesServico);
 			db.insert("cliente", null, valuesCliente);
@@ -66,7 +66,7 @@ public class ServicoDB {
 
 				// insert relacionamentos
 				ContentValues valuesRelacionamento = especialidadeDB
-						.valoresPorRelacionamento(diarista.getCodigo(), 
+						.valoresPorRelacionamento(diarista.getCodigo(),
 								especialidade.getCodigoEspecialidade());
 
 				db.insert("relacionamento_especialidade_diarista", null,
@@ -76,6 +76,7 @@ public class ServicoDB {
 
 		db.setTransactionSuccessful();
 		db.endTransaction();
+		db.close();
 	}
 
 	private ContentValues valoresPorServico(Servico servico) {
@@ -85,7 +86,7 @@ public class ServicoDB {
 		values.put("descricao", servico.getDescricao());
 		values.put("cliente", servico.getCliente().getCodigo());
 		values.put("diarista", servico.getDiarista().getCodigo());
-		values.put("endereco", "");
+		values.put("endereco", servico.getEndereco());
 		values.put("data", servico.getDataServico().toString());
 		values.put("valor", servico.getValor());
 		values.put("status", servico.getStatus());
@@ -127,7 +128,7 @@ public class ServicoDB {
 		return servico;
 	}
 
-	public List<Servico> listarServico() throws ParseException {
+	public List<Servico> listarServico() {
 
 		List<Servico> listaServico = new ArrayList<Servico>();
 
@@ -144,7 +145,7 @@ public class ServicoDB {
 		return listaServico;
 	}
 
-	private Servico preencherServico(Cursor cursor) throws ParseException {
+	private Servico preencherServico(Cursor cursor) {
 
 		DateFormat formatter = new SimpleDateFormat("MM/dd/yy");
 		ClienteDB clienteDB = new ClienteDB(contexto);
@@ -157,14 +158,14 @@ public class ServicoDB {
 		Integer codigoDaDiarista = cursor.getInt(4);
 		String endereco = cursor.getString(5);
 		Date data = new Date();
-		double valor = Double.parseDouble(cursor.getString(7));
+		double valor = 8.8;
 		String status = cursor.getString(8);
 
 		Cliente cliente = clienteDB.pegarCliente(codigoDoCliente);
 		Diarista diarista = diaristaDB.pegarDiarista(codigoDaDiarista);
 
 		Servico servico = new Servico(codigo, tipo, descricao, cliente,
-				diarista, null, data, valor, status);
+				diarista, endereco, data, valor, status);
 
 		return servico;
 	}

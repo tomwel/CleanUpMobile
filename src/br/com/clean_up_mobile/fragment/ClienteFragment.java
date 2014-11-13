@@ -94,7 +94,8 @@ public class ClienteFragment extends ListFragment implements SearchView.OnQueryT
         int pos = 0;  
         while(pos< mDiaristas.size()){  
             diarista = mDiaristas.get(pos); 
-            if(diarista.getNome().toLowerCase().contains(text.toLowerCase()) || diarista.getCidade().getNomeCidade().toLowerCase().contains(text.toLowerCase())){  
+//            if(diarista.getNome().toLowerCase().contains(text.toLowerCase()) || diarista.getCidade().getNomeCidade().toLowerCase().contains(text.toLowerCase())){ 
+            if(diarista.getNome().toLowerCase().contains(text.toLowerCase()) || diarista.getCidade().toLowerCase().contains(text.toLowerCase())){  
                 list.add(diarista); 
             }  
             pos++;  

@@ -19,6 +19,7 @@
     <string name="msgLoginSucesso">Login realizado com sucesso</string>
     <string name="msgLoginErrado">Senha ou email errado.</string>
     <string name="msgDeErroWebservice">Ocorreu um erro de conexão com servidor. Tente novamente.</string>
+     <string name="msgServicoSolicitado">Serviço solicitado com sucesso.</string>
 
     <!-- TextView -->
     <string name="tvNome">Nome</string>
@@ -34,6 +35,7 @@
     <string name="tvLogout">Logout</string>
     <string name="tvLogo1">Encontrando diarista de maneira</string>
     <string name="tvLogo2">INTELIGENTE</string>
+    <string name="tvErroAtualizar">Lista não atualizada.</string>
     <!-- Radio Button -->
 
     <string name="rbCliente">Cliente</string>
@@ -93,4 +95,5 @@
     <string name="endereco">Endereço</string>
     <string name="descricao">Descrição</string>
     <string name="valor">Valor</string>
+    <string name="classificar">Classificar</string>
 </resources>

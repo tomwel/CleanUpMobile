@@ -1,49 +1,50 @@
 package br.com.clean_up_mobile.model;
 
+import java.math.BigDecimal;
+
 public class Endereco {
-	private String rua;
-	private int numero;
-	private String bairro;
-	private String cidade;
-	private String cep;
-
-	public String getRua() {
-		return rua;
+	private Integer codigo;
+	private String logradouro;
+	private BigDecimal lat;
+	private BigDecimal lng;
+	
+	public Endereco(){
+		
+	}
+	
+	public Endereco(String logradouro){
+		this.logradouro = logradouro;
 	}
 
-	public void setRua(String rua) {
-		this.rua = rua;
+	public Integer getCodigo() {
+		return codigo;
 	}
 
-	public int getNumero() {
-		return numero;
+	public void setCodigo(Integer codigo) {
+		this.codigo = codigo;
 	}
 
-	public void setNumero(int numero) {
-		this.numero = numero;
+	public String getLogradouro() {
+		return logradouro;
 	}
 
-	public String getBairro() {
-		return bairro;
+	public void setLogradouro(String logradouro) {
+		this.logradouro = logradouro;
 	}
 
-	public void setBairro(String bairro) {
-		this.bairro = bairro;
+	public BigDecimal getLat() {
+		return lat;
 	}
 
-	public String getCidade() {
-		return cidade;
+	public void setLat(BigDecimal lat) {
+		this.lat = lat;
 	}
 
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
+	public BigDecimal getLng() {
+		return lng;
 	}
 
-	public String getCep() {
-		return cep;
-	}
-
-	public void setCep(String cep) {
-		this.cep = cep;
-	}
+	public void setLng(BigDecimal lng) {
+		this.lng = lng;
+	}	
 }

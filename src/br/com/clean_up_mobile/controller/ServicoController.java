@@ -39,7 +39,6 @@ public class ServicoController {
 		DiaristaDB diaristaDB = new DiaristaDB(context);
 
 		especialidadeDB.excluirTodosRelacionamento();
-		especialidadeDB.excluirTodasEspecialidades();
 		clienteDB.excluirTodos();
 		diaristaDB.excluirTodos();
 		servicoDB.excluirTodos();
@@ -47,61 +46,51 @@ public class ServicoController {
 	}
 
 	public void inserirServicos(List<Servico> listaServicos) {
-
-		listaServicos.remove(null);
-
 		limpaTodosServicos();
-
 		servicoDB.inserir(listaServicos);
 	}
 
 	public List<Servico> listarServicosLocal() {
 		List<Servico> list = new ArrayList<Servico>();
 
-		try {
-			list = servicoDB.listarServico();
-			list.remove(null);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		list = servicoDB.listarServico();
 		return list;
 	}
 
-	public List<Servico> pegarListaServico(boolean atualizarWeb, String tipo,
-			int codigo) {
+	public List<Servico> pegarListaServicosLocal() {
 
 		List<Servico> listaServicos = new ArrayList<Servico>();
-
-		if (atualizarWeb) {
-			atulizaServicosDobanco(tipo, codigo);
-		}
 		listaServicos = listarServicosLocal();
 
 		return listaServicos;
-
 	}
 
-	public void atulizaServicosDobanco(String tipo, int codigo) {
+	public boolean atualizarBancoLocal(String tipo, int codigo) {
 
 		String tipoBusca;
 		List<Servico> listaServicos = new ArrayList<Servico>();
-		if (tipo.equals("ROLE_CLIENT")) {
-			tipoBusca = "cliente";
-		} else {
-			tipoBusca = "diarista";
-		}
-
-		String result = WebService.getREST(Constantes.GET_SERVICO + "/"
-				+ tipoBusca + "/" + codigo);
-
-		Log.v("FLS", result);
 
 		try {
-			listaServicos = montaListServico(result);
-			inserirServicos(listaServicos);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+			if (tipo.equals("ROLE_CLIENT")) {
+				tipoBusca = "cliente";
+			} else {
+				tipoBusca = "diarista";
+			}
+
+			String result = WebService.getREST(Constantes.GET_SERVICO + "/"
+					+ tipoBusca + "/" + codigo);
+
+			Log.v("FLS", result);
+
+			if (result != null) {
+				listaServicos = montaListServico(result);
+				inserirServicos(listaServicos);
+				return true;
+			}
+			return false;
+		} catch (Exception e) {
+			return false;
 		}
 	}
 
@@ -122,6 +111,7 @@ public class ServicoController {
 			// diarista
 			JSONObject d = s.getJSONObject("diarista");
 			JSONArray es = d.getJSONArray("especialidades");
+			JSONObject ed = s.getJSONObject("endereco");
 
 			// especialidades
 			for (int j = 0; j < es.length(); j++) {
@@ -153,8 +143,8 @@ public class ServicoController {
 			servico.setCliente(cliente);
 			servico.setDiarista(diarista);
 			servico.setDataServico(new Date(s.getInt("dataServico")));
-			servico.setEndereco("sem");
-			servico.setStatus(s.getString("dataServico"));
+			servico.setEndereco(ed.getString("logradouro"));
+			servico.setStatus(s.getString("status"));
 			servico.setDescricao(s.getString("descricao"));
 
 			listaServicos.add(servico);
