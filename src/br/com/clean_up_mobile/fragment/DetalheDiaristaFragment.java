@@ -1,16 +1,15 @@
 package br.com.clean_up_mobile.fragment;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import org.json.JSONException;
-import org.json.JSONObject;
 import br.com.clean_up_mobile.R;
 import br.com.clean_up_mobile.activity.HomeActivity;
+import br.com.clean_up_mobile.db.DiaristaFavoritaDB;
+import br.com.clean_up_mobile.db.EspecialidadeDB;
 import br.com.clean_up_mobile.db.UsuarioDB;
 import br.com.clean_up_mobile.model.Diarista;
 import br.com.clean_up_mobile.model.Endereco;
@@ -30,7 +29,11 @@ import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
@@ -40,6 +43,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class DetalheDiaristaFragment extends Fragment implements
 		OnClickListener {
@@ -48,6 +52,8 @@ public class DetalheDiaristaFragment extends Fragment implements
 	Usuario usuario;
 	ServicoVO servicoVo;
 	UsuarioDB db;
+	DiaristaFavoritaDB dbDiaristaFav;
+	EspecialidadeDB dbEspecialidade;
 	PlaceHolder placeHolder;
 	TextView txtNome;
 	TextView txtCidade;
@@ -76,6 +82,8 @@ public class DetalheDiaristaFragment extends Fragment implements
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 		db = new UsuarioDB(getActivity());
+		dbDiaristaFav = new DiaristaFavoritaDB(getActivity());
+		dbEspecialidade = new EspecialidadeDB(getActivity());
 	}
 
 	@Override
@@ -103,12 +111,13 @@ public class DetalheDiaristaFragment extends Fragment implements
 		btCancelar = (Button) layout.findViewById(R.id.buttonCancelarDiarista);
 		btCancelar.setOnClickListener(btnCancelarOnClickListener);
 		data.requestFocus();
-		
+
 		endereco.setOnClickListener(this);
 		endereco.setAdapter(new PlaceHolder(getActivity(),
 				R.layout.list_item_autocomplete));
 
 		diarista = (Diarista) getArguments().getSerializable("diarista");
+		diarista.favorito = dbDiaristaFav.favorito(diarista);
 
 		List<Especialidade> especialidades = diarista.getEspecialidades();
 		Especialidade especialidade = new Especialidade();
@@ -116,6 +125,16 @@ public class DetalheDiaristaFragment extends Fragment implements
 		for (int i = 0; i < especialidades.size(); i++) {
 			if (especialidades.get(i) != null) {
 				especialidade = especialidades.get(i);
+				boolean existeEspecialidade;
+				existeEspecialidade = dbEspecialidade
+						.existeEspecialidade(especialidade
+								.getCodigoEspecialidade());
+				
+				if(!existeEspecialidade){
+					dbEspecialidade.inserirEspecialidade(especialidade);
+					dbEspecialidade.inserirRelacionamentoEspecialidadeDiarista(diarista.getCodigo(), especialidade.getCodigoEspecialidade());
+				}
+				
 				listaEspecialidades = listaEspecialidades + "* "
 						+ especialidade.getNomeEspecialidade() + "\n";
 			} else {
@@ -123,28 +142,71 @@ public class DetalheDiaristaFragment extends Fragment implements
 			}
 		}
 		txtNome.setText(diarista.getNome());
-//		txtCidade.setText(diarista.getCidade().getNomeCidade());
+		// txtCidade.setText(diarista.getCidade().getNomeCidade());
 		txtCidade.setText(diarista.getCidade());
 		txtEspecialidades.setText(listaEspecialidades);
 
 		return layout;
 	}
 
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		inflater.inflate(R.menu.detalhe, menu);
+
+		MenuItem item = menu.findItem(R.id.action_favoritos);
+		if (diarista.favorito) {
+			item.setIcon(android.R.drawable.ic_menu_delete);
+		} else {
+			item.setIcon(android.R.drawable.ic_menu_save);
+		}
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == R.id.action_favoritos) {
+
+			if (diarista.favorito) {
+				dbDiaristaFav.excluir(diarista);
+				Toast.makeText(getActivity(),
+						"Diarista removida dos favoritos", Toast.LENGTH_SHORT)
+						.show();
+			} else {
+				dbDiaristaFav.inserir(diarista);
+				Toast.makeText(getActivity(),
+						"Diarista Adicionada aos favoritos", Toast.LENGTH_SHORT)
+						.show();
+			}
+
+			if (getActivity() instanceof DiaristaNosFavoritos) {
+				((DiaristaNosFavoritos) getActivity())
+						.diaristaAdicionadaAoFavorito(diarista);
+			}
+
+			((ActionBarActivity) getActivity()).supportInvalidateOptionsMenu();
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	interface DiaristaNosFavoritos {
+		void diaristaAdicionadaAoFavorito(Diarista diarista);
+	}
+
 	public void gravarServico() throws ParseException {
-		
+
 		DiaristaVO diaristaVO = new DiaristaVO();
 		diaristaVO.setCodigo(diarista.getCodigo());
-		
+
 		servicoVo = new ServicoVO();
 		usuario = db.listaUsuario();
 		Calendar cal = Calendar.getInstance();
-		SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");      
-		Date date = fmt.parse(data.getText().toString());	
+		SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = fmt.parse(data.getText().toString());
 		cal.setTime(date);
 		int dia = cal.get(Calendar.DAY_OF_MONTH);
-		int mes = cal.get(Calendar.MONTH)+1;
+		int mes = cal.get(Calendar.MONTH) + 1;
 		int ano = cal.get(Calendar.YEAR);
-		String strDate = ano+"-"+mes+"-"+dia;
+		String strDate = ano + "-" + mes + "-" + dia;
 		servicoVo.setData(strDate);
 		servicoVo.setDescricao(descricao.getText().toString());
 		servicoVo.setDiarista(diaristaVO);
@@ -156,7 +218,7 @@ public class DetalheDiaristaFragment extends Fragment implements
 	private OnClickListener btnConfirmarOnClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-				salvarEndereco();
+			salvarEndereco();
 		}
 	};
 
@@ -164,8 +226,7 @@ public class DetalheDiaristaFragment extends Fragment implements
 		@Override
 		public void onClick(View v) {
 			usuario = db.listaUsuario();
-			Intent homeIntent = new Intent(getActivity(),
-					HomeActivity.class);
+			Intent homeIntent = new Intent(getActivity(), HomeActivity.class);
 			homeIntent.putExtra("usuario", usuario);
 			homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(homeIntent);
@@ -201,12 +262,12 @@ public class DetalheDiaristaFragment extends Fragment implements
 		protected void onPostExecute(String result) {
 			if (result != null) {
 
-				//JSONObject obj;
+				// JSONObject obj;
 				try {
 					Util.criarToast(getActivity(),
 							R.string.msgServicoSolicitado);
-					//obj = new JSONObject(result);
-					//System.out.println(obj);
+					// obj = new JSONObject(result);
+					// System.out.println(obj);
 					Intent homeIntent = new Intent(getActivity(),
 							HomeActivity.class);
 					homeIntent.putExtra("usuario", usuario);

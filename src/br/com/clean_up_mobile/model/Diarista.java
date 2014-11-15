@@ -10,7 +10,8 @@ public class Diarista implements Serializable{
 	private String telefone;
 	private String cidade;
 	private List<Especialidade> especialidades;
-
+	public boolean favorito;
+	
 	public Diarista() {
 	}
 	

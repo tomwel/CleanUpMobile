@@ -3,16 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context="br.com.clean_up_mobile.activity.MainActivity" >
-
-    <ImageView
-        android:id="@+id/imgLogo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="168dp"
-        android:src="@drawable/logo" />
 
     <TextView
         android:id="@+id/textViewLogo1"
@@ -33,5 +25,14 @@
         android:layout_marginTop="14dp"
         android:text="@string/tvLogo2"
         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="82dp"
+        android:src="@drawable/logo" />
 
 </RelativeLayout>
