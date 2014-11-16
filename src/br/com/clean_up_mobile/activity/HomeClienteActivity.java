@@ -4,6 +4,7 @@ import br.com.clean_up_mobile.R;
 import br.com.clean_up_mobile.db.UsuarioDB;
 import br.com.clean_up_mobile.fragment.ClienteFragment;
 import br.com.clean_up_mobile.fragment.DiaristaServicoFragment;
+import br.com.clean_up_mobile.fragment.ListaDiaristasFavoritas;
 import br.com.clean_up_mobile.model.Diarista;
 import br.com.clean_up_mobile.model.Usuario;
 import android.content.Intent;
@@ -39,7 +40,7 @@ public class HomeClienteActivity extends ActionBarActivity implements
 		db = new UsuarioDB(getApplicationContext());
 		usuario = (Usuario) getIntent().getSerializableExtra("usuario");
 		fragment1 = new ClienteFragment();
-		fragment2 = new DiaristaServicoFragment();
+		fragment2 = new ListaDiaristasFavoritas();
 		final ActionBar actionBar = getSupportActionBar();
 
 		pager = (ViewPager) findViewById(R.id.viewPager);
@@ -60,7 +61,7 @@ public class HomeClienteActivity extends ActionBarActivity implements
 		aba1.setTabListener(this);
 
 		Tab aba2 = actionBar.newTab();
-		aba2.setIcon(R.drawable.ic_notas);
+		aba2.setIcon(R.drawable.ic_favorito);
 		aba2.setTabListener(this);
 
 		actionBar.addTab(aba1);
