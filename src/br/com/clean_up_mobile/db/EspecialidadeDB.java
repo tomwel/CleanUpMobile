@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import br.com.clean_up_mobile.model.Especialidade;
+import br.com.clean_up_mobile.model.Usuario;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -18,6 +19,30 @@ public class EspecialidadeDB {
 		helper = new DBHelper(contexto);
 	}
 
+	public long inserirEspecialidade(Especialidade especialidade) {
+		SQLiteDatabase db = helper.getWritableDatabase();
+
+		ContentValues values = valoresPorEspecialidade(especialidade);
+
+		long id = db.insert("especialidade", null, values);
+
+		db.close();
+
+		return id;
+	}
+	
+	public long inserirRelacionamentoEspecialidadeDiarista(int codDiarista, int codEspecialidade) {
+		SQLiteDatabase db = helper.getWritableDatabase();
+
+		ContentValues values = valoresPorRelacionamento(codDiarista, codEspecialidade);
+
+		long id = db.insert("relacionamento_especialidade_diarista", null, values);
+
+		db.close();
+
+		return id;
+	}
+	
 	public ContentValues valoresPorEspecialidade(Especialidade especialidade) {
 		ContentValues values = new ContentValues();
 		values.put("codigo", especialidade.getCodigoEspecialidade());
@@ -25,11 +50,11 @@ public class EspecialidadeDB {
 		return values;
 	}
 
-	public boolean existeEspecialidade(Integer idDoEsepcialidade) {
+	public boolean existeEspecialidade(Integer idEspecialidade) {
 
 		SQLiteDatabase db = helper.getReadableDatabase();
 		Cursor cursor = db.rawQuery("select * from especialidade where codigo="
-				+ idDoEsepcialidade, null);
+				+ idEspecialidade, null);
 
 		boolean resultado = false;
 		if (cursor != null && cursor.getCount() > 0) {
