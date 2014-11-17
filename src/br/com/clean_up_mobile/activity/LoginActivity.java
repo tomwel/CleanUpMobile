@@ -51,11 +51,11 @@ public class LoginActivity extends Activity {
 		Button btnLogin = (Button) findViewById(R.id.btnLogin);
 		btnLogin.setOnClickListener(btnLoginOnClickListener);
 
-		Button btnRegistro = (Button) findViewById(R.id.btnRegistro);
-		btnRegistro.setOnClickListener(btnRegistroOnClickListener);
+		TextView textViewRegistro = (TextView) findViewById(R.id.textViewRegistrar);
+		textViewRegistro.setOnClickListener(textViewRegistroOnClickListener);
 	}
 
-	private OnClickListener btnRegistroOnClickListener = new OnClickListener() {
+	private OnClickListener textViewRegistroOnClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			Intent cadastroIntent = new Intent(getApplicationContext(),

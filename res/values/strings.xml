@@ -36,6 +36,7 @@
     <string name="tvLogo1">Encontrando diarista de maneira</string>
     <string name="tvLogo2">INTELIGENTE</string>
     <string name="tvErroAtualizar">Lista não atualizada.</string>
+    <string name="tvRegistrar"><a href="#">Registrar</a></string>
     <!-- Radio Button -->
 
     <string name="rbCliente">Cliente</string>
