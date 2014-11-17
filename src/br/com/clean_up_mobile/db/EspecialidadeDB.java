@@ -6,6 +6,7 @@ import java.util.List;
 
 import br.com.clean_up_mobile.model.Especialidade;
 import br.com.clean_up_mobile.model.Usuario;
+import br.com.clean_up_mobile.util.Constantes;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -30,6 +31,26 @@ public class EspecialidadeDB {
 
 		return id;
 	}
+	
+	public void inserirEspecialidades(List<Especialidade> listaEspecialidades) {
+
+		SQLiteDatabase db = helper.getReadableDatabase();
+		db.beginTransaction();
+
+		for (Iterator<Especialidade> es = listaEspecialidades.iterator(); es
+				.hasNext();) {
+
+			Especialidade especialidade = es.next();
+			ContentValues valuesEspecialidade = valoresPorEspecialidade(especialidade);
+
+			db.insert(Constantes.TABELA_ESPECIALIDADE, null, valuesEspecialidade);
+		}
+
+		db.setTransactionSuccessful();
+		db.endTransaction();
+		db.close();
+	}
+
 	
 	public long inserirRelacionamentoEspecialidadeDiarista(int codDiarista, int codEspecialidade) {
 		SQLiteDatabase db = helper.getWritableDatabase();
