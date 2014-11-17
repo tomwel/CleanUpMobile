@@ -31,14 +31,14 @@ public class ServicoFragment extends ListFragment {
 	ProgressBar progress;
 	TextView txtMensagem, txtAviso;
 	Integer codigoUsuario = 0;
-	String tipoUsuario = ""; // 0 diarista 1 cliente
+	String tipoUsuario, where = ""; // 0 diarista 1 cliente
 	boolean atualizarWeb = true;
 	boolean aparecerAviso = false;
 	UsuarioDB db;
 	Usuario usuario;
 	Context context;
 
-	public ServicoFragment(boolean a, Context c) {
+	public ServicoFragment(boolean a, Context c, String w) {
 
 		db = new UsuarioDB(c);
 		usuario = db.listaUsuario();
@@ -48,6 +48,7 @@ public class ServicoFragment extends ListFragment {
 		atualizarWeb = a;
 		codigoUsuario = usuario.getId();
 		tipoUsuario = usuario.getPerfil();
+		where = w; 
 	}
 
 	@Override

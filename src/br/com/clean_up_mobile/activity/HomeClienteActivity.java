@@ -5,6 +5,7 @@ import br.com.clean_up_mobile.db.UsuarioDB;
 import br.com.clean_up_mobile.fragment.ClienteFragment;
 import br.com.clean_up_mobile.fragment.DiaristaServicoFragment;
 import br.com.clean_up_mobile.fragment.ListaDiaristasFavoritas;
+import br.com.clean_up_mobile.fragment.ServicoFragment;
 import br.com.clean_up_mobile.model.Diarista;
 import br.com.clean_up_mobile.model.Usuario;
 import android.content.Intent;
@@ -27,8 +28,7 @@ import android.widget.Toast;
 public class HomeClienteActivity extends ActionBarActivity implements
 		TabListener, OnClickDiarista {
 
-	Fragment fragment1;
-	Fragment fragment2;
+	Fragment fragment1, fragment2, fragment3;
 	ViewPager pager;
 	Usuario usuario;
 	UsuarioDB db;
@@ -41,6 +41,7 @@ public class HomeClienteActivity extends ActionBarActivity implements
 		usuario = (Usuario) getIntent().getSerializableExtra("usuario");
 		fragment1 = new ClienteFragment();
 		fragment2 = new ListaDiaristasFavoritas();
+		fragment3 = new ServicoFragment(true, getApplicationContext(), null);
 		final ActionBar actionBar = getSupportActionBar();
 
 		pager = (ViewPager) findViewById(R.id.viewPager);
@@ -57,25 +58,31 @@ public class HomeClienteActivity extends ActionBarActivity implements
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
 		Tab aba1 = actionBar.newTab();
-		aba1.setIcon(R.drawable.ic_home);
+		aba1.setIcon(R.drawable.ic_buscar);
 		aba1.setTabListener(this);
 
 		Tab aba2 = actionBar.newTab();
-		aba2.setIcon(R.drawable.ic_favorito);
+		aba2.setIcon(R.drawable.ic_fovoritos);
 		aba2.setTabListener(this);
+
+		Tab aba3 = actionBar.newTab();
+		aba3.setIcon(R.drawable.ic_historico_servicos);
+		aba3.setTabListener(this);
 
 		actionBar.addTab(aba1);
 		actionBar.addTab(aba2);
+		actionBar.addTab(aba3);
 	}
 
 	@Override
 	public void clickedDiarista(Diarista diarista) {
 
-//		DetalheDiaristaFragment d = DetalheDiaristaFragment
-//				.novaInstancia(diarista);
-//
-//		getSupportFragmentManager().beginTransaction().replace(R.id.detail, d)
-//				.commit();
+		// DetalheDiaristaFragment d = DetalheDiaristaFragment
+		// .novaInstancia(diarista);
+		//
+		// getSupportFragmentManager().beginTransaction().replace(R.id.detail,
+		// d)
+		// .commit();
 		Intent it = new Intent(this, DetalheDiaristaActivity.class);
 		it.putExtra("diarista", diarista);
 		startActivity(it);
@@ -143,15 +150,21 @@ public class HomeClienteActivity extends ActionBarActivity implements
 
 		@Override
 		public Fragment getItem(int position) {
-			if (position == 0) {
+			switch (position) {
+			case 0:
+				return fragment1;
+			case 1:
+				return fragment2;
+			case 2:
+				return fragment3;
+			default:
 				return fragment1;
 			}
-			return fragment2;
 		}
 
 		@Override
 		public int getCount() {
-			return 2;
+			return 3;
 		}
 	}
 }
