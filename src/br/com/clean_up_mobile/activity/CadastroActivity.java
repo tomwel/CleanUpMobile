@@ -1,18 +1,21 @@
 package br.com.clean_up_mobile.activity;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -21,17 +24,21 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 import br.com.clean_up_mobile.R;
-import br.com.clean_up_mobile.task.WebService;
+import br.com.clean_up_mobile.controller.CadastroController;
+import br.com.clean_up_mobile.db.CidadeDB;
+import br.com.clean_up_mobile.db.EspecialidadeDB;
+import br.com.clean_up_mobile.model.Cidade;
+import br.com.clean_up_mobile.model.Especialidade;
 import br.com.clean_up_mobile.util.Constantes;
 import br.com.clean_up_mobile.util.Mask;
 import br.com.clean_up_mobile.util.Util;
 import br.com.clean_up_mobile.vo.PessoaVO;
 
-public class CadastroActivity extends Activity
-{
+public class CadastroActivity extends Activity implements OnItemSelectedListener, OnMultiChoiceClickListener{
+	
+
 
 	int tipoUsuario = 1;
 	int[] arrEspecialidades = new int[5];
@@ -44,12 +51,30 @@ public class CadastroActivity extends Activity
 	EditText addressET;
 	EditText emailET;
 	EditText pwdET;
+	
+	Spinner spinner;
+	List<Cidade> cidades;
+	Cidade cidade;
+	 
+	
+//	Spinner spinner2;
+//	List<Especialidade> _especialidades;
+//	Especialidade _especialidade;
 
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_cadastro);
-
+		
+		
+		spinner = (Spinner) findViewById(R.id.spinner1);
+		spinner.setOnItemSelectedListener(this);
+		
+		
+//		spinner2 = (Spinner) findViewById(R.id.spinner2);
+//		spinner2.setOnItemSelectedListener(this);
+		
 		nameET = (EditText) findViewById(R.id.registerName1);
 		lastNameET = (EditText) findViewById(R.id.registerName2);
 		cpfET = (EditText) findViewById(R.id.registerCPF);
@@ -83,31 +108,130 @@ public class CadastroActivity extends Activity
 		CheckBox checkBox5 = (CheckBox) findViewById(R.id.checkBox5);
 		checkBox5.setOnClickListener(checkBoxOnClickListener);
 
-		// Spinner
+		loadSpinnerData();
+//		loadSpinnerData2();
+		
 
-		// Spinner spiCidade = (Spinner) findViewById(R.id.spinner1);
-		// spiCidade.setOnItemSelectedListener(spiCidadeOnItemSelectedListener);
+		atualizarEspecialidadesECidades();
 
 	}
 
-	// OnItemSelectedListener spiCidadeOnItemSelectedListener = new
-	// OnItemSelectedListener() {
-	//
-	// @Override
-	// public void onItemSelected(AdapterView<?> parent, View view,
-	// int pos, long id) {
-	//
-	// Util.criarToast(getApplicationContext(), pos + " - " + id);
-	//
-	// }
-	//
-	// @Override
-	// public void onNothingSelected(AdapterView<?> arg0) {
-	// // TODO Auto-generated method stub
-	//
-	// }
-	//
-	// };
+	
+	
+	
+	
+	private void loadSpinnerData() {
+        // database handler
+        CidadeDB db = new CidadeDB(getApplicationContext());
+ 
+        // Spinner Drop down elements
+        cidades = new ArrayList<Cidade>();
+        cidades = db.listarCidades();
+      
+              
+        
+        // Criando adapter para spinner
+        ArrayAdapter<Cidade> dataAdapter = new ArrayAdapter<Cidade>(this,
+                android.R.layout.simple_spinner_item, cidades);
+ 
+        // Drop down layout style - list view with radio button
+        dataAdapter
+                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+ 
+        // attaching data adapter to spinner
+        spinner.setAdapter(dataAdapter);
+       // spinner.setOnItemSelectedListener(new onItemSelectedListener());
+        
+        
+        
+        
+        
+        
+    }
+	
+	
+//	private void loadSpinnerData2() {
+//        // database handler
+//       EspecialidadeDB db1 = new EspecialidadeDB(getApplicationContext());
+// 
+//        // Spinner Drop down elements
+//       _especialidades = new ArrayList<Especialidade>();
+//       _especialidades = db1.listarEspecialidades();
+//      
+//       Log.v("LIST_ESP", "Item_Especialidades: " + _especialidades);
+// 
+//        // Criando adapter para spinner
+//        ArrayAdapter<Especialidade> dataAdapter = new ArrayAdapter<Especialidade>(this,
+//                android.R.layout.simple_list_item_1, _especialidades);
+// 
+//        // Drop down layout style - list view with radio button
+//        dataAdapter
+//                .setDropDownViewResource(android.R.layout.simple_list_item_checked);
+// 
+//        // attaching data adapter to spinner
+//       spinner2.setAdapter(dataAdapter);
+//    
+//    }
+
+	public void onItemSelected(AdapterView<?> parent, View view, int position,
+			long id) {
+		// On selecting a spinner item
+		
+			
+			
+			switch (parent.getId()) 
+		    {         
+		        case R.id.spinner1:
+
+		        	cidade = cidades.get(position);
+		        	
+
+		    		Toast.makeText(parent.getContext(), "You selected: " + cidade.getCodigoCidade(),  
+		                    Toast.LENGTH_LONG).show();  
+		       
+		    	
+		    	
+		    		Log.v("CLUP", "Item_Cidade: " + cidade.getCodigoCidade());
+		    		
+
+		           
+
+		            break;              
+
+////		        case R.id.spinner2:
+////
+////		        	_especialidade = _especialidades.get(position);
+////		        	
+////		        	Toast.makeText(parent.getContext(), "You selected: " +_especialidade.getCodigoEspecialidade(),  
+////		                Toast.LENGTH_LONG).show();  
+////			
+////				
+////				Log.v("CLUP", "Item_Especialidade: " + _especialidade.getCodigoEspecialidade());
+////		       
+//		        	
+//		            break;              
+		    }
+			
+			
+	
+		
+		
+
+	}
+	
+	
+
+
+	
+	public void onNothingSelected(AdapterView<?> arg0) {
+        // TODO Auto-generated method stub
+ 
+    }
+	
+	
+	
+	
+	
 
 	OnClickListener checkBoxOnClickListener = new OnClickListener() {
 
@@ -116,7 +240,7 @@ public class CadastroActivity extends Activity
 			boolean checked = ((CompoundButton) view).isChecked();
 
 			Toast.makeText(getApplicationContext(),
-					"info " + view.getId() + "  " + checked, Toast.LENGTH_LONG)
+					"info " + view.getId() + "  " + checked, Toast.LENGTH_SHORT)
 					.show();
 
 			switch (view.getId()) {
@@ -230,7 +354,8 @@ public class CadastroActivity extends Activity
 						p.setCpf(cpfLimpo);
 						p.setTelefone(telefoneLimpo);
 						p.setEndereco(address);
-						p.setCidade(1);
+					
+						p.setCidade(cidade.getCodigoCidade());
 						p.setEmail(email);
 						p.setSenha(password);
 						p.setTipo(tipoUsuario);
@@ -246,19 +371,28 @@ public class CadastroActivity extends Activity
 		}
 	}
 
-	public void doCadastroUsuario(PessoaVO pessoa) {
+	private void doCadastroUsuario(PessoaVO pessoa) {
 		if (Util.existeConexao(getApplicationContext()))
 			new HttpAsyncTask(Constantes.POST_CADASTRO, pessoa).execute();
 	}
 
-	public void navigatetoLoginActivity(View view) {
+	private void atualizarEspecialidadesECidades() {
+		if (Util.existeConexao(getApplicationContext())) {
+			new AtualizarEspecilidadesECidadesTask().execute();
+		} else {
+			navigatetoLoginActivity();
+		}
+
+	}
+
+	private void navigatetoLoginActivity() {
 		Intent loginIntent = new Intent(getApplicationContext(),
 				LoginActivity.class);
 		loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(loginIntent);
 	}
 
-	public void setDefaultValues() {
+	private void setDefaultValues() {
 		nameET.setText("");
 		lastNameET.setText("");
 		cpfET.setText("");
@@ -269,7 +403,16 @@ public class CadastroActivity extends Activity
 
 	}
 
-	private class HttpAsyncTask extends AsyncTask<Void, Void, String> {
+	private void mostrarProgressDialog(String texto) {
+		prgDialog = new ProgressDialog(CadastroActivity.this);
+		prgDialog.setMessage(texto);
+		prgDialog.setTitle("Cadastro");
+		prgDialog.setCancelable(true);
+		prgDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+		prgDialog.show();
+	}
+
+	class HttpAsyncTask extends AsyncTask<Void, Void, Boolean> {
 
 		private Object o;
 		private String url;
@@ -281,62 +424,61 @@ public class CadastroActivity extends Activity
 
 		@Override
 		protected void onPreExecute() {
-			prgDialog = new ProgressDialog(CadastroActivity.this);
-			prgDialog.setMessage("Ralizando Cadastro");
-			prgDialog.setTitle("Cadastro");
-			prgDialog.setCancelable(true);
-			prgDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-			prgDialog.show();
+			mostrarProgressDialog("Realizando cadastro");
 		}
 
 		@Override
-		protected String doInBackground(Void... params) {
-			return WebService.getREST(url, o);
+		protected Boolean doInBackground(Void... params) {
+			CadastroController cc = new CadastroController(
+					getApplicationContext());
+			return cc.cadastrar(url, o);
 		}
 
 		@Override
-		protected void onPostExecute(String result) {
-
-			try {
-				if (prgDialog.isShowing()) {
-					prgDialog.dismiss();
-				}
-				if (result != null) {
-
-					JSONObject obj = new JSONObject(result);
-
-					// cadastro realizado
-					if (obj.getBoolean("status")) {
-						setDefaultValues();
-						Util.criarToast(getApplicationContext(),
-								R.string.msgCadastroRealizado);
-					} else {
-
-						int mensagemErrro;
-
-						// cpf já cadastrado
-						if (obj.getString("error_msg").equals("cpf_cadastrado")) {
-							mensagemErrro = R.string.msgCpfCadastrado;
-							// email já cadastrado
-						} else if (obj.getString("error_msg").equals(
-								"email_cadastrado")) {
-							mensagemErrro = R.string.msgEmailCadastrado;
-							// erro no servidor ao cadastrar
-						} else {
-							mensagemErrro = R.string.msgDeErroWebservice;
-						}
-						Util.criarToast(getApplicationContext(), mensagemErrro);
-					}
-				} else {
-					Util.criarToast(getApplicationContext(),
-							R.string.msgDeErroWebservice);
-				}
-			} catch (JSONException e) {
-				Util.criarToast(getApplicationContext(),
-						R.string.msgDeErroWebservice);
-
+		protected void onPostExecute(Boolean result) {
+			if (prgDialog.isShowing()) {
+				prgDialog.dismiss();
+			}
+			if (result) {
+				setDefaultValues();
 			}
 		}
-
 	}
+
+	class AtualizarEspecilidadesECidadesTask extends
+			AsyncTask<Void, Void, Boolean> {
+
+		@Override
+		protected void onPreExecute() {
+			mostrarProgressDialog("Atualizando informações.");
+		}
+
+		@Override
+		protected Boolean doInBackground(Void... params) {
+			CadastroController cc = new CadastroController(
+					getApplicationContext());
+			return cc.atualizarEspecialidadesECidades();
+		}
+
+		@Override
+		protected void onPostExecute(Boolean result) {
+			if (prgDialog.isShowing()) {
+				prgDialog.dismiss();
+			}
+			if (!result) {
+				Util.criarToast(getApplicationContext(),
+						R.string.msgDeErroWebservice);
+				navigatetoLoginActivity();
+			}
+		}
+	}
+
+	@Override
+	public void onClick(DialogInterface arg0, int arg1, boolean arg2) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	
 }
