@@ -19,7 +19,9 @@ import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,7 +50,7 @@ public class ServicoFragment extends ListFragment {
 		atualizarWeb = a;
 		codigoUsuario = usuario.getId();
 		tipoUsuario = usuario.getPerfil();
-		where = w; 
+		where = w;
 	}
 
 	@Override
@@ -69,6 +71,17 @@ public class ServicoFragment extends ListFragment {
 			}
 		}
 		setRetainInstance(true);
+
+		ListView listView = getListView();
+		listView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Toast.makeText(context, "Click ListItem Number " + position,
+						Toast.LENGTH_LONG).show();
+			}
+		});
+
 	}
 
 	@Override
@@ -158,5 +171,4 @@ public class ServicoFragment extends ListFragment {
 
 		}
 	}
-
 }

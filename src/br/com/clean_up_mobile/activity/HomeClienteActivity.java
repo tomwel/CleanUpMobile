@@ -37,11 +37,15 @@ public class HomeClienteActivity extends ActionBarActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home_cliente);
+		
+		
 		db = new UsuarioDB(getApplicationContext());
 		usuario = (Usuario) getIntent().getSerializableExtra("usuario");
+		
 		fragment1 = new ClienteFragment();
 		fragment2 = new ListaDiaristasFavoritas();
-		fragment3 = new ServicoFragment(true, getApplicationContext(), null);
+		fragment3 = new ServicoFragment(false, getApplicationContext(), null);
+		
 		final ActionBar actionBar = getSupportActionBar();
 
 		pager = (ViewPager) findViewById(R.id.viewPager);
@@ -150,15 +154,12 @@ public class HomeClienteActivity extends ActionBarActivity implements
 
 		@Override
 		public Fragment getItem(int position) {
-			switch (position) {
-			case 0:
+			if (position == 0) {
 				return fragment1;
-			case 1:
+			} else if (position == 1) {
 				return fragment2;
-			case 2:
+			} else {
 				return fragment3;
-			default:
-				return fragment1;
 			}
 		}
 

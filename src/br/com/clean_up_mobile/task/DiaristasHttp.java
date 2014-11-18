@@ -19,7 +19,7 @@ import br.com.clean_up_mobile.util.Constantes;
 
 public class DiaristasHttp {
 
-	public static List<Diarista> retrieveDiaristas() throws Exception {
+	public static List<Diarista> retrieveDiaristas() throws Exception, IOException {
 		URL url = new URL(Constantes.GET_DIARISTAS);
 		HttpURLConnection conexao = (HttpURLConnection) url.openConnection();
 		conexao.setRequestMethod("GET");

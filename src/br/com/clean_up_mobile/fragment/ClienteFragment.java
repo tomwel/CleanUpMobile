@@ -1,5 +1,6 @@
 package br.com.clean_up_mobile.fragment;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,13 +24,15 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class ClienteFragment extends ListFragment implements SearchView.OnQueryTextListener{
+public class ClienteFragment extends ListFragment implements
+		SearchView.OnQueryTextListener {
 
 	DiaristasTask mTask;
 	List<Diarista> mDiaristas;
 	ProgressBar progress;
 	TextView txtMensagem;
 	private SearchView mSearchView;
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -70,10 +73,10 @@ public class ClienteFragment extends ListFragment implements SearchView.OnQueryT
 				false);
 		progress = (ProgressBar) view.findViewById(R.id.progressBar1);
 		txtMensagem = (TextView) view.findViewById(R.id.textViewLoading);
-	     mSearchView = (SearchView) view.findViewById(R.id.searchview);
-	     mSearchView.setQueryHint("Procurar Diarista");
-	     mSearchView.setIconifiedByDefault(false);
-	     mSearchView.setOnQueryTextListener(this);
+		mSearchView = (SearchView) view.findViewById(R.id.searchview);
+		mSearchView.setQueryHint("Procurar Diarista");
+		mSearchView.setIconifiedByDefault(false);
+		mSearchView.setOnQueryTextListener(this);
 		return view;
 	}
 
@@ -82,37 +85,46 @@ public class ClienteFragment extends ListFragment implements SearchView.OnQueryT
 		super.onListItemClick(l, v, position, id);
 
 		if (getActivity() instanceof OnClickDiarista) {
-			((OnClickDiarista) getActivity()).clickedDiarista(mDiaristas.get(position));
+			((OnClickDiarista) getActivity()).clickedDiarista(mDiaristas
+					.get(position));
 		}
 	}
-	
+
 	@Override
 	public boolean onQueryTextChange(String text) {
-		//System.out.println(text);
-		ArrayList<Diarista> list = new ArrayList<Diarista>();  
-        Diarista diarista = null;  
-        int pos = 0;  
-        while(pos< mDiaristas.size()){  
-            diarista = mDiaristas.get(pos); 
-//            if(diarista.getNome().toLowerCase().contains(text.toLowerCase()) || diarista.getCidade().getNomeCidade().toLowerCase().contains(text.toLowerCase())){ 
-            if(diarista.getNome().toLowerCase().contains(text.toLowerCase()) || diarista.getCidade().toLowerCase().contains(text.toLowerCase())){  
-                list.add(diarista); 
-            }  
-            pos++;  
-        }  
-        DiaristasAdapter adapter = new DiaristasAdapter(getActivity(),
-				list);
-		setListAdapter(adapter);
-		
-		return true;
+		// System.out.println(text);
+		ArrayList<Diarista> list = new ArrayList<Diarista>();
+		Diarista diarista = null;
+		int pos = 0;
+		if (mDiaristas != null) {
+			while (pos < mDiaristas.size()) {
+				diarista = mDiaristas.get(pos);
+				// if(diarista.getNome().toLowerCase().contains(text.toLowerCase())
+				// ||
+				// diarista.getCidade().getNomeCidade().toLowerCase().contains(text.toLowerCase())){
+				if (diarista.getNome().toLowerCase()
+						.contains(text.toLowerCase())
+						|| diarista.getCidade().toLowerCase()
+								.contains(text.toLowerCase())) {
+					list.add(diarista);
+				}
+				pos++;
+			}
+
+			DiaristasAdapter adapter = new DiaristasAdapter(getActivity(), list);
+			setListAdapter(adapter);
+
+			return true;
+		}
+		return false;
 	}
 
 	@Override
 	public boolean onQueryTextSubmit(String text) {
-		
+
 		return false;
 	}
-	
+
 	private void refreshList() {
 		DiaristasAdapter adapter = new DiaristasAdapter(getActivity(),
 				mDiaristas);
@@ -137,6 +149,8 @@ public class ClienteFragment extends ListFragment implements SearchView.OnQueryT
 		protected List<Diarista> doInBackground(Void... params) {
 			try {
 				return DiaristasHttp.retrieveDiaristas();
+			} catch (IOException i) {
+				i.printStackTrace();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

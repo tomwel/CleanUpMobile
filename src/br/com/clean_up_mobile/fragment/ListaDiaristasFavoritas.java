@@ -40,7 +40,9 @@ public class ListaDiaristasFavoritas extends ListFragment {
 		DiaristaFavoritaDB db = new DiaristaFavoritaDB(getActivity());
 		mDiaristas = db.listaDiaristas();
 		
-		DiaristasAdapter adapter = new DiaristasAdapter(getActivity(), mDiaristas);
-		setListAdapter(adapter);
+		if(mDiaristas!= null){
+			DiaristasAdapter adapter = new DiaristasAdapter(getActivity(), mDiaristas);
+			setListAdapter(adapter);
+		}
 	}
 }
