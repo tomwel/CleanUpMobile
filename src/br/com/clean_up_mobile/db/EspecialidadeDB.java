@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import br.com.clean_up_mobile.model.Especialidade;
-import br.com.clean_up_mobile.model.Usuario;
-import br.com.clean_up_mobile.util.Constantes;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+import br.com.clean_up_mobile.model.Especialidade;
+import br.com.clean_up_mobile.util.Constantes;
 
 public class EspecialidadeDB {
 
@@ -51,6 +51,27 @@ public class EspecialidadeDB {
 		db.close();
 	}
 
+	
+	public List<Especialidade> listarEspecialidades() {
+
+		List<Especialidade> listaEspecialidades = new ArrayList<Especialidade>();
+
+		SQLiteDatabase db = helper.getReadableDatabase();
+
+		Cursor cursor = db.rawQuery("select * from " + Constantes.TABELA_ESPECIALIDADE
+				+ " where 1=1", null);
+
+		while (cursor.moveToNext()) {
+			listaEspecialidades.add(preencherEspecialidade(cursor));
+			Log.v("CLUP", "ESPECIALIDADES_BD: " + listaEspecialidades.toString());
+		}
+		cursor.close();
+		db.close();
+		
+		return listaEspecialidades;
+		
+	}
+	
 	
 	public long inserirRelacionamentoEspecialidadeDiarista(int codDiarista, int codEspecialidade) {
 		SQLiteDatabase db = helper.getWritableDatabase();

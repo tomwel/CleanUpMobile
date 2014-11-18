@@ -57,9 +57,9 @@ public class CadastroActivity extends Activity implements OnItemSelectedListener
 	Cidade cidade;
 	 
 	
-//	Spinner spinner2;
-//	List<Especialidade> _especialidades;
-//	Especialidade _especialidade;
+	Spinner spinner2;
+	List<Especialidade> _especialidades;
+	Especialidade _especialidade;
 
 	
 	@Override
@@ -72,8 +72,8 @@ public class CadastroActivity extends Activity implements OnItemSelectedListener
 		spinner.setOnItemSelectedListener(this);
 		
 		
-//		spinner2 = (Spinner) findViewById(R.id.spinner2);
-//		spinner2.setOnItemSelectedListener(this);
+		spinner2 = (Spinner) findViewById(R.id.spinner2);
+		spinner2.setOnItemSelectedListener(this);
 		
 		nameET = (EditText) findViewById(R.id.registerName1);
 		lastNameET = (EditText) findViewById(R.id.registerName2);
@@ -109,7 +109,7 @@ public class CadastroActivity extends Activity implements OnItemSelectedListener
 		checkBox5.setOnClickListener(checkBoxOnClickListener);
 
 		loadSpinnerData();
-//		loadSpinnerData2();
+		loadSpinnerData2();
 		
 
 		atualizarEspecialidadesECidades();
@@ -150,28 +150,28 @@ public class CadastroActivity extends Activity implements OnItemSelectedListener
     }
 	
 	
-//	private void loadSpinnerData2() {
-//        // database handler
-//       EspecialidadeDB db1 = new EspecialidadeDB(getApplicationContext());
-// 
-//        // Spinner Drop down elements
-//       _especialidades = new ArrayList<Especialidade>();
-//       _especialidades = db1.listarEspecialidades();
-//      
-//       Log.v("LIST_ESP", "Item_Especialidades: " + _especialidades);
-// 
-//        // Criando adapter para spinner
-//        ArrayAdapter<Especialidade> dataAdapter = new ArrayAdapter<Especialidade>(this,
-//                android.R.layout.simple_list_item_1, _especialidades);
-// 
-//        // Drop down layout style - list view with radio button
-//        dataAdapter
-//                .setDropDownViewResource(android.R.layout.simple_list_item_checked);
-// 
-//        // attaching data adapter to spinner
-//       spinner2.setAdapter(dataAdapter);
-//    
-//    }
+	private void loadSpinnerData2() {
+        // database handler
+       EspecialidadeDB db1 = new EspecialidadeDB(getApplicationContext());
+ 
+        // Spinner Drop down elements
+       _especialidades = new ArrayList<Especialidade>();
+       _especialidades = db1.listarEspecialidades();
+      
+       Log.v("LIST_ESP", "Item_Especialidades: " + _especialidades);
+ 
+        // Criando adapter para spinner
+        ArrayAdapter<Especialidade> dataAdapter = new ArrayAdapter<Especialidade>(this,
+                android.R.layout.simple_list_item_1, _especialidades);
+ 
+        // Drop down layout style - list view with radio button
+        dataAdapter
+                .setDropDownViewResource(android.R.layout.simple_list_item_checked);
+ 
+        // attaching data adapter to spinner
+       spinner2.setAdapter(dataAdapter);
+    
+    }
 
 	public void onItemSelected(AdapterView<?> parent, View view, int position,
 			long id) {
@@ -198,18 +198,18 @@ public class CadastroActivity extends Activity implements OnItemSelectedListener
 
 		            break;              
 
-////		        case R.id.spinner2:
-////
-////		        	_especialidade = _especialidades.get(position);
-////		        	
-////		        	Toast.makeText(parent.getContext(), "You selected: " +_especialidade.getCodigoEspecialidade(),  
-////		                Toast.LENGTH_LONG).show();  
-////			
-////				
-////				Log.v("CLUP", "Item_Especialidade: " + _especialidade.getCodigoEspecialidade());
-////		       
-//		        	
-//		            break;              
+		        case R.id.spinner2:
+
+		        	_especialidade = _especialidades.get(position);
+		        	
+		        	Toast.makeText(parent.getContext(), "You selected: " +_especialidade.getCodigoEspecialidade(),  
+		                Toast.LENGTH_LONG).show();  
+			
+				
+				Log.v("CLUP", "Item_Especialidade: " + _especialidade.getCodigoEspecialidade());
+		       
+		        	
+		            break;              
 		    }
 			
 			

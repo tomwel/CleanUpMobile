@@ -109,6 +109,15 @@
             android:inputType="textMultiLine"
             android:textColorHint="@color/gray" />
             
+            
+            <Spinner
+            android:id="@+id/spinner2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/registerAddress"
+            android:layout_below="@+id/registerAddress"
+            android:entries="@array/spiCidade" />
+            
         
 
             <CheckBox
