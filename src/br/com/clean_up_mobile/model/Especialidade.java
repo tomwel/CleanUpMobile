@@ -20,6 +20,11 @@ public class Especialidade implements Serializable {
 		return codigoEspecialidade;
 	}
 
+	@Override
+	public String toString() {
+		return nomeEspecialidade;
+	}
+
 	public void setCodigoEspecialidade(Integer codigoEspecialidade) {
 		this.codigoEspecialidade = codigoEspecialidade;
 	}
