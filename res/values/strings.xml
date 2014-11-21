@@ -4,7 +4,7 @@
     <string name="app_name">CleanUp</string>
     <string name="action_settings">Settings</string>
     <string name="address">Address</string>
-    <string name="carregando">Carregando</string>
+    <string name="carregando">Carregando...</string>
     <string name="conexao">Falha na conexão!</string>
     <string name="logout">Logout</string>
 

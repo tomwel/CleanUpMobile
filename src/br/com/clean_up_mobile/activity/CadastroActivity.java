@@ -162,11 +162,11 @@ public class CadastroActivity extends Activity implements OnItemSelectedListener
  
         // Criando adapter para spinner
         ArrayAdapter<Especialidade> dataAdapter = new ArrayAdapter<Especialidade>(this,
-                android.R.layout.simple_list_item_1, _especialidades);
+                android.R.layout.simple_list_item_checked, _especialidades);
  
         // Drop down layout style - list view with radio button
         dataAdapter
-                .setDropDownViewResource(android.R.layout.simple_list_item_checked);
+                .setDropDownViewResource(android.R.layout.simple_list_item_multiple_choice);
  
         // attaching data adapter to spinner
        spinner2.setAdapter(dataAdapter);

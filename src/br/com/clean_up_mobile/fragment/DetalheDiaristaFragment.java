@@ -1,5 +1,9 @@
 package br.com.clean_up_mobile.fragment;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -7,6 +11,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import br.com.clean_up_mobile.R;
+import br.com.clean_up_mobile.activity.CalendarActivity;
 import br.com.clean_up_mobile.activity.HomeActivity;
 import br.com.clean_up_mobile.db.DiaristaFavoritaDB;
 import br.com.clean_up_mobile.db.EspecialidadeDB;
@@ -25,11 +30,14 @@ import br.com.clean_up_mobile.vo.DiaristaVO;
 import br.com.clean_up_mobile.vo.ServicoVO;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -63,7 +71,7 @@ public class DetalheDiaristaFragment extends Fragment implements
 	EditText descricao;
 	AutoCompleteTextView enderecoCompleto;
 	AutoCompleteTextView endereco;
-	Button btConfirmar, btCancelar;
+	Button btConfirmar, btCancelar, btData;
 	ArrayAdapter<String> adapter;
 	ArrayList<Endereco> mEnderecos;
 	EnderecoTask mTask;
@@ -71,9 +79,9 @@ public class DetalheDiaristaFragment extends Fragment implements
 	public static DetalheDiaristaFragment novaInstancia(Diarista diarista) {
 		Bundle args = new Bundle();
 		args.putSerializable("diarista", diarista);
-
 		DetalheDiaristaFragment f = new DetalheDiaristaFragment();
 		f.setArguments(args);
+
 		return f;
 	}
 
@@ -99,8 +107,8 @@ public class DetalheDiaristaFragment extends Fragment implements
 				.findViewById(R.id.textViewEspecialidadesDiaristaDetalhe);
 		imgDiarista = (ImageView) layout
 				.findViewById(R.id.imageViewDiaristaDetalhe);
+		
 		data = (EditText) layout.findViewById(R.id.editTextDataServico);
-		data.addTextChangedListener(Mask.insert("##/##/####", data));
 		descricao = (EditText) layout
 				.findViewById(R.id.editTextDescricaoServico);
 		endereco = (AutoCompleteTextView) layout
@@ -110,7 +118,8 @@ public class DetalheDiaristaFragment extends Fragment implements
 		btConfirmar.setOnClickListener(btnConfirmarOnClickListener);
 		btCancelar = (Button) layout.findViewById(R.id.buttonCancelarDiarista);
 		btCancelar.setOnClickListener(btnCancelarOnClickListener);
-		data.requestFocus();
+		btData = (Button) layout.findViewById(R.id.buttonCalendario);
+		btData.setOnClickListener(btnCalendarioOnClickListener);
 
 		endereco.setOnClickListener(this);
 		endereco.setAdapter(new PlaceHolder(getActivity(),
@@ -129,12 +138,14 @@ public class DetalheDiaristaFragment extends Fragment implements
 				existeEspecialidade = dbEspecialidade
 						.existeEspecialidade(especialidade
 								.getCodigoEspecialidade());
-				
-				if(!existeEspecialidade){
+
+				if (!existeEspecialidade) {
 					dbEspecialidade.inserirEspecialidade(especialidade);
-					dbEspecialidade.inserirRelacionamentoEspecialidadeDiarista(diarista.getCodigo(), especialidade.getCodigoEspecialidade());
+					dbEspecialidade.inserirRelacionamentoEspecialidadeDiarista(
+							diarista.getCodigo(),
+							especialidade.getCodigoEspecialidade());
 				}
-				
+
 				listaEspecialidades = listaEspecialidades + "* "
 						+ especialidade.getNomeEspecialidade() + "\n";
 			} else {
@@ -233,6 +244,15 @@ public class DetalheDiaristaFragment extends Fragment implements
 		}
 	};
 
+	private OnClickListener btnCalendarioOnClickListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			Intent calendarIntent = new Intent(getActivity(),
+					CalendarActivity.class);
+			startActivityForResult(calendarIntent, 1);
+		}
+	};
+
 	public void contratarServico(ServicoVO servico) {
 		if (Util.existeConexao(getActivity()))
 			new HttpAsyncTask(Constantes.CONTRATAR_SERVICO, servico).execute();
@@ -262,19 +282,16 @@ public class DetalheDiaristaFragment extends Fragment implements
 		protected void onPostExecute(String result) {
 			if (result != null) {
 
-				// JSONObject obj;
 				try {
 					Util.criarToast(getActivity(),
 							R.string.msgServicoSolicitado);
-					// obj = new JSONObject(result);
-					// System.out.println(obj);
 					Intent homeIntent = new Intent(getActivity(),
 							HomeActivity.class);
 					homeIntent.putExtra("usuario", usuario);
 					homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(homeIntent);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
+					Util.criarToast(getActivity(), R.string.msgDeErroWebservice);
 					e.printStackTrace();
 				}
 			}
@@ -332,4 +349,15 @@ public class DetalheDiaristaFragment extends Fragment implements
 		// TODO Auto-generated method stub
 
 	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent date) {
+		switch (requestCode) {
+		case 1:
+			data.setText(date.getExtras().getString("data_servico"));
+			break;
+		}
+		super.onActivityResult(requestCode, resultCode, date);
+	}
+	
 }

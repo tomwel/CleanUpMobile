@@ -10,6 +10,7 @@ import br.com.clean_up_mobile.adapter.DiaristasAdapter;
 import br.com.clean_up_mobile.model.Diarista;
 import br.com.clean_up_mobile.model.Especialidade;
 import br.com.clean_up_mobile.task.DiaristasHttp;
+import br.com.clean_up_mobile.util.Util;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
@@ -165,7 +166,8 @@ public class ClienteFragment extends ListFragment implements
 				refreshList();
 				txtMensagem.setVisibility(View.GONE);
 			} else {
-				txtMensagem.setText(R.string.conexao);
+				Util.criarToast(getActivity(),
+						R.string.msgDeErroWebservice);
 			}
 			progress.setVisibility(View.GONE);
 		}
