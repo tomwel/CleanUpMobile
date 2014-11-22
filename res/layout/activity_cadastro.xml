@@ -109,7 +109,7 @@
             android:inputType="textMultiLine"
             android:textColorHint="@color/gray" />
             
-          
+
 
             <CheckBox
                 android:id="@+id/checkBox1"
@@ -164,8 +164,7 @@
             android:hint="@string/tvEmail"
             android:inputType="textEmailAddress"
             android:textColorHint="@color/gray" />
-
-        <EditText
+ <EditText
             android:id="@+id/registerPassword"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -183,7 +182,6 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/registerPassword"
             android:layout_below="@+id/registerPassword"
-            android:onClick="registerUser"
             android:text="@string/btnRegister" />
 
         <Button
@@ -192,7 +190,6 @@
             android:layout_height="wrap_content"
             android:layout_alignRight="@+id/registerPassword"
             android:layout_below="@+id/registerPassword"
-            android:onClick="navigatetoLoginActivity"
             android:text="@string/btnLogin" />
     </RelativeLayout>
 

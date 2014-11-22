@@ -5,12 +5,10 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
+import android.content.pm.ActivityInfo;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -24,13 +22,10 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Spinner;
-import android.widget.Toast;
 import br.com.clean_up_mobile.R;
 import br.com.clean_up_mobile.controller.CadastroController;
 import br.com.clean_up_mobile.db.CidadeDB;
-import br.com.clean_up_mobile.db.EspecialidadeDB;
 import br.com.clean_up_mobile.model.Cidade;
-import br.com.clean_up_mobile.model.Especialidade;
 import br.com.clean_up_mobile.util.Constantes;
 import br.com.clean_up_mobile.util.Mask;
 import br.com.clean_up_mobile.util.Util;
@@ -38,8 +33,7 @@ import br.com.clean_up_mobile.vo.PessoaVO;
 
 public class CadastroActivity extends Activity implements OnItemSelectedListener{
 	
-
-
+	
 	int tipoUsuario = 1;
 	ArrayList<Integer> especialidadesSelecionadas = new ArrayList<Integer>();
 	ProgressDialog prgDialog;
@@ -54,19 +48,14 @@ public class CadastroActivity extends Activity implements OnItemSelectedListener
 	Spinner spinner;
 	List<Cidade> cidades;
 	Cidade cidade;
-	 
-	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_cadastro);
-		
-		
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		spinner = (Spinner) findViewById(R.id.spinner1);
 		spinner.setOnItemSelectedListener(this);
-		
-		
 		
 		nameET = (EditText) findViewById(R.id.registerName1);
 		lastNameET = (EditText) findViewById(R.id.registerName2);
@@ -80,7 +69,10 @@ public class CadastroActivity extends Activity implements OnItemSelectedListener
 
 		Button btnRegister = (Button) findViewById(R.id.btnRegister);
 		btnRegister.setOnClickListener(btnRegisterOnClickListener);
-
+		
+		Button btnLogin = (Button) findViewById(R.id.btnLinkToLoginScreen);
+		btnLogin.setOnClickListener(btnLoginOnClickListener);
+		
 		RadioGroup radioGroup = (RadioGroup) findViewById(R.id.tipo_usuario);
 		radioGroup.setOnCheckedChangeListener(btnRadioOnCheckedChangeListener);
 
@@ -107,10 +99,6 @@ public class CadastroActivity extends Activity implements OnItemSelectedListener
 		atualizarEspecialidadesECidades();
 
 	}
-
-	
-	
-	
 	
 	private void loadSpinnerData() {
         // database handler
@@ -118,9 +106,7 @@ public class CadastroActivity extends Activity implements OnItemSelectedListener
  
         // Spinner Drop down elements
         cidades = new ArrayList<Cidade>();
-        cidades = db.listarCidades();
-      
-              
+        cidades = db.listarCidades();        
         
         // Criando adapter para spinner
         ArrayAdapter<Cidade> dataAdapter = new ArrayAdapter<Cidade>(this,
@@ -132,17 +118,9 @@ public class CadastroActivity extends Activity implements OnItemSelectedListener
  
         // attaching data adapter to spinner
         spinner.setAdapter(dataAdapter);
-       // spinner.setOnItemSelectedListener(new onItemSelectedListener());
-        
-        
-        
-        
-        
+       // spinner.setOnItemSelectedListener(new onItemSelectedListener());   
         
     }
-	
-	
-
 
 	public void onItemSelected(AdapterView<?> parent, View view, int position,
 			long id) {
@@ -151,18 +129,11 @@ public class CadastroActivity extends Activity implements OnItemSelectedListener
 		        	cidade = cidades.get(position);
 	
 	}
-	
-	
 
-
-	
 	public void onNothingSelected(AdapterView<?> arg0) {
         // TODO Auto-generated method stub
  
     }
-	
-	
-	
 
 	OnClickListener checkBoxOnClickListener = new OnClickListener() {
 
@@ -250,7 +221,14 @@ public class CadastroActivity extends Activity implements OnItemSelectedListener
 	private OnClickListener btnRegisterOnClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			validaForm();
+			validaForm(); 
+		}
+	};
+	
+	private OnClickListener btnLoginOnClickListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			navigatetoLoginActivity(); 
 		}
 	};
 
@@ -330,8 +308,7 @@ public class CadastroActivity extends Activity implements OnItemSelectedListener
 	}
 
 	private void navigatetoLoginActivity() {
-		Intent loginIntent = new Intent(getApplicationContext(),
-				LoginActivity.class);
+		Intent loginIntent = new Intent(getApplicationContext(),LoginActivity.class);
 		loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(loginIntent);
 	}
