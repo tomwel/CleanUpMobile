@@ -109,46 +109,37 @@
             android:inputType="textMultiLine"
             android:textColorHint="@color/gray" />
             
-            
-            <Spinner
-            android:id="@+id/spinner2"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/registerAddress"
-            android:layout_below="@+id/registerAddress"
-            android:entries="@array/spiCidade" />
-            
-        
+
 
             <CheckBox
                 android:id="@+id/checkBox1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/ckbPassar" />
+                android:text="@string/ckbLavar" />
 
             <CheckBox
                 android:id="@+id/checkBox2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/ckbLimpar" />
+                android:text="@string/ckbPassar" />
 
             <CheckBox
                 android:id="@+id/checkBox3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/ckbArrumar" />
+                android:text="@string/ckbCozinhar" />
 
             <CheckBox
                 android:id="@+id/checkBox4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/ckbFaxina" />
+                android:text="@string/ckbFaxinar" />
 
             <CheckBox
                 android:id="@+id/checkBox5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/ckbCozinhar" />
+                android:text="@string/ckbBaba" />
         </LinearLayout>
 
         <EditText
@@ -173,8 +164,7 @@
             android:hint="@string/tvEmail"
             android:inputType="textEmailAddress"
             android:textColorHint="@color/gray" />
-
-        <EditText
+ <EditText
             android:id="@+id/registerPassword"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -192,7 +182,6 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/registerPassword"
             android:layout_below="@+id/registerPassword"
-            android:onClick="registerUser"
             android:text="@string/btnRegister" />
 
         <Button
@@ -201,7 +190,6 @@
             android:layout_height="wrap_content"
             android:layout_alignRight="@+id/registerPassword"
             android:layout_below="@+id/registerPassword"
-            android:onClick="navigatetoLoginActivity"
             android:text="@string/btnLogin" />
     </RelativeLayout>
 

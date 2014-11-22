@@ -12,7 +12,6 @@ public class DetalheDiaristaActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 
 		Diarista diarista = (Diarista) getIntent().getSerializableExtra("diarista");
-
 		DetalheDiaristaFragment detalhe = DetalheDiaristaFragment.novaInstancia(diarista);
 
 		getSupportFragmentManager().beginTransaction()

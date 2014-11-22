@@ -41,7 +41,6 @@ public class CadastroController {
 
 				// cadastro realizado
 				if (obj.getBoolean("status")) {
-					Util.criarToast(context, R.string.msgCadastroRealizado);
 					return true;
 				} else {
 

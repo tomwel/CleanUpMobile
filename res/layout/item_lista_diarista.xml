@@ -48,6 +48,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/textViewLoading"
+        android:background="@layout/rounded"
         android:src="@drawable/ic_diarista" />
 
 </RelativeLayout>
