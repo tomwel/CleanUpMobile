@@ -48,11 +48,11 @@
 
     <!-- CheckBox -->
 
+    <string name="ckbLavar">Lavar</string>
     <string name="ckbPassar">Passar</string>
-    <string name="ckbLimpar">Limpar</string>
-    <string name="ckbArrumar">Arrumar</string>
-    <string name="ckbFaxina">Faxinar</string>
-    <string name="ckbCozinhar">Cozinhar</string>
+    <string name="ckbCozinhar">Arrumar</string>
+    <string name="ckbFaxinar">Faxinar</string>
+    <string name="ckbBaba">Baba</string>
 
     <!-- EditTExt -->
     <string name="edtEndereco">Digite seu endereço</string>

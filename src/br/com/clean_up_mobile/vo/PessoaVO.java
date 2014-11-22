@@ -1,9 +1,13 @@
 package br.com.clean_up_mobile.vo;
 
+import java.util.ArrayList;
+
+import br.com.clean_up_mobile.model.Especialidade;
+
 public class PessoaVO {
 
 	private String nome;
-	private int[] especialidades;
+	private ArrayList<Integer> especialidades;
 	private String cpf;
 	private String telefone;
 	private String endereco;
@@ -18,12 +22,7 @@ public class PessoaVO {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public int[] getEspecialidades() {
-		return especialidades;
-	}
-	public void setEspecialidades(int[] especialidades) {
-		this.especialidades = especialidades;
-	}
+	
 	public String getCpf() {
 		return cpf;
 	}
@@ -65,6 +64,12 @@ public class PessoaVO {
 	}
 	public void setTipo(int tipo) {
 		this.tipo = tipo;
+	}
+	public ArrayList<Integer> getEspecialidades() {
+		return especialidades;
+	}
+	public void setEspecialidades(ArrayList<Integer> especialidades) {
+		this.especialidades = especialidades;
 	}	
 	
 }

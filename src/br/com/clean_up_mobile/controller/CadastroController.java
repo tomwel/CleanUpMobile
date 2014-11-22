@@ -41,7 +41,6 @@ public class CadastroController {
 
 				// cadastro realizado
 				if (obj.getBoolean("status")) {
-					Util.criarToast(context, R.string.msgCadastroRealizado);
 					return true;
 				} else {
 
@@ -56,7 +55,7 @@ public class CadastroController {
 					} else {
 						mensagemErrro = R.string.msgDeErroWebservice;
 					}
-					Util.criarToast(context, mensagemErrro);
+					//Util.criarToast(context, mensagemErrro);
 				}
 			} else {
 				Util.criarToast(context, R.string.msgDeErroWebservice);

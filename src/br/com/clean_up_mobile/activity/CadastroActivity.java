@@ -36,13 +36,12 @@ import br.com.clean_up_mobile.util.Mask;
 import br.com.clean_up_mobile.util.Util;
 import br.com.clean_up_mobile.vo.PessoaVO;
 
-public class CadastroActivity extends Activity implements OnItemSelectedListener, OnMultiChoiceClickListener{
+public class CadastroActivity extends Activity implements OnItemSelectedListener{
 	
 
 
 	int tipoUsuario = 1;
-	int[] arrEspecialidades = new int[5];
-
+	ArrayList<Integer> especialidadesSelecionadas = new ArrayList<Integer>();
 	ProgressDialog prgDialog;
 	EditText nameET;
 	EditText lastNameET;
@@ -57,10 +56,6 @@ public class CadastroActivity extends Activity implements OnItemSelectedListener
 	Cidade cidade;
 	 
 	
-	Spinner spinner2;
-	List<Especialidade> _especialidades;
-	Especialidade _especialidade;
-
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +67,6 @@ public class CadastroActivity extends Activity implements OnItemSelectedListener
 		spinner.setOnItemSelectedListener(this);
 		
 		
-		spinner2 = (Spinner) findViewById(R.id.spinner2);
-		spinner2.setOnItemSelectedListener(this);
 		
 		nameET = (EditText) findViewById(R.id.registerName1);
 		lastNameET = (EditText) findViewById(R.id.registerName2);
@@ -109,8 +102,7 @@ public class CadastroActivity extends Activity implements OnItemSelectedListener
 		checkBox5.setOnClickListener(checkBoxOnClickListener);
 
 		loadSpinnerData();
-		loadSpinnerData2();
-		
+	
 
 		atualizarEspecialidadesECidades();
 
@@ -150,73 +142,14 @@ public class CadastroActivity extends Activity implements OnItemSelectedListener
     }
 	
 	
-	private void loadSpinnerData2() {
-        // database handler
-       EspecialidadeDB db1 = new EspecialidadeDB(getApplicationContext());
- 
-        // Spinner Drop down elements
-       _especialidades = new ArrayList<Especialidade>();
-       _especialidades = db1.listarEspecialidades();
-      
-       Log.v("LIST_ESP", "Item_Especialidades: " + _especialidades);
- 
-        // Criando adapter para spinner
-        ArrayAdapter<Especialidade> dataAdapter = new ArrayAdapter<Especialidade>(this,
-                android.R.layout.simple_list_item_checked, _especialidades);
- 
-        // Drop down layout style - list view with radio button
-        dataAdapter
-                .setDropDownViewResource(android.R.layout.simple_list_item_multiple_choice);
- 
-        // attaching data adapter to spinner
-       spinner2.setAdapter(dataAdapter);
-    
-    }
+
 
 	public void onItemSelected(AdapterView<?> parent, View view, int position,
 			long id) {
 		// On selecting a spinner item
-		
-			
-			
-			switch (parent.getId()) 
-		    {         
-		        case R.id.spinner1:
-
-		        	cidade = cidades.get(position);
-		        	
-
-		    		Toast.makeText(parent.getContext(), "You selected: " + cidade.getCodigoCidade(),  
-		                    Toast.LENGTH_LONG).show();  
-		       
-		    	
-		    	
-		    		Log.v("CLUP", "Item_Cidade: " + cidade.getCodigoCidade());
-		    		
-
-		           
-
-		            break;              
-
-		        case R.id.spinner2:
-
-		        	_especialidade = _especialidades.get(position);
-		        	
-		        	Toast.makeText(parent.getContext(), "You selected: " +_especialidade.getCodigoEspecialidade(),  
-		                Toast.LENGTH_LONG).show();  
-			
-				
-				Log.v("CLUP", "Item_Especialidade: " + _especialidade.getCodigoEspecialidade());
-		       
-		        	
-		            break;              
-		    }
-			
-			
 	
-		
-		
-
+		        	cidade = cidades.get(position);
+	
 	}
 	
 	
@@ -230,8 +163,6 @@ public class CadastroActivity extends Activity implements OnItemSelectedListener
 	
 	
 	
-	
-	
 
 	OnClickListener checkBoxOnClickListener = new OnClickListener() {
 
@@ -239,44 +170,58 @@ public class CadastroActivity extends Activity implements OnItemSelectedListener
 		public void onClick(View view) {
 			boolean checked = ((CompoundButton) view).isChecked();
 
-			Toast.makeText(getApplicationContext(),
-					"info " + view.getId() + "  " + checked, Toast.LENGTH_SHORT)
-					.show();
-
+	
+			int index = 0;
 			switch (view.getId()) {
 			case R.id.checkBox1:
 				if (checked) {
-					arrEspecialidades[0] = 1;
+					especialidadesSelecionadas.add(1);
+					
+				
 				} else {
-					arrEspecialidades[0] = 0;
+					index = especialidadesSelecionadas.indexOf(1);
+					especialidadesSelecionadas.remove(index);
+					
 				}
 				break;
 			case R.id.checkBox2:
 				if (checked) {
-					arrEspecialidades[1] = 2;
+					especialidadesSelecionadas.add(2);
+					
 				} else {
-					arrEspecialidades[1] = 0;
+					index = especialidadesSelecionadas.indexOf(2);
+					especialidadesSelecionadas.remove(index);
+					
 				}
 				break;
 			case R.id.checkBox3:
 				if (checked) {
-					arrEspecialidades[2] = 3;
+					especialidadesSelecionadas.add(3);
+				
 				} else {
-					arrEspecialidades[2] = 0;
+					index = especialidadesSelecionadas.indexOf(3);
+					especialidadesSelecionadas.remove(index);
+					
 				}
 				break;
 			case R.id.checkBox4:
 				if (checked) {
-					arrEspecialidades[3] = 4;
+					especialidadesSelecionadas.add(4);
+					
 				} else {
-					arrEspecialidades[3] = 0;
+					index = especialidadesSelecionadas.indexOf(4);
+					especialidadesSelecionadas.remove(index);
+					
 				}
 				break;
 			case R.id.checkBox5:
 				if (checked) {
-					arrEspecialidades[4] = 5;
+					especialidadesSelecionadas.add(5);
+					
 				} else {
-					arrEspecialidades[4] = 0;
+					index = especialidadesSelecionadas.indexOf(5);
+					especialidadesSelecionadas.remove(index);
+					
 				}
 				break;
 			}
@@ -345,7 +290,6 @@ public class CadastroActivity extends Activity implements OnItemSelectedListener
 						Util.criarToast(getApplicationContext(),
 								R.string.msgCpfInvalido);
 					} else {
-
 						String cpfLimpo = Util.limpaCpf(cpf);
 						String telefoneLimpo = Util.limpaTelefone(phone);
 
@@ -359,7 +303,7 @@ public class CadastroActivity extends Activity implements OnItemSelectedListener
 						p.setEmail(email);
 						p.setSenha(password);
 						p.setTipo(tipoUsuario);
-						p.setEspecialidades(arrEspecialidades);
+						p.setEspecialidades(especialidadesSelecionadas);
 
 						doCadastroUsuario(p);
 					}
@@ -440,6 +384,7 @@ public class CadastroActivity extends Activity implements OnItemSelectedListener
 				prgDialog.dismiss();
 			}
 			if (result) {
+				Util.criarToast(getApplicationContext(), R.string.msgCadastroRealizado);
 				setDefaultValues();
 			}
 		}
@@ -473,12 +418,6 @@ public class CadastroActivity extends Activity implements OnItemSelectedListener
 		}
 	}
 
-	@Override
-	public void onClick(DialogInterface arg0, int arg1, boolean arg2) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	
+
 	
 }
