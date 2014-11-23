@@ -37,7 +37,7 @@ public class ClienteFragment extends ListFragment implements
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-
+		
 		if (mDiaristas != null) {
 			txtMensagem.setVisibility(View.GONE);
 			progress.setVisibility(View.GONE);
@@ -93,16 +93,12 @@ public class ClienteFragment extends ListFragment implements
 
 	@Override
 	public boolean onQueryTextChange(String text) {
-		// System.out.println(text);
 		ArrayList<Diarista> list = new ArrayList<Diarista>();
 		Diarista diarista = null;
 		int pos = 0;
 		if (mDiaristas != null) {
 			while (pos < mDiaristas.size()) {
 				diarista = mDiaristas.get(pos);
-				// if(diarista.getNome().toLowerCase().contains(text.toLowerCase())
-				// ||
-				// diarista.getCidade().getNomeCidade().toLowerCase().contains(text.toLowerCase())){
 				if (diarista.getNome().toLowerCase()
 						.contains(text.toLowerCase())
 						|| diarista.getCidade().toLowerCase()

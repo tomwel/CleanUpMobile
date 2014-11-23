@@ -57,11 +57,11 @@ public class HomeDiaristaActivity extends ActionBarActivity implements
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
 		Tab aba1 = actionBar.newTab();
-		aba1.setIcon(R.drawable.ic_historico_servicos);
+		aba1.setText("Historico Servicos");
 		aba1.setTabListener(this);
 
 		Tab aba2 = actionBar.newTab();
-		aba2.setIcon(R.drawable.ic_historico_diarista);
+		aba2.setText("Historico Diarista");
 		aba2.setTabListener(this);
 
 		actionBar.addTab(aba1);

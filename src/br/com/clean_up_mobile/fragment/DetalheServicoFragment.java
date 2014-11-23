@@ -9,6 +9,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,6 +20,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -100,7 +104,12 @@ public class DetalheServicoFragment extends Fragment implements OnClickListener 
 		infoContratante = (TextView) view.findViewById(R.id.textViewContratante);
 		llConfirmacao = (LinearLayout) view.findViewById(R.id.linearLayoutConfirmacao); 
 		btnCancelar = (Button)view.findViewById(R.id.buttonCancelar); 
-
+		
+		
+		ImageButton btnVerMapa = (ImageButton) view.findViewById(R.id.imageButtonVerMapa);
+		btnVerMapa.setOnClickListener(btnVerMapaOnClickListener);
+		
+		
 		endereco.setText(objEndereco.getLogradouro());
 		descricao.setText(serv.getDescricao());
 		data.setText(dataServicoFormatada);
@@ -185,7 +194,34 @@ public class DetalheServicoFragment extends Fragment implements OnClickListener 
 			break;
 		}
 	}
-
+	
+	private OnClickListener btnVerMapaOnClickListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			String lat = objEndereco.getLat().toString();
+			String lng = objEndereco.getLng().toString();
+			String uri = "http://maps.google.com/maps?&daddr="+lat+","+lng;
+	        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+	        intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+	        try
+	        {
+	            startActivity(intent);
+	        }
+	        catch(ActivityNotFoundException ex)
+	        {
+	            try
+	            {
+	                Intent unrestrictedIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+	                startActivity(unrestrictedIntent);
+	            }
+	            catch(ActivityNotFoundException innerEx)
+	            {
+	            	Util.criarToast(getActivity(), "Por favor, instale o google maps para ver o mapa!");
+	            }
+	        }
+		}
+	};
+	
 	public void cancelaServico(ServicoSimples servico) {
 		// somente 2 dias antes
 		if (Util.existeConexao(getActivity().getApplicationContext()))

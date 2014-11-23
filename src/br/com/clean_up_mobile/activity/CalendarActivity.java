@@ -23,7 +23,6 @@ import java.util.Locale;
 
 public class CalendarActivity extends Activity {
 	private static final String TAG = "CalendarFragment";
-	// private static final String TAG = "SampleTimesSquareActivity";
 	private CalendarPickerView calendar;
 
 	@Override

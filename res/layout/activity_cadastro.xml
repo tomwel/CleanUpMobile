@@ -178,19 +178,24 @@
 
         <Button
             android:id="@+id/btnRegister"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/btnLinkToLoginScreen"
+            android:layout_alignBottom="@+id/btnLinkToLoginScreen"
             android:layout_alignLeft="@+id/registerPassword"
-            android:layout_below="@+id/registerPassword"
+            android:background="@layout/layout_button_verde_sembordas"
             android:text="@string/btnRegister" />
 
         <Button
             android:id="@+id/btnLinkToLoginScreen"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_alignRight="@+id/registerPassword"
             android:layout_below="@+id/registerPassword"
+            android:layout_marginTop="14dp"
+            android:background="@layout/layout_button_azul"
             android:text="@string/btnLogin" />
+
     </RelativeLayout>
 
 </ScrollView>

@@ -88,10 +88,11 @@
             </LinearLayout>
 
             <ImageButton
-                android:id="@+id/imageButton1"
+                android:id="@+id/imageButtonVerMapa"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
+                android:background="@android:color/transparent"
                 android:src="@drawable/ic_buscar_mapa" />
         </LinearLayout>
 

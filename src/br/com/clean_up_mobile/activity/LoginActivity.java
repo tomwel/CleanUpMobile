@@ -21,6 +21,7 @@ import br.com.clean_up_mobile.task.WebService;
 import br.com.clean_up_mobile.util.Constantes;
 import br.com.clean_up_mobile.util.Util;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 
 public class LoginActivity extends Activity {
 
@@ -42,9 +43,9 @@ public class LoginActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		db = new UsuarioDB(getApplicationContext());
 		setContentView(R.layout.activity_login);
-
 		emailET = (EditText) findViewById(R.id.loginEmail);
 		pwdET = (EditText) findViewById(R.id.loginPassword);
 
@@ -160,7 +161,7 @@ public class LoginActivity extends Activity {
 						}
 
 						navigatetoHome();
-
+						finish();
 					} else {
 						Util.criarToast(getApplicationContext(),
 								R.string.msgLoginErrado);

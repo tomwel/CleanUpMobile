@@ -2,7 +2,6 @@ package br.com.clean_up_mobile.util;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -12,7 +11,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import android.content.Context;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
@@ -41,8 +39,6 @@ Filterable {
 	private static final String GEO_LOCALIZACAO = "http://maps.googleapis.com/maps/api/geocode/json?address=";
 
 	Context context;
-
-	String countryName;
 
 	// Constructor
 
@@ -182,16 +178,9 @@ Filterable {
 			// Create a JSON object hierarchy from the results
 
 			JSONObject jsonObj = new JSONObject(jsonResults.toString());
-
 			JSONArray predsJsonArray = jsonObj.getJSONArray("results");
-			//JSONObject jsonLocation = new JSONObject();
-			// Extract the Place descriptions from the results
 			resultList = new ArrayList<String>(predsJsonArray.length());
 			for (int i = 0; i < predsJsonArray.length(); i++) {
-//				JSONObject jsonGeometry = predsJsonArray.getJSONObject(i).getJSONObject("geometry");
-//				jsonLocation = jsonGeometry.getJSONObject("location");
-//				BigDecimal bigDecimalLng = new BigDecimal(jsonLocation.getString("lng"));
-//				BigDecimal bigDecimalLat = new BigDecimal(jsonLocation.getString("lat"));
 				resultList.add(predsJsonArray.getJSONObject(i).getString("formatted_address"));
 			}
 			
@@ -203,18 +192,6 @@ Filterable {
 		}
 
 		return resultList;
-
-	}
-
-	// function to identify the country code by SIM.
-
-	private String getCountryCode() {
-
-		TelephonyManager tel = (TelephonyManager) context
-
-		.getSystemService(Context.TELEPHONY_SERVICE);
-
-		return tel.getNetworkCountryIso();
 
 	}
 

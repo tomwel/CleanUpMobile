@@ -47,13 +47,13 @@
 
     <!-- Button -->
     <string name="btnLogin">Login</string>
-    <string name="btnRegister">Registro</string>
+    <string name="btnRegister">Registrar</string>
 
     <!-- CheckBox -->
 
     <string name="ckbLavar">Lavar</string>
     <string name="ckbPassar">Passar</string>
-    <string name="ckbCozinhar">Arrumar</string>
+    <string name="ckbCozinhar">Cozinhar</string>
     <string name="ckbFaxinar">Faxinar</string>
     <string name="ckbBaba">Baba</string>
 
@@ -78,9 +78,7 @@
 
     <!-- Tittle Activity -->
 
-    <string name="title_activity_home_client">HomeClientActivity</string>
-    <string name="title_activity_home_diarist">HomeDiaristActivity</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">Login</string>
     <string name="title_activity_login">Login</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_activity_splash_screen">SplashScreenActivity</string>
@@ -91,9 +89,9 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
-    <string name="title_activity_home_tabs">HomeTabsActivity</string>
-    <string name="title_activity_home_diarista">HomeDiaristaActivity</string>
-    <string name="title_activity_detalhe_diarista">HomeDetalheActivity</string>
+    <string name="title_activity_home_tabs">Home</string>
+    <string name="title_activity_home_diarista">Home</string>
+    <string name="title_activity_detalhe_diarista">Detalhe da Diarista</string>
 	<string name="cliente">Cliente</string>
     <string name="diarista">Diarista</string>
     <string name="endereco">Endereço</string>

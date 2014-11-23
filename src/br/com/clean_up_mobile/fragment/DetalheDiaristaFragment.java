@@ -1,9 +1,5 @@
 package br.com.clean_up_mobile.fragment;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,21 +19,17 @@ import br.com.clean_up_mobile.model.Usuario;
 import br.com.clean_up_mobile.task.EnderecoHttp;
 import br.com.clean_up_mobile.task.WebService;
 import br.com.clean_up_mobile.util.Constantes;
-import br.com.clean_up_mobile.util.Mask;
 import br.com.clean_up_mobile.util.PlaceHolder;
 import br.com.clean_up_mobile.util.Util;
 import br.com.clean_up_mobile.vo.DiaristaVO;
 import br.com.clean_up_mobile.vo.ServicoVO;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -71,7 +63,6 @@ public class DetalheDiaristaFragment extends Fragment implements
 	EditText descricao;
 	AutoCompleteTextView enderecoCompleto;
 	AutoCompleteTextView endereco;
-	Button btConfirmar, btCancelar, btData;
 	ArrayAdapter<String> adapter;
 	ArrayList<Endereco> mEnderecos;
 	EnderecoTask mTask;
@@ -107,18 +98,18 @@ public class DetalheDiaristaFragment extends Fragment implements
 				.findViewById(R.id.textViewEspecialidadesDiaristaDetalhe);
 		imgDiarista = (ImageView) layout
 				.findViewById(R.id.imageViewDiaristaDetalhe);
-		
+
 		data = (EditText) layout.findViewById(R.id.editTextDataServico);
 		descricao = (EditText) layout
 				.findViewById(R.id.editTextDescricaoServico);
 		endereco = (AutoCompleteTextView) layout
 				.findViewById(R.id.autoCompleteTextEnderecoServico);
-		btConfirmar = (Button) layout
+		Button btConfirmar = (Button) layout
 				.findViewById(R.id.buttonConfirmarDiarista);
 		btConfirmar.setOnClickListener(btnConfirmarOnClickListener);
-		btCancelar = (Button) layout.findViewById(R.id.buttonCancelarDiarista);
+		Button btCancelar = (Button) layout.findViewById(R.id.buttonCancelarDiarista);
 		btCancelar.setOnClickListener(btnCancelarOnClickListener);
-		btData = (Button) layout.findViewById(R.id.buttonCalendario);
+		Button btData = (Button) layout.findViewById(R.id.buttonCalendario);
 		btData.setOnClickListener(btnCalendarioOnClickListener);
 
 		endereco.setOnClickListener(this);
@@ -153,7 +144,6 @@ public class DetalheDiaristaFragment extends Fragment implements
 			}
 		}
 		txtNome.setText(diarista.getNome());
-		// txtCidade.setText(diarista.getCidade().getNomeCidade());
 		txtCidade.setText(diarista.getCidade());
 		txtEspecialidades.setText(listaEspecialidades);
 
@@ -354,10 +344,11 @@ public class DetalheDiaristaFragment extends Fragment implements
 	public void onActivityResult(int requestCode, int resultCode, Intent date) {
 		switch (requestCode) {
 		case 1:
-			data.setText(date.getExtras().getString("data_servico"));
+			if (date.getExtras().getString("data_servico") != null) {
+				data.setText(date.getExtras().getString("data_servico"));
+			}
 			break;
 		}
 		super.onActivityResult(requestCode, resultCode, date);
 	}
-	
 }

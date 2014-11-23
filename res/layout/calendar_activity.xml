@@ -21,7 +21,7 @@
       android:id="@+id/button_done"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:background="@layout/layout_button"
+      android:background="@layout/layout_button_verde_sembordas"
       android:text="Done"
       android:textColor="@color/branco" />
  

@@ -62,15 +62,15 @@ public class HomeClienteActivity extends ActionBarActivity implements
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
 		Tab aba1 = actionBar.newTab();
-		aba1.setIcon(R.drawable.ic_buscar);
+		aba1.setText("Diaristas");
 		aba1.setTabListener(this);
 
 		Tab aba2 = actionBar.newTab();
-		aba2.setIcon(R.drawable.ic_fovoritos);
+		aba2.setText("Favorito");
 		aba2.setTabListener(this);
 
 		Tab aba3 = actionBar.newTab();
-		aba3.setIcon(R.drawable.ic_historico_servicos);
+		aba3.setText("Serviços");
 		aba3.setTabListener(this);
 
 		actionBar.addTab(aba1);
@@ -80,13 +80,6 @@ public class HomeClienteActivity extends ActionBarActivity implements
 
 	@Override
 	public void clickedDiarista(Diarista diarista) {
-
-		// DetalheDiaristaFragment d = DetalheDiaristaFragment
-		// .novaInstancia(diarista);
-		//
-		// getSupportFragmentManager().beginTransaction().replace(R.id.detail,
-		// d)
-		// .commit();
 		Intent it = new Intent(this, DetalheDiaristaActivity.class);
 		it.putExtra("diarista", diarista);
 		startActivity(it);

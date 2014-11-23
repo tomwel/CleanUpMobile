@@ -12,7 +12,6 @@
         android:layout_height="150dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
         android:scaleType="fitCenter"
         android:src="@drawable/logo" />
 
@@ -20,9 +19,9 @@
         android:id="@+id/RelativeLayout1"
         android:layout_width="278dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageViewDiaristaDetalhe"
+        android:layout_below="@+id/textView1"
         android:layout_centerHorizontal="true"
-        android:background="#E6E6E6"
+        android:background="#F2F2F2"
         android:gravity="center_vertical"
         android:padding="10dp" >
 
@@ -63,8 +62,20 @@
             android:ems="10"
             android:hint="@string/edtSenhaLogin"
             android:inputType="textPassword" />
-
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageViewDiaristaDetalhe"
+        android:layout_alignLeft="@+id/RelativeLayout1"
+        android:layout_alignRight="@+id/RelativeLayout1"
+        android:background="@color/blue"
+        android:fontFamily="@string/abc_searchview_description_submit"
+        android:text="  Login do usuário"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/branco" />
 
     <Button
         android:id="@+id/btnLogin"
@@ -73,8 +84,8 @@
         android:layout_alignLeft="@+id/RelativeLayout1"
         android:layout_alignRight="@+id/RelativeLayout1"
         android:layout_below="@+id/RelativeLayout1"
-        android:layout_marginTop="16dp"
-        android:background="@layout/layout_button"
+        android:layout_marginTop="14dp"
+        android:background="@layout/layout_button_check"
         android:text="@string/btnLogin"
         android:textColor="@color/branco" />
 
