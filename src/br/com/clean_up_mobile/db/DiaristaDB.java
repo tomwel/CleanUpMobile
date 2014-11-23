@@ -74,7 +74,7 @@ public class DiaristaDB {
 		List<Especialidade> especialidades = especialidadeDB
 				.pegarEspecialidades(codigo);
 
-		Diarista diarista = new Diarista(codigo, nome, telefone, null,
+		Diarista diarista = new Diarista(codigo, nome, telefone, "",
 				especialidades);
 
 		return diarista;

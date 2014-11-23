@@ -1,21 +1,27 @@
 package br.com.clean_up_mobile.fragment;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.clean_up_mobile.R;
+import br.com.clean_up_mobile.activity.SwitchingActivity;
 import br.com.clean_up_mobile.adapter.ServicoAdapter;
 import br.com.clean_up_mobile.controller.ServicoController;
 import br.com.clean_up_mobile.db.UsuarioDB;
-import br.com.clean_up_mobile.model.Servico;
+import br.com.clean_up_mobile.model.ServicoSimples;
 import br.com.clean_up_mobile.model.Usuario;
 import br.com.clean_up_mobile.util.Util;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.AsyncTask.Status;
+import android.os.Handler;
 import android.support.v4.app.ListFragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,10 +32,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ServicoFragment extends ListFragment {
+public class ServicoFragment extends ListFragment implements OnRefreshListener {
 
 	Task mTask;
-	List<Servico> mServicos;
+	AtualizaManualTask atualizaManualTask;
+	List<ServicoSimples> mServicos;
 	ProgressBar progress;
 	TextView txtMensagem, txtAviso;
 	Integer codigoUsuario = 0;
@@ -39,6 +46,7 @@ public class ServicoFragment extends ListFragment {
 	UsuarioDB db;
 	Usuario usuario;
 	Context context;
+	SwipeRefreshLayout swipeLayout;
 
 	public ServicoFragment(boolean a, Context c, String w) {
 
@@ -77,11 +85,15 @@ public class ServicoFragment extends ListFragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				Toast.makeText(context, "Click ListItem Number " + position,
-						Toast.LENGTH_LONG).show();
+
+				ServicoSimples s = mServicos.get(position);
+
+				Intent it = new Intent(view.getContext(),
+						SwitchingActivity.class);
+				it.putExtra("servico", (Serializable) s);
+				startActivity(it);
 			}
 		});
-
 	}
 
 	@Override
@@ -92,7 +104,29 @@ public class ServicoFragment extends ListFragment {
 		progress = (ProgressBar) view.findViewById(R.id.progressBar1);
 		txtMensagem = (TextView) view.findViewById(R.id.textViewLoading);
 		txtAviso = (TextView) view.findViewById(R.id.textAviso);
+
+		swipeLayout = (SwipeRefreshLayout) view
+				.findViewById(R.id.swipe_container);
+		swipeLayout.setOnRefreshListener(this);
+		swipeLayout.setColorScheme(android.R.color.holo_blue_bright,
+				android.R.color.holo_green_light,
+				android.R.color.holo_orange_light,
+				android.R.color.holo_red_light);
+
 		return view;
+	}
+
+	@Override
+	public void onRefresh() {
+		ConnectivityManager cm = (ConnectivityManager) getActivity()
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+		if (cm.getActiveNetworkInfo() != null
+				&& cm.getActiveNetworkInfo().isConnected()) {
+
+			atualizaManualTask = new AtualizaManualTask();
+			mTask.execute();
+		}
 	}
 
 	private void mostrarProgress() {
@@ -102,7 +136,6 @@ public class ServicoFragment extends ListFragment {
 	}
 
 	private void atualizarLista() {
-
 		if (mServicos != null) {
 			ServicoAdapter adapter = new ServicoAdapter(getActivity(),
 					mServicos);
@@ -111,7 +144,6 @@ public class ServicoFragment extends ListFragment {
 	}
 
 	private void pegarLista() {
-
 		ConnectivityManager cm = (ConnectivityManager) getActivity()
 				.getSystemService(Context.CONNECTIVITY_SERVICE);
 
@@ -123,7 +155,7 @@ public class ServicoFragment extends ListFragment {
 		}
 	}
 
-	class Task extends AsyncTask<Void, Void, List<Servico>> {
+	class Task extends AsyncTask<Void, Void, List<ServicoSimples>> {
 
 		@Override
 		protected void onPreExecute() {
@@ -131,8 +163,8 @@ public class ServicoFragment extends ListFragment {
 		}
 
 		@Override
-		protected List<Servico> doInBackground(Void... params) {
-			List<Servico> listServicos = new ArrayList<Servico>();
+		protected List<ServicoSimples> doInBackground(Void... params) {
+			List<ServicoSimples> listServicos = new ArrayList<ServicoSimples>();
 			ServicoController sc = new ServicoController(getActivity());
 
 			try {
@@ -152,7 +184,7 @@ public class ServicoFragment extends ListFragment {
 		}
 
 		@Override
-		protected void onPostExecute(List<Servico> result) {
+		protected void onPostExecute(List<ServicoSimples> result) {
 			if (result != null) {
 				mServicos = result;
 				atualizarLista();
@@ -168,7 +200,48 @@ public class ServicoFragment extends ListFragment {
 			} else {
 				txtAviso.setVisibility(View.GONE);
 			}
+		}
+	}
 
+	class AtualizaManualTask extends
+			AsyncTask<Void, Void, List<ServicoSimples>> {
+
+		@Override
+		protected List<ServicoSimples> doInBackground(Void... params) {
+			List<ServicoSimples> listServicos = new ArrayList<ServicoSimples>();
+			ServicoController sc = new ServicoController(getActivity());
+
+			try {
+				if (!sc.atualizarBancoLocal(tipoUsuario, codigoUsuario)) {
+					aparecerAviso = true;
+				} else {
+					aparecerAviso = false;
+				}
+				listServicos = sc.pegarListaServicosLocal();
+			} catch (Exception e) {
+				aparecerAviso = true;
+				listServicos = sc.pegarListaServicosLocal();
+			}
+			return listServicos;
+		}
+
+		@Override
+		protected void onPostExecute(List<ServicoSimples> result) {
+			if (result != null) {
+				mServicos = result;
+				atualizarLista();
+				txtMensagem.setVisibility(View.GONE);
+				txtAviso.setVisibility(View.VISIBLE);
+			} else {
+				txtMensagem.setText(R.string.conexao);
+			}
+			swipeLayout.setRefreshing(false);
+			if (aparecerAviso) {
+				txtAviso.setVisibility(View.VISIBLE);
+				Util.criarToast(context, R.string.msgDeErroWebservice);
+			} else {
+				txtAviso.setVisibility(View.GONE);
+			}
 		}
 	}
 }

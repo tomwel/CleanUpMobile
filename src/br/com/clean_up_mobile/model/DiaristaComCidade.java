@@ -3,20 +3,20 @@ package br.com.clean_up_mobile.model;
 import java.io.Serializable;
 import java.util.List;
 
-public class Diarista implements Serializable {
+public class DiaristaComCidade implements Serializable{
 
 	private Integer codigo;
 	private String nome;
 	private String telefone;
-	private String cidade;
+	private Cidade cidade;
 	private List<Especialidade> especialidades;
 	public boolean favorito;
-
-	public Diarista() {
+	
+	public DiaristaComCidade() {
 	}
-
-	public Diarista(Integer codigo, String nome, String telefone,
-			String cidade, List<Especialidade> especialidades) {
+	
+	public DiaristaComCidade(Integer codigo, String nome, String telefone,
+			Cidade cidade, List<Especialidade> especialidades) {
 		super();
 		this.codigo = codigo;
 		this.nome = nome;
@@ -33,11 +33,11 @@ public class Diarista implements Serializable {
 		this.codigo = codigo;
 	}
 
-	public String getCidade() {
+	public Cidade getCidade() {
 		return cidade;
 	}
 
-	public void setCidade(String cidade) {
+	public void setCidade(Cidade cidade) {
 		this.cidade = cidade;
 	}
 

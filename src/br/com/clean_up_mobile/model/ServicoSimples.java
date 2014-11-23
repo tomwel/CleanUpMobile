@@ -1,28 +1,22 @@
 package br.com.clean_up_mobile.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
-public class Servico implements Serializable  {
+public class ServicoSimples implements Serializable {
 
 	private Integer codServico;
 	private String tipoServico;
 	private String descricao;
-	private Cliente cliente;
-	private Diarista diarista;
+	private String cliente;
+	private String diarista;
 	private String endereco;
-	private int dataServico;
+	private long dataServico;
 	private double valor;
 	private String status;
-	
-	public  Servico() {
-		this.diarista = new Diarista();
-		this.cliente = new Cliente();
-	}
-	
-	public Servico(Integer codServico, String tipoServico, String descricao,
-			Cliente cliente, Diarista diarista, String endereco,
-			int dataServico, double valor, String status) {
+
+	public ServicoSimples(Integer codServico, String tipoServico,
+			String descricao, String cliente, String diarista, String endereco,
+			long dataServico, double valor, String status) {
 		super();
 		this.codServico = codServico;
 		this.tipoServico = tipoServico;
@@ -33,6 +27,9 @@ public class Servico implements Serializable  {
 		this.dataServico = dataServico;
 		this.valor = valor;
 		this.status = status;
+	}
+
+	public ServicoSimples() {
 	}
 
 	public Integer getCodServico() {
@@ -59,19 +56,19 @@ public class Servico implements Serializable  {
 		this.descricao = descricao;
 	}
 
-	public Cliente getCliente() {
+	public String getCliente() {
 		return cliente;
 	}
 
-	public void setCliente(Cliente cliente) {
+	public void setCliente(String cliente) {
 		this.cliente = cliente;
 	}
 
-	public Diarista getDiarista() {
+	public String getDiarista() {
 		return diarista;
 	}
 
-	public void setDiarista(Diarista diarista) {
+	public void setDiarista(String diarista) {
 		this.diarista = diarista;
 	}
 
@@ -83,11 +80,11 @@ public class Servico implements Serializable  {
 		this.endereco = endereco;
 	}
 
-	public int getDataServico() {
+	public long getDataServico() {
 		return dataServico;
 	}
 
-	public void setDataServico(int dataServico) {
+	public void setDataServico(long dataServico) {
 		this.dataServico = dataServico;
 	}
 
@@ -105,5 +102,5 @@ public class Servico implements Serializable  {
 
 	public void setStatus(String status) {
 		this.status = status;
-	}	
+	}
 }

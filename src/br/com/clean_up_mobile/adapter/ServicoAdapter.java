@@ -2,8 +2,16 @@ package br.com.clean_up_mobile.adapter;
 
 import java.util.List;
 
+import org.json.JSONObject;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import br.com.clean_up_mobile.R;
+import br.com.clean_up_mobile.model.Endereco;
 import br.com.clean_up_mobile.model.Servico;
+import br.com.clean_up_mobile.model.ServicoSimples;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,11 +21,15 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ServicoAdapter extends ArrayAdapter<Servico> {
+public class ServicoAdapter extends ArrayAdapter<ServicoSimples> {
 
-	public ServicoAdapter(Context context, List<Servico> objects) {
+	Gson gson = new Gson();
+	JsonParser parser = new JsonParser();
+	JsonObject jsonEndereco;
+	Endereco objEndereco;
+
+	public ServicoAdapter(Context context, List<ServicoSimples> objects) {
 		super(context, 0, 0, objects);
-
 	}
 
 	@Override
@@ -25,9 +37,10 @@ public class ServicoAdapter extends ArrayAdapter<Servico> {
 
 		ViewHolder holder;
 
-		Servico s = getItem(position);
+		ServicoSimples s = getItem(position);
 
 		if (convertView == null) {
+
 			convertView = LayoutInflater.from(getContext()).inflate(
 					R.layout.item_lista_servico, null);
 
@@ -46,20 +59,29 @@ public class ServicoAdapter extends ArrayAdapter<Servico> {
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
+
+		jsonEndereco = (JsonObject) parser.parse(s.getEndereco());
+		objEndereco = gson.fromJson(jsonEndereco, Endereco.class);
+
 		holder.textDia.setText("12");
 		holder.textMes.setText("out");
-		holder.textEndereco.setText(s.getEndereco());
-		
-		Log.v("FLS", s.getStatus());
-		
+		holder.textEndereco.setText(objEndereco.getLogradouro());
+
 		if (s.getStatus().equals("PENDENTE")) {
-			holder.imageStatus.setImageResource(R.drawable.ic_status_servico_pendente);
+			holder.imageStatus
+					.setImageResource(R.drawable.ic_status_servico_pendente);
 		} else if (s.getStatus().equals("ATIVO")) {
-			holder.imageStatus.setImageResource(R.drawable.ic_status_servico_ativo);
+			holder.imageStatus
+					.setImageResource(R.drawable.ic_status_servico_ativo);
 		} else if (s.getStatus().equals("INATIVO")) {
-			holder.imageStatus.setImageResource(R.drawable.ic_status_servico_inativo);
+			holder.imageStatus
+					.setImageResource(R.drawable.ic_status_servico_inativo);
+		} else if (s.getStatus().equals("CONCLUIDO")) {
+			holder.imageStatus
+					.setImageResource(R.drawable.ic_status_servico_concluido);
 		} else {
-			holder.imageStatus.setImageResource(R.drawable.ic_status_servico_sem_imagem);
+			holder.imageStatus
+					.setImageResource(R.drawable.ic_status_servico_sem_imagem);
 		}
 
 		return convertView;
