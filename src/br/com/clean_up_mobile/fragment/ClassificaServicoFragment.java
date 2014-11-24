@@ -54,7 +54,8 @@ public class ClassificaServicoFragment extends Fragment implements OnClickListen
 	
 	@Override
 	public void onClick(View v) {
-//		serv.set
+		serv.setComentario(comentario.getText().toString());
+		serv.setNota(nota.getNumStars());
 		if (Util.existeConexao(getActivity().getApplicationContext())){
 			new HttpAsyncTask(Constantes.POST_CLASSIFICASERVICO, serv).execute();
 		}
@@ -81,7 +82,7 @@ public class ClassificaServicoFragment extends Fragment implements OnClickListen
 
 		@Override
 		protected void onPostExecute(String result) {
-			}
+			
 		}
-	
+	}	
 }
