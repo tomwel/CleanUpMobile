@@ -4,171 +4,196 @@
     android:layout_height="fill_parent"
     android:background="#80FFFFFF" >
 
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="470dp"
-    android:padding="10dp"
-    android:orientation="vertical" >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="530dp"
+        android:padding="10dp" >
 
-    <ImageView
-        android:id="@+id/imageViewDiaristaDetalhe"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:background="@layout/rounded"
-        android:src="@drawable/diarista" />
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:padding="5dp"
+            android:background="@layout/layout_fundo_detalhe" >
 
-    <TextView
-        android:id="@+id/textViewNomeDiaristaDetalhe"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/imageViewDiaristaDetalhe"
-        android:text="Large Text"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1.10"
+                android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/textViewCodigoDiarista"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/textViewCidadeDiaristaDetalhe"
-        android:text="Especialidades:" />
+                <TextView
+                    android:id="@+id/textViewNomeDiaristaDetalhe"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Large Text"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <TextView
-        android:id="@+id/textViewEspecialidadesDiaristaDetalhe"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignRight="@+id/textViewCidadeDiaristaDetalhe"
-        android:layout_below="@+id/imageViewDiaristaDetalhe"
-        android:text="Medium Text"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textViewCodigoDiarista"
-        android:layout_alignParentLeft="true"
-        android:text="Cidade:"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cidade:"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <TextView
-        android:id="@+id/textViewCidadeDiaristaDetalhe"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/textViewNomeDiaristaDetalhe"
-        android:layout_below="@+id/textViewNomeDiaristaDetalhe"
-        android:layout_toRightOf="@+id/textView4"
-        android:text="Medium Text"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+                    <TextView
+                        android:id="@+id/textViewCidadeDiaristaDetalhe"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Medium Text"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                </LinearLayout>
+            </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/textView2"
-        android:text="Data:" />
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="100dp"
+                android:layout_height="70dp"
+                android:src="@drawable/diarista" />
+        </LinearLayout>
 
-    <Button
-        android:id="@+id/buttonConfirmarDiarista"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/buttonCalendario"
-        android:layout_below="@+id/autoCompleteTextEnderecoServico"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="22dp"
-        android:background="@layout/layout_button_verde_sembordas"
-        android:text="Confirmar"
-        android:textColor="@color/branco" />
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/linearLayout1"
+            android:layout_alignRight="@+id/linearLayout1"
+            android:layout_below="@+id/linearLayout1"
+            android:layout_marginTop="14dp"
+            android:padding="5dp"
+            android:background="@layout/layout_fundo_detalhe"
+            android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/buttonCancelarDiarista"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/buttonConfirmarDiarista"
-        android:layout_alignBottom="@+id/buttonConfirmarDiarista"
-        android:layout_toRightOf="@+id/textView3"
-        android:background="@layout/layout_button_vermelho"
-        android:text="Cancelar"
-        android:textColor="@color/branco" />
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Especialidades:"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textViewEspecialidadesDiaristaDetalhe"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="44dp"
-        android:gravity="center"
-        android:text="Contratar Diarista"
-        android:textAlignment="center"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+            <TextView
+                android:id="@+id/textViewEspecialidadesDiaristaDetalhe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Medium Text"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+        </LinearLayout>
 
-    <AutoCompleteTextView
-        android:id="@+id/autoCompleteTextEnderecoServico"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/textView5"
-        android:ems="10" />
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linearLayout2"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:text="Contratar Diarista"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/editTextDescricaoServico"
-        android:layout_marginTop="14dp"
-        android:text="Endereço:" />
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/linearLayout2"
+            android:layout_below="@+id/textView3"
+            android:layout_marginTop="20dp"
+            android:text="Data" />
 
-    <EditText
-        android:id="@+id/editTextDescricaoServico"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/textView4"
-        android:ems="10"
-        android:inputType="textMultiLine" />
+        <EditText
+            android:id="@+id/editTextDataServico"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignRight="@+id/buttonCancelarDiarista"
+            android:layout_below="@+id/textView4"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:enabled="false"
+            android:inputType="date" >
+        </EditText>
 
-    <EditText
-        android:id="@+id/editTextDataServico"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignRight="@+id/buttonCancelarDiarista"
-        android:layout_below="@+id/textView3"
-        android:layout_marginTop="22dp"
-        android:ems="10"
-        android:enabled="false"
-        android:inputType="date" >
+        <Button
+            android:id="@+id/buttonCalendario"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/editTextDataServico"
+            android:layout_alignRight="@+id/linearLayout2"
+            android:layout_alignTop="@+id/editTextDataServico"
+            android:background="@layout/layout_button_azul"
+            android:text="Selecionar Data"
+            android:textColor="@color/branco" />
 
-        <requestFocus />
-    </EditText>
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/editTextDataServico"
+            android:layout_marginTop="19dp"
+            android:layout_toLeftOf="@+id/buttonConfirmarDiarista"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            android:text="Descrição do Serviço" />
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/buttonCalendario"
-        android:text="Descrição:" />
+        <EditText
+            android:id="@+id/editTextDescricaoServico"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignRight="@+id/buttonCalendario"
+            android:layout_below="@+id/textView9"
+            android:layout_marginTop="14dp"
+            android:ems="10"
+            android:inputType="textMultiLine" />
 
-    <Button
-        android:id="@+id/buttonCalendario"
-        android:layout_width="150dp"
-        android:layout_height="40dp"
-        android:layout_alignBottom="@+id/editTextDataServico"
-        android:layout_alignRight="@+id/editTextDescricaoServico"
-        android:background="@layout/layout_button_azul"
-        android:text="Selecionar Data"
-        android:textColor="@color/branco" />
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/editTextDescricaoServico"
+            android:layout_marginTop="19dp"
+            android:text="Endereço" />
 
-</RelativeLayout>
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteTextEnderecoServico"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/textView5"
+            android:layout_marginTop="14dp"
+            android:ems="10" />
+
+        <Button
+            android:id="@+id/buttonCancelarDiarista"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/autoCompleteTextEnderecoServico"
+            android:layout_marginTop="15dp"
+            android:layout_toRightOf="@+id/textView4"
+            android:background="@layout/layout_button_vermelho"
+            android:text="Cancelar"
+            android:textColor="@color/branco" />
+
+        <Button
+            android:id="@+id/buttonConfirmarDiarista"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/buttonCancelarDiarista"
+            android:layout_alignBottom="@+id/buttonCancelarDiarista"
+            android:layout_alignLeft="@+id/buttonCalendario"
+            android:layout_marginLeft="16dp"
+            android:background="@layout/layout_button_verde_sembordas"
+            android:text="Confirmar"
+            android:textColor="@color/branco" />
+
+    </RelativeLayout>
+
 </ScrollView>

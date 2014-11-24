@@ -125,7 +125,7 @@ public class ServicoFragment extends ListFragment implements OnRefreshListener {
 				&& cm.getActiveNetworkInfo().isConnected()) {
 
 			atualizaManualTask = new AtualizaManualTask();
-			mTask.execute();
+			atualizaManualTask.execute();
 		}
 	}
 

@@ -7,6 +7,8 @@ import java.util.List;
 import br.com.clean_up_mobile.R;
 import br.com.clean_up_mobile.activity.OnClickDiarista;
 import br.com.clean_up_mobile.adapter.DiaristasAdapter;
+import br.com.clean_up_mobile.db.EspecialidadeDB;
+import br.com.clean_up_mobile.fragment.ServicoFragment.AtualizaManualTask;
 import br.com.clean_up_mobile.model.Diarista;
 import br.com.clean_up_mobile.model.Especialidade;
 import br.com.clean_up_mobile.task.DiaristasHttp;
@@ -17,6 +19,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.AsyncTask.Status;
 import android.support.v4.app.ListFragment;
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,18 +29,19 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class ClienteFragment extends ListFragment implements
-		SearchView.OnQueryTextListener {
+		SearchView.OnQueryTextListener, OnRefreshListener {
 
 	DiaristasTask mTask;
 	List<Diarista> mDiaristas;
 	ProgressBar progress;
 	TextView txtMensagem;
 	private SearchView mSearchView;
+	EspecialidadeDB dbEspecialidade;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		
+		dbEspecialidade = new EspecialidadeDB(getActivity());
 		if (mDiaristas != null) {
 			txtMensagem.setVisibility(View.GONE);
 			progress.setVisibility(View.GONE);
@@ -78,6 +82,7 @@ public class ClienteFragment extends ListFragment implements
 		mSearchView.setQueryHint("Procurar Diarista");
 		mSearchView.setIconifiedByDefault(false);
 		mSearchView.setOnQueryTextListener(this);
+		mSearchView.clearFocus();
 		return view;
 	}
 
@@ -96,13 +101,19 @@ public class ClienteFragment extends ListFragment implements
 		ArrayList<Diarista> list = new ArrayList<Diarista>();
 		Diarista diarista = null;
 		int pos = 0;
+		List<String> especialidades = new ArrayList<String>();
 		if (mDiaristas != null) {
 			while (pos < mDiaristas.size()) {
 				diarista = mDiaristas.get(pos);
+				for (int i = 0; i < diarista.getEspecialidades().size(); i++) {
+					especialidades.add(diarista.getEspecialidades().get(i)
+							.getNomeEspecialidade().toLowerCase());
+				}
 				if (diarista.getNome().toLowerCase()
 						.contains(text.toLowerCase())
 						|| diarista.getCidade().toLowerCase()
-								.contains(text.toLowerCase())) {
+								.contains(text.toLowerCase())
+						|| especialidades.contains(text.toLowerCase())) {
 					list.add(diarista);
 				}
 				pos++;
@@ -120,6 +131,20 @@ public class ClienteFragment extends ListFragment implements
 	public boolean onQueryTextSubmit(String text) {
 
 		return false;
+	}
+
+	@Override
+	public void onRefresh() {
+		ConnectivityManager cm = (ConnectivityManager) getActivity()
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+		if (cm.getActiveNetworkInfo() != null
+				&& cm.getActiveNetworkInfo().isConnected()) {
+
+			mTask = new DiaristasTask();
+			mTask.execute();
+		}
+
 	}
 
 	private void refreshList() {
@@ -162,8 +187,7 @@ public class ClienteFragment extends ListFragment implements
 				refreshList();
 				txtMensagem.setVisibility(View.GONE);
 			} else {
-				Util.criarToast(getActivity(),
-						R.string.msgDeErroWebservice);
+				Util.criarToast(getActivity(), R.string.msgDeErroWebservice);
 			}
 			progress.setVisibility(View.GONE);
 		}
