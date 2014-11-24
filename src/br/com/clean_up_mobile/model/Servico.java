@@ -14,6 +14,8 @@ public class Servico implements Serializable  {
 	private int dataServico;
 	private double valor;
 	private String status;
+	private String comentario;
+	private int nota;
 	
 	public  Servico() {
 		this.diarista = new Diarista();
@@ -105,5 +107,21 @@ public class Servico implements Serializable  {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getComentario() {
+		return comentario;
+	}
+
+	public void setComentario(String comentario) {
+		this.comentario = comentario;
+	}
+
+	public int getNota() {
+		return nota;
+	}
+
+	public void setNota(int nota) {
+		this.nota = nota;
 	}	
 }
