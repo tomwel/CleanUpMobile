@@ -4,21 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.clean_up_mobile.R;
-import br.com.clean_up_mobile.activity.SwitchingActivity;
-import br.com.clean_up_mobile.adapter.ServicoAdapter;
-import br.com.clean_up_mobile.controller.ServicoController;
-import br.com.clean_up_mobile.db.UsuarioDB;
-import br.com.clean_up_mobile.model.ServicoSimples;
-import br.com.clean_up_mobile.model.Usuario;
-import br.com.clean_up_mobile.util.Util;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.os.AsyncTask.Status;
-import android.os.Handler;
+import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
@@ -30,7 +21,14 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
+import br.com.clean_up_mobile.R;
+import br.com.clean_up_mobile.activity.SwitchingActivity;
+import br.com.clean_up_mobile.adapter.ServicoAdapter;
+import br.com.clean_up_mobile.controller.ServicoController;
+import br.com.clean_up_mobile.db.UsuarioDB;
+import br.com.clean_up_mobile.model.ServicoSimples;
+import br.com.clean_up_mobile.model.Usuario;
+import br.com.clean_up_mobile.util.Util;
 
 public class ServicoFragment extends ListFragment implements OnRefreshListener {
 
@@ -118,15 +116,8 @@ public class ServicoFragment extends ListFragment implements OnRefreshListener {
 
 	@Override
 	public void onRefresh() {
-		ConnectivityManager cm = (ConnectivityManager) getActivity()
-				.getSystemService(Context.CONNECTIVITY_SERVICE);
-
-		if (cm.getActiveNetworkInfo() != null
-				&& cm.getActiveNetworkInfo().isConnected()) {
-
-			atualizaManualTask = new AtualizaManualTask();
-			atualizaManualTask.execute();
-		}
+		if (Util.existeConexao(context))
+			new AtualizaManualTask().execute();
 	}
 
 	private void mostrarProgress() {
@@ -144,15 +135,8 @@ public class ServicoFragment extends ListFragment implements OnRefreshListener {
 	}
 
 	private void pegarLista() {
-		ConnectivityManager cm = (ConnectivityManager) getActivity()
-				.getSystemService(Context.CONNECTIVITY_SERVICE);
-
-		if (cm.getActiveNetworkInfo() != null
-				&& cm.getActiveNetworkInfo().isConnected()) {
-
-			mTask = new Task();
-			mTask.execute();
-		}
+		if (Util.existeConexao(context))
+			new Task().execute();
 	}
 
 	class Task extends AsyncTask<Void, Void, List<ServicoSimples>> {
@@ -175,10 +159,10 @@ public class ServicoFragment extends ListFragment implements OnRefreshListener {
 						aparecerAviso = false;
 					}
 				}
-				listServicos = sc.pegarListaServicosLocal();
+				listServicos = sc.pegarListaServicosLocal(where);
 			} catch (Exception e) {
 				aparecerAviso = true;
-				listServicos = sc.pegarListaServicosLocal();
+				listServicos = sc.pegarListaServicosLocal(where);
 			}
 			return listServicos;
 		}
@@ -217,10 +201,10 @@ public class ServicoFragment extends ListFragment implements OnRefreshListener {
 				} else {
 					aparecerAviso = false;
 				}
-				listServicos = sc.pegarListaServicosLocal();
+				listServicos = sc.pegarListaServicosLocal(where);
 			} catch (Exception e) {
 				aparecerAviso = true;
-				listServicos = sc.pegarListaServicosLocal();
+				listServicos = sc.pegarListaServicosLocal(where);
 			}
 			return listServicos;
 		}
