@@ -33,17 +33,18 @@ public class ServicoController {
 		servicoDB.inserir(listaServicos);
 	}
 
-	public List<ServicoSimples> listarServicosLocal() {
+	public List<ServicoSimples> listarServicosLocal(String where) {
 		List<ServicoSimples> list = new ArrayList<ServicoSimples>();
 
-		list = servicoDB.listarServico();
+		list = servicoDB.listarServico(where);
 		return list;
 	}
 
-	public List<ServicoSimples> pegarListaServicosLocal() {
+	public List<ServicoSimples> pegarListaServicosLocal(String where) {
+		
 
 		List<ServicoSimples> listaServicos = new ArrayList<ServicoSimples>();
-		listaServicos = listarServicosLocal();
+		listaServicos = listarServicosLocal(where);
 
 		return listaServicos;
 	}

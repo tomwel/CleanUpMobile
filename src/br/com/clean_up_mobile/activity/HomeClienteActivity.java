@@ -44,7 +44,7 @@ public class HomeClienteActivity extends ActionBarActivity implements
 		
 		fragment1 = new ClienteFragment();
 		fragment2 = new ListaDiaristasFavoritas();
-		fragment3 = new ServicoFragment(true, getApplicationContext(), null);
+		fragment3 = new ServicoFragment(true, getApplicationContext(), "TODOS");
 		
 		final ActionBar actionBar = getSupportActionBar();
 

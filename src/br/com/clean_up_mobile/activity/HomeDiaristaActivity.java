@@ -38,8 +38,8 @@ public class HomeDiaristaActivity extends ActionBarActivity implements
 		db = new UsuarioDB(getApplicationContext());
 		usuario = (Usuario) getIntent().getSerializableExtra("usuario");
 		
-		fragment1 = new ServicoFragment(true, getApplicationContext(),  null);
-		fragment2 = new ServicoFragment(false, getApplicationContext(), null);
+		fragment1 = new ServicoFragment(true, getApplicationContext(),  "ATIVO");
+		fragment2 = new ServicoFragment(false, getApplicationContext(), "TODOS");
 
 		final ActionBar actionBar = getSupportActionBar();
 
@@ -57,11 +57,11 @@ public class HomeDiaristaActivity extends ActionBarActivity implements
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
 		Tab aba1 = actionBar.newTab();
-		aba1.setText("Historico Servicos");
+		aba1.setText("Próximos");
 		aba1.setTabListener(this);
 
 		Tab aba2 = actionBar.newTab();
-		aba2.setText("Historico Diarista");
+		aba2.setText("Todos");
 		aba2.setTabListener(this);
 
 		actionBar.addTab(aba1);

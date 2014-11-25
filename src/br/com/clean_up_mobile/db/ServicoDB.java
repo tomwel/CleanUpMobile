@@ -74,7 +74,8 @@ public class ServicoDB {
 		return rows;
 	}
 
-	public ServicoSimples pegarServico(Integer codigoDoServico) throws ParseException {
+	public ServicoSimples pegarServico(Integer codigoDoServico)
+			throws ParseException {
 
 		ServicoSimples servico = new ServicoSimples();
 		SQLiteDatabase db = helper.getReadableDatabase();
@@ -90,13 +91,18 @@ public class ServicoDB {
 		return servico;
 	}
 
-	public List<ServicoSimples> listarServico() {
+	public List<ServicoSimples> listarServico(String statusServico) {
 
+		String causaWhere = "";
 		List<ServicoSimples> listaServico = new ArrayList<ServicoSimples>();
 
 		SQLiteDatabase db = helper.getReadableDatabase();
 
-		Cursor cursor = db.rawQuery("select * from servico where 1=1", null);
+		if (statusServico.equals("ATIVO"))
+			causaWhere = " AND status='" + statusServico + "'";
+
+		Cursor cursor = db.rawQuery("select * from servico where 1=1"
+				+ causaWhere, null);
 
 		while (cursor.moveToNext()) {
 			listaServico.add(preencherServico(cursor));
@@ -119,8 +125,8 @@ public class ServicoDB {
 		double valor = 8.8;
 		String status = cursor.getString(8);
 
-		ServicoSimples servico = new ServicoSimples(codigo, tipo, descricao, cliente,
-				diarista, endereco, data, valor, status);
+		ServicoSimples servico = new ServicoSimples(codigo, tipo, descricao,
+				cliente, diarista, endereco, data, valor, status);
 
 		return servico;
 	}

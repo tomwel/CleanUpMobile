@@ -12,6 +12,9 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 
 import br.com.clean_up_mobile.util.Util;
 
@@ -21,7 +24,10 @@ public class WebService {
 
 	public static String getREST(String url) {
 
-		HttpClient httpclient = new DefaultHttpClient();
+		final HttpParams httpParams = new BasicHttpParams();
+		HttpConnectionParams.setConnectionTimeout(httpParams, 20000);
+
+		HttpClient httpclient = new DefaultHttpClient(httpParams);
 		HttpGet httpget = new HttpGet(url);
 
 		try {
@@ -51,7 +57,7 @@ public class WebService {
 		try {
 
 			json = Util.convertJSON(o);
-			
+
 			Log.v("CLUP", "json" + json);
 
 			u = new URL(url);
@@ -77,12 +83,12 @@ public class WebService {
 				return toString(is);
 			} else {
 				// pode ser erro 403 ou 404 ou 409
-				 Log.v("CLUP", "erro" + conexao.getResponseCode());
+				Log.v("CLUP", "erro" + conexao.getResponseCode());
 				return null;
 			}
 
 		} catch (IOException e) {
-			 Log.e("CLUP", "Falha ao acessar Web service classe web", e);
+			Log.e("CLUP", "Falha ao acessar Web service classe web", e);
 			return null;
 		} finally {
 			conexao.disconnect();
