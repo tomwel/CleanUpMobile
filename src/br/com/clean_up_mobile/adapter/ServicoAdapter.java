@@ -1,8 +1,8 @@
 package br.com.clean_up_mobile.adapter;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-
-import org.json.JSONObject;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -10,10 +10,8 @@ import com.google.gson.JsonParser;
 
 import br.com.clean_up_mobile.R;
 import br.com.clean_up_mobile.model.Endereco;
-import br.com.clean_up_mobile.model.Servico;
 import br.com.clean_up_mobile.model.ServicoSimples;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +25,9 @@ public class ServicoAdapter extends ArrayAdapter<ServicoSimples> {
 	JsonParser parser = new JsonParser();
 	JsonObject jsonEndereco;
 	Endereco objEndereco;
+	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM");
+	Date dataServico;
+	String dataServicoFormatada;
 
 	public ServicoAdapter(Context context, List<ServicoSimples> objects) {
 		super(context, 0, 0, objects);
@@ -45,12 +46,10 @@ public class ServicoAdapter extends ArrayAdapter<ServicoSimples> {
 					R.layout.item_lista_servico, null);
 
 			holder = new ViewHolder();
-			holder.textDia = (TextView) convertView.findViewById(R.id.textDia);
-
-			holder.textMes = (TextView) convertView.findViewById(R.id.textMes);
-
-			holder.textEndereco = (TextView) convertView
-					.findViewById(R.id.textEndereco);
+			holder.textData = (TextView) convertView
+					.findViewById(R.id.textData);
+			holder.textInformacao = (TextView) convertView
+					.findViewById(R.id.textInformacao);
 
 			holder.imageStatus = (ImageView) convertView
 					.findViewById(R.id.imageStatus);
@@ -63,9 +62,11 @@ public class ServicoAdapter extends ArrayAdapter<ServicoSimples> {
 		jsonEndereco = (JsonObject) parser.parse(s.getEndereco());
 		objEndereco = gson.fromJson(jsonEndereco, Endereco.class);
 
-		holder.textDia.setText("12");
-		holder.textMes.setText("out");
-		holder.textEndereco.setText(objEndereco.getLogradouro());
+		dataServico = new Date(s.getDataServico());
+		dataServicoFormatada = sdf.format(dataServico);
+
+		holder.textData.setText(dataServicoFormatada);
+		holder.textInformacao.setText(objEndereco.getLogradouro());
 
 		if (s.getStatus().equals("PENDENTE")) {
 			holder.imageStatus
@@ -88,9 +89,8 @@ public class ServicoAdapter extends ArrayAdapter<ServicoSimples> {
 	}
 
 	static class ViewHolder {
-		TextView textDia;
-		TextView textMes;
-		TextView textEndereco;
+		TextView textData;
+		TextView textInformacao;
 		ImageView imageStatus;
 
 	}

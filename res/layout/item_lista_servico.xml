@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:padding="10dp"
     android:layout_height="match_parent" >
 
     <ImageView
@@ -14,38 +13,29 @@
         android:src="@drawable/ic_ok" />
 
     <TextView
-        android:id="@+id/textDia"
+        android:id="@+id/textData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textInformacao"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:layout_margin="5dp"
+        android:background="@layout/layout_fundo_detalhe"
         android:gravity="center_vertical|center_horizontal|center"
-        android:maxWidth="90dp"
-        android:text="00"
+        android:text="11/12"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-        android:id="@+id/textEndereco"
+        android:id="@+id/textInformacao"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/imageView2"
+        android:layout_alignBottom="@+id/imageStatus"
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/imageStatus"
-        android:layout_toRightOf="@+id/textMes"
+        android:layout_toRightOf="@+id/textData"
         android:gravity="center_vertical|center_horizontal|start"
         android:padding="10dp"
-        android:text="Large Text"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/textMes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textEndereco"
-        android:layout_alignParentLeft="true"
-        android:maxWidth="70dp"
-        android:paddingTop="-5dp"
-        android:text="out"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:text="Rua Campo..."
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>
