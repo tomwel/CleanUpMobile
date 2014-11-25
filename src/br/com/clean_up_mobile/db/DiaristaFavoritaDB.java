@@ -2,8 +2,8 @@ package br.com.clean_up_mobile.db;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import br.com.clean_up_mobile.model.Diarista;
+import br.com.clean_up_mobile.model.DiaristaComCidade;
 import br.com.clean_up_mobile.model.Especialidade;
 import android.content.ContentValues;
 import android.content.Context;
@@ -20,7 +20,7 @@ public class DiaristaFavoritaDB {
 		helper = new DBHelper(contexto);
 	}
 
-	public long inserir(Diarista diarista) {
+	public long inserir(DiaristaComCidade diarista) {
 		SQLiteDatabase db = helper.getWritableDatabase();
 		ContentValues values = valoresPorDiarista(diarista);
 
@@ -30,18 +30,18 @@ public class DiaristaFavoritaDB {
 
 		return id;
 	}
-	public ContentValues valoresPorDiarista(Diarista diarista) {
+	public ContentValues valoresPorDiarista(DiaristaComCidade diarista) {
 		ContentValues values = new ContentValues();
 		values.put("codigo", diarista.getCodigo());
 		values.put("nome", diarista.getNome());
 		values.put("telefone", diarista.getTelefone());
-		values.put("cidade", diarista.getCidade());
+		values.put("cidade", diarista.getCidade().getNomeCidade());
 		diarista.favorito = true;
 
 		return values;
 	}
 	
-	public int excluir(Diarista diarista) {
+	public int excluir(DiaristaComCidade diarista) {
 		SQLiteDatabase db = helper.getWritableDatabase();
 
 		int rows = db.delete("diarista_favorita", "codigo = " + diarista.getCodigo(),
@@ -51,7 +51,7 @@ public class DiaristaFavoritaDB {
 		return rows;
 	}
 
-	public boolean favorito(Diarista diarista) {
+	public boolean favorito(DiaristaComCidade diarista) {
 		SQLiteDatabase db = helper.getReadableDatabase();
 
 		Cursor cursor = db.rawQuery("select * from diarista_favorita where codigo="
@@ -90,7 +90,6 @@ public class DiaristaFavoritaDB {
 		String nome = cursor.getString(1);
 		String telefone = cursor.getString(2);
 		String cidade = cursor.getString(3);
-
 		EspecialidadeDB especialidadeDB = new EspecialidadeDB(contexto);
 
 		List<Especialidade> especialidades = especialidadeDB

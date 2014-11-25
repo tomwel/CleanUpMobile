@@ -117,7 +117,7 @@ public class DetalheDiaristaFragment extends Fragment implements
 				R.layout.list_item_autocomplete));
 
 		diarista = (Diarista) getArguments().getSerializable("diarista");
-		diarista.favorito = dbDiaristaFav.favorito(diarista);
+		//diarista.favorito = dbDiaristaFav.favorito(diarista);
 
 		List<Especialidade> especialidades = diarista.getEspecialidades();
 		Especialidade especialidade = new Especialidade();
@@ -148,49 +148,6 @@ public class DetalheDiaristaFragment extends Fragment implements
 		txtEspecialidades.setText(listaEspecialidades);
 
 		return layout;
-	}
-
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		super.onCreateOptionsMenu(menu, inflater);
-		inflater.inflate(R.menu.detalhe, menu);
-
-		MenuItem item = menu.findItem(R.id.action_favoritos);
-		if (diarista.favorito) {
-			item.setIcon(android.R.drawable.ic_menu_delete);
-		} else {
-			item.setIcon(android.R.drawable.ic_menu_save);
-		}
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		if (item.getItemId() == R.id.action_favoritos) {
-
-			if (diarista.favorito) {
-				dbDiaristaFav.excluir(diarista);
-				Toast.makeText(getActivity(),
-						"Diarista removida dos favoritos", Toast.LENGTH_SHORT)
-						.show();
-			} else {
-				dbDiaristaFav.inserir(diarista);
-				Toast.makeText(getActivity(),
-						"Diarista Adicionada aos favoritos", Toast.LENGTH_SHORT)
-						.show();
-			}
-
-			if (getActivity() instanceof DiaristaNosFavoritos) {
-				((DiaristaNosFavoritos) getActivity())
-						.diaristaAdicionadaAoFavorito(diarista);
-			}
-
-			((ActionBarActivity) getActivity()).supportInvalidateOptionsMenu();
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
-	interface DiaristaNosFavoritos {
-		void diaristaAdicionadaAoFavorito(Diarista diarista);
 	}
 
 	public void gravarServico() throws ParseException {

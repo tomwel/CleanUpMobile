@@ -37,8 +37,8 @@
     <string name="tvLogo2">INTELIGENTE</string>
     <string name="tvErroAtualizar">Lista não atualizada.</string>
     <string name="tvRegistrar"><a href="#">Registrar</a></string>
-    <string name="tvContratanteCliente">Cliente:</string>
-     <string name="tvContratanteDiarista">Diarista:</string>
+    <string name="tvContratanteCliente">Cliente</string>
+     <string name="tvContratanteDiarista">Diarista</string>
     
     <!-- Radio Button -->
 

@@ -2,13 +2,10 @@ package br.com.clean_up_mobile.fragment;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import javax.xml.datatype.Duration;
-
+import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
@@ -24,19 +21,21 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import br.com.clean_up_mobile.R;
+import br.com.clean_up_mobile.R.drawable;
+import br.com.clean_up_mobile.db.DiaristaFavoritaDB;
+import br.com.clean_up_mobile.db.EspecialidadeDB;
 import br.com.clean_up_mobile.db.UsuarioDB;
 import br.com.clean_up_mobile.model.Cliente;
-import br.com.clean_up_mobile.model.Diarista;
 import br.com.clean_up_mobile.model.DiaristaComCidade;
 import br.com.clean_up_mobile.model.Endereco;
-import br.com.clean_up_mobile.model.Perfil;
+import br.com.clean_up_mobile.model.Especialidade;
 import br.com.clean_up_mobile.model.ServicoSimples;
 import br.com.clean_up_mobile.model.StatusServico;
 import br.com.clean_up_mobile.model.Usuario;
 import br.com.clean_up_mobile.task.WebService;
 import br.com.clean_up_mobile.util.Constantes;
-import br.com.clean_up_mobile.util.Mask;
 import br.com.clean_up_mobile.util.Util;
 
 public class DetalheServicoFragment extends Fragment implements OnClickListener {
@@ -45,18 +44,21 @@ public class DetalheServicoFragment extends Fragment implements OnClickListener 
 	Usuario usuarioLogado;
 	TextView nome, telefone, nomeDiarista, data, endereco, descricao, valor,
 			infoContratante;
-	Button buttonCancel, buttonOk,btnCancelar;
+	Button buttonCancel, buttonOk, btnCancelar;
 	ImageView statusServico;
 	LinearLayout llConfirmacao;
 	StatusServico status;
 	String mensagem;
 	UsuarioDB db;
+	EspecialidadeDB dbEspecialidade;
+	DiaristaFavoritaDB dbDiaristaFav;
 	Gson gson = new Gson();
 	JsonParser parser = new JsonParser();
 	JsonObject jsonEndereco, jsonCliente, jsonDiarista;
 	Endereco objEndereco;
 	Cliente objCliente;
 	DiaristaComCidade objDiarista;
+	ImageButton btnFavorito;
 
 	public static DetalheServicoFragment novaInstancia(ServicoSimples servico) {
 		Bundle args = new Bundle();
@@ -72,7 +74,8 @@ public class DetalheServicoFragment extends Fragment implements OnClickListener 
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_detalhe_servico,
 				container, false);
-
+		dbDiaristaFav = new DiaristaFavoritaDB(getActivity());
+		dbEspecialidade = new EspecialidadeDB(getActivity());
 		db = new UsuarioDB(getActivity().getApplicationContext());
 		usuarioLogado = db.listaUsuario();
 
@@ -84,8 +87,6 @@ public class DetalheServicoFragment extends Fragment implements OnClickListener 
 		String dataServicoFormatada = sdf.format(dataServico);
 
 		Date hoje = new Date();
-		
-		
 
 		jsonEndereco = (JsonObject) parser.parse(serv.getEndereco());
 		jsonCliente = (JsonObject) parser.parse(serv.getCliente());
@@ -94,22 +95,55 @@ public class DetalheServicoFragment extends Fragment implements OnClickListener 
 		objEndereco = gson.fromJson(jsonEndereco, Endereco.class);
 		objCliente = gson.fromJson(jsonCliente, Cliente.class);
 		objDiarista = gson.fromJson(jsonDiarista, DiaristaComCidade.class);
-
+		objDiarista.favorito = dbDiaristaFav.favorito(objDiarista);
+		List<Especialidade> especialidades = objDiarista.getEspecialidades();
+		Especialidade especialidade = new Especialidade();
+		for (int i = 0; i < especialidades.size(); i++) {
+			if (especialidades.get(i) != null) {
+				especialidade = especialidades.get(i);
+				boolean existeEspecialidade;
+				existeEspecialidade = dbEspecialidade
+						.existeEspecialidade(especialidade
+								.getCodigoEspecialidade());
+				if (!existeEspecialidade) {
+					dbEspecialidade.inserirEspecialidade(especialidade);
+					dbEspecialidade.inserirRelacionamentoEspecialidadeDiarista(
+							objDiarista.getCodigo(),
+							especialidade.getCodigoEspecialidade());
+				}
+				if (dbEspecialidade.pegarEspecialidades(objDiarista.getCodigo()).size() < especialidades.size()){
+					dbEspecialidade.inserirRelacionamentoEspecialidadeDiarista(
+							objDiarista.getCodigo(),
+							especialidade.getCodigoEspecialidade());
+				}
+			} else {
+				break;
+			}
+		}
 		endereco = (TextView) view.findViewById(R.id.textViewEnderecoCliente);
 		descricao = (TextView) view.findViewById(R.id.textViewDescricao);
 		nome = (TextView) view.findViewById(R.id.textViewNome);
 		telefone = (TextView) view.findViewById(R.id.textViewTelefone);
 		statusServico = (ImageView) view.findViewById(R.id.imageViewStatus);
 		data = (TextView) view.findViewById(R.id.textViewData);
-		infoContratante = (TextView) view.findViewById(R.id.textViewContratante);
-		llConfirmacao = (LinearLayout) view.findViewById(R.id.linearLayoutConfirmacao); 
-		btnCancelar = (Button)view.findViewById(R.id.buttonCancelar); 
-		
-		
-		ImageButton btnVerMapa = (ImageButton) view.findViewById(R.id.imageButtonVerMapa);
+		infoContratante = (TextView) view
+				.findViewById(R.id.textViewContratante);
+		llConfirmacao = (LinearLayout) view
+				.findViewById(R.id.linearLayoutConfirmacao);
+		btnCancelar = (Button) view.findViewById(R.id.buttonCancelar);
+
+		btnFavorito = (ImageButton) view.findViewById(R.id.imageButtonFavorito);
+		btnFavorito.setOnClickListener(btnFavoritoOnClickListener);
+		if (objDiarista.favorito) {
+			btnFavorito.setImageResource(drawable.favorite_delete);
+		} else {
+			btnFavorito.setImageResource(drawable.favorite_add);
+		}
+
+		ImageButton btnVerMapa = (ImageButton) view
+				.findViewById(R.id.imageButtonVerMapa);
 		btnVerMapa.setOnClickListener(btnVerMapaOnClickListener);
-		
-		
+
 		endereco.setText(objEndereco.getLogradouro());
 		descricao.setText(serv.getDescricao());
 		data.setText(dataServicoFormatada);
@@ -140,17 +174,18 @@ public class DetalheServicoFragment extends Fragment implements OnClickListener 
 			statusServico
 					.setImageResource(R.drawable.ic_status_servico_sem_imagem);
 		}
-		
-		
-        //exibição de acordo com perfil
+
+		// exibição de acordo com perfil
 		if (usuarioLogado.getPerfil().equals("ROLE_DIARIST")) {
 			nome.setText(objCliente.getNome());
 			telefone.setText(objCliente.getTelefone());
 			infoContratante.setText(R.string.tvContratanteCliente);
+			btnFavorito.setVisibility(view.GONE);
 		} else {
 			nome.setText(objDiarista.getNome());
 			telefone.setText(objDiarista.getTelefone());
 			infoContratante.setText(R.string.tvContratanteDiarista);
+			btnVerMapa.setVisibility(view.GONE);
 		}
 
 		// // Botões
@@ -194,34 +229,61 @@ public class DetalheServicoFragment extends Fragment implements OnClickListener 
 			break;
 		}
 	}
-	
+
+	private OnClickListener btnFavoritoOnClickListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			if (objDiarista.favorito) {
+				dbDiaristaFav.excluir(objDiarista);
+				Toast.makeText(getActivity(),
+						"Diarista removida dos favoritos", Toast.LENGTH_SHORT)
+						.show();
+				btnFavorito.setImageResource(drawable.favorite_add);
+				objDiarista.favorito = false;
+			} else {
+				dbDiaristaFav.inserir(objDiarista);
+				Toast.makeText(getActivity(),
+						"Diarista Adicionada aos favoritos", Toast.LENGTH_SHORT)
+						.show();
+				btnFavorito.setImageResource(drawable.favorite_delete);
+				objDiarista.favorito = true;
+			}
+			if (getActivity() instanceof DiaristaNosFavoritos) {
+				((DiaristaNosFavoritos) getActivity())
+						.diaristaAdicionadaAoFavorito(objDiarista);
+			}
+		}
+	};
+
+	interface DiaristaNosFavoritos {
+		void diaristaAdicionadaAoFavorito(DiaristaComCidade diarista);
+	}
+
 	private OnClickListener btnVerMapaOnClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			String lat = objEndereco.getLat().toString();
 			String lng = objEndereco.getLng().toString();
-			String uri = "http://maps.google.com/maps?&daddr="+lat+","+lng;
-	        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-	        intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
-	        try
-	        {
-	            startActivity(intent);
-	        }
-	        catch(ActivityNotFoundException ex)
-	        {
-	            try
-	            {
-	                Intent unrestrictedIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-	                startActivity(unrestrictedIntent);
-	            }
-	            catch(ActivityNotFoundException innerEx)
-	            {
-	            	Util.criarToast(getActivity(), "Por favor, instale o google maps para ver o mapa!");
-	            }
-	        }
+			String uri = "http://maps.google.com/maps?&daddr=" + lat + ","
+					+ lng;
+			Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+			intent.setClassName("com.google.android.apps.maps",
+					"com.google.android.maps.MapsActivity");
+			try {
+				startActivity(intent);
+			} catch (ActivityNotFoundException ex) {
+				try {
+					Intent unrestrictedIntent = new Intent(Intent.ACTION_VIEW,
+							Uri.parse(uri));
+					startActivity(unrestrictedIntent);
+				} catch (ActivityNotFoundException innerEx) {
+					Util.criarToast(getActivity(),
+							"Por favor, instale o google maps para ver o mapa!");
+				}
+			}
 		}
 	};
-	
+
 	public void cancelaServico(ServicoSimples servico) {
 		// somente 2 dias antes
 		if (Util.existeConexao(getActivity().getApplicationContext()))
