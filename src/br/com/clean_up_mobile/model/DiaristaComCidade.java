@@ -11,7 +11,8 @@ public class DiaristaComCidade implements Serializable{
 	private Cidade cidade;
 	private List<Especialidade> especialidades;
 	public boolean favorito;
-	
+	public Double mediaDiarista;
+
 	public DiaristaComCidade() {
 	}
 	
@@ -63,5 +64,13 @@ public class DiaristaComCidade implements Serializable{
 
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
+	}
+	
+	public Double getMediaDiarista() {
+		return mediaDiarista;
+	}
+
+	public void setMediaDiarista(Double mediaDiarista) {
+		this.mediaDiarista = mediaDiarista;
 	}
 }

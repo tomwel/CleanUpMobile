@@ -113,14 +113,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
 
-                <TextView
-                    android:id="@+id/textViewContratante"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="0.39"
-                    android:gravity="center_vertical|center_horizontal|center"
-                    android:text="Cliente" />
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/textViewContratante"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:layout_margin="5dp"
+                        android:gravity="center_vertical|center_horizontal|center"
+                        android:text="Cliente" />
+                </LinearLayout>
 
                 <ImageButton
                     android:id="@+id/imageButtonFavorito"
@@ -172,14 +178,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical|center_horizontal|center"
-                    android:text="Telefone: " />
+                    android:text="Fone:" />
 
                 <TextView
                     android:id="@+id/textViewTelefone"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="0.49"
                     android:text="(81) 3333 4444"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <Button
+                    android:id="@+id/buttonAvaliarServico"
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="89dp"
+                    android:layout_height="34dp"
+                    android:layout_weight="0.35"
+                    android:background="@layout/layout_button_azul"
+                    android:text="avaliar serviço"
+                    android:textColor="@color/branco" />
+
             </LinearLayout>
 
         </LinearLayout>
@@ -238,8 +256,8 @@
                 android:id="@+id/buttonRecusar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/button1"
-                android:layout_alignBottom="@+id/button1"
+                android:layout_alignBaseline="@+id/buttonAvaliarServico"
+                android:layout_alignBottom="@+id/buttonAvaliarServico"
                 android:layout_alignParentRight="true"
                 android:layout_margin="5dp"
                 android:background="@layout/layout_button_vermelho"

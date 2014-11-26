@@ -43,7 +43,9 @@ public class DiaristaDB {
 		ContentValues values = new ContentValues();
 		values.put("codigo", diarista.getCodigo());
 		values.put("nome", diarista.getNome());
+		values.put("cidade", diarista.getCidade());
 		values.put("telefone", diarista.getTelefone());
+		values.put("mediaDiarista", diarista.getMediaDiarista());
 		return values;
 	}
 
@@ -68,14 +70,15 @@ public class DiaristaDB {
 		Integer codigo = Integer.parseInt(cursor.getString(0));
 		String nome = cursor.getString(1);
 		String telefone = cursor.getString(2);
-
+		String cidade = cursor.getString(3);
+		Double mediaDiarista = Double.parseDouble(cursor.getString(4));
 		EspecialidadeDB especialidadeDB = new EspecialidadeDB(contexto);
 
 		List<Especialidade> especialidades = especialidadeDB
 				.pegarEspecialidades(codigo);
 
-		Diarista diarista = new Diarista(codigo, nome, telefone, "",
-				especialidades);
+		Diarista diarista = new Diarista(codigo, nome, telefone, cidade,
+				especialidades, mediaDiarista);
 
 		return diarista;
 	}

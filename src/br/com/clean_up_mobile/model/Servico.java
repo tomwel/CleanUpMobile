@@ -9,21 +9,19 @@ public class Servico implements Serializable  {
 	private String tipoServico;
 	private String descricao;
 	private Cliente cliente;
-	private Diarista diarista;
-	private String endereco;
-	private int dataServico;
+	private DiaristaServico diarista;
+	private Endereco endereco;
+	private long dataServico;
 	private double valor;
 	private String status;
-	private String comentario;
-	private int nota;
 	
 	public  Servico() {
-		this.diarista = new Diarista();
+		this.diarista = new DiaristaServico();
 		this.cliente = new Cliente();
 	}
 	
 	public Servico(Integer codServico, String tipoServico, String descricao,
-			Cliente cliente, Diarista diarista, String endereco,
+			Cliente cliente, DiaristaServico diarista, Endereco endereco,
 			int dataServico, double valor, String status) {
 		super();
 		this.codServico = codServico;
@@ -69,27 +67,27 @@ public class Servico implements Serializable  {
 		this.cliente = cliente;
 	}
 
-	public Diarista getDiarista() {
+	public DiaristaServico getDiarista() {
 		return diarista;
 	}
 
-	public void setDiarista(Diarista diarista) {
+	public void setDiarista(DiaristaServico diarista) {
 		this.diarista = diarista;
 	}
 
-	public String getEndereco() {
+	public Endereco getEndereco() {
 		return endereco;
 	}
 
-	public void setEndereco(String endereco) {
+	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
 
-	public int getDataServico() {
+	public long getDataServico() {
 		return dataServico;
 	}
 
-	public void setDataServico(int dataServico) {
+	public void setDataServico(long dataServico) {
 		this.dataServico = dataServico;
 	}
 
@@ -108,20 +106,4 @@ public class Servico implements Serializable  {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
-	public String getComentario() {
-		return comentario;
-	}
-
-	public void setComentario(String comentario) {
-		this.comentario = comentario;
-	}
-
-	public int getNota() {
-		return nota;
-	}
-
-	public void setNota(int nota) {
-		this.nota = nota;
-	}	
 }

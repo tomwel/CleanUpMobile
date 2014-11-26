@@ -41,6 +41,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -111,7 +112,7 @@ public class DetalheDiaristaFragment extends Fragment implements
 		btCancelar.setOnClickListener(btnCancelarOnClickListener);
 		Button btData = (Button) layout.findViewById(R.id.buttonCalendario);
 		btData.setOnClickListener(btnCalendarioOnClickListener);
-
+		
 		endereco.setOnClickListener(this);
 		endereco.setAdapter(new PlaceHolder(getActivity(),
 				R.layout.list_item_autocomplete));

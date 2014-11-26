@@ -51,4 +51,13 @@
         android:layout_toLeftOf="@+id/textViewLoading"
         android:src="@drawable/diarista" />
 
+    <RatingBar
+        android:id="@+id/ratingBarClassificacaoDiarista"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/textViewEspecialidadesListDiarista"
+        android:layout_marginRight="17dp" />
+
 </RelativeLayout>

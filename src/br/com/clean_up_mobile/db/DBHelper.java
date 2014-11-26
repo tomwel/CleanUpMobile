@@ -30,7 +30,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
 		// tabela diarista favorita
 				db.execSQL("create TABLE diarista_favorita (codigo INTEGER PRIMARY KEY,"
-						+ "nome TEXT, telefone TEXT, cidade TEXT)");
+						+ "nome TEXT, telefone TEXT, cidade TEXT, mediaDiarista TEXT)");
 		
 		// tabela servico
 		db.execSQL("create TABLE servico (codigo INTEGER PRIMARY KEY,"

@@ -47,6 +47,7 @@ public class DiaristasHttp {
 			JSONObject jsonDiarista = jsonDiaristas.getJSONObject(i);
 			diarista.setCodigo(jsonDiarista.getInt("codigo"));
 			diarista.setNome(jsonDiarista.getString("nome"));
+			diarista.setMediaDiarista(jsonDiarista.getDouble("mediaDiarista"));
 			JSONObject jsonCidade = jsonDiarista.getJSONObject("cidade");
 //			cidade.setCodigoCidade(jsonCidade.getInt("codigoCidade"));
 //			cidade.setNomeCidade(jsonCidade.getString("nomeCidade"));

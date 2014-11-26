@@ -10,12 +10,14 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView.FindListener;
 import android.widget.ArrayAdapter;
+import android.widget.RatingBar;
 import android.widget.SearchView;
 import android.widget.TextView;
 
-public class DiaristasAdapter extends ArrayAdapter<Diarista>{
-	
+public class DiaristasAdapter extends ArrayAdapter<Diarista> {
+
 	public DiaristasAdapter(Context context, List<Diarista> objects) {
 		super(context, 0, 0, objects);
 
@@ -55,6 +57,7 @@ public class DiaristasAdapter extends ArrayAdapter<Diarista>{
 			holder.especialidadesDiarista = (TextView) convertView
 					.findViewById(R.id.textViewEspecialidadesListDiarista);
 			
+			holder.clasificacaoDiarista = (RatingBar) convertView.findViewById(R.id.ratingBarClassificacaoDiarista);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
@@ -64,7 +67,7 @@ public class DiaristasAdapter extends ArrayAdapter<Diarista>{
 //		holder.cidadeDiarista.setText(diarista.getCidade().getNomeCidade());
 		holder.cidadeDiarista.setText(diarista.getCidade());
 		holder.especialidadesDiarista.setText(listaEspecialidades);
-		
+		holder.clasificacaoDiarista.setRating(diarista.getMediaDiarista().floatValue());
 		return convertView;
 	}
 
@@ -74,5 +77,6 @@ public class DiaristasAdapter extends ArrayAdapter<Diarista>{
 		TextView cidadeDiarista;
 		TextView especialidadesDiarista;
 		SearchView mSearchView;
+		RatingBar clasificacaoDiarista;
 	}
 }

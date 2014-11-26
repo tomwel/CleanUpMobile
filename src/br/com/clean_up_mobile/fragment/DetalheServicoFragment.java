@@ -24,8 +24,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import br.com.clean_up_mobile.R;
 import br.com.clean_up_mobile.R.drawable;
+import br.com.clean_up_mobile.activity.ClassificaServicoActivity;
 import br.com.clean_up_mobile.db.DiaristaFavoritaDB;
 import br.com.clean_up_mobile.db.EspecialidadeDB;
+import br.com.clean_up_mobile.db.ServicoDB;
 import br.com.clean_up_mobile.db.UsuarioDB;
 import br.com.clean_up_mobile.model.Cliente;
 import br.com.clean_up_mobile.model.DiaristaComCidade;
@@ -50,6 +52,7 @@ public class DetalheServicoFragment extends Fragment implements OnClickListener 
 	StatusServico status;
 	String mensagem;
 	UsuarioDB db;
+	ServicoDB dbServico;
 	EspecialidadeDB dbEspecialidade;
 	DiaristaFavoritaDB dbDiaristaFav;
 	Gson gson = new Gson();
@@ -59,6 +62,7 @@ public class DetalheServicoFragment extends Fragment implements OnClickListener 
 	Cliente objCliente;
 	DiaristaComCidade objDiarista;
 	ImageButton btnFavorito;
+	Button btnAvaliar;
 
 	public static DetalheServicoFragment novaInstancia(ServicoSimples servico) {
 		Bundle args = new Bundle();
@@ -76,6 +80,7 @@ public class DetalheServicoFragment extends Fragment implements OnClickListener 
 				container, false);
 		dbDiaristaFav = new DiaristaFavoritaDB(getActivity());
 		dbEspecialidade = new EspecialidadeDB(getActivity());
+		dbServico = new ServicoDB(getActivity());
 		db = new UsuarioDB(getActivity().getApplicationContext());
 		usuarioLogado = db.listaUsuario();
 
@@ -131,7 +136,8 @@ public class DetalheServicoFragment extends Fragment implements OnClickListener 
 		llConfirmacao = (LinearLayout) view
 				.findViewById(R.id.linearLayoutConfirmacao);
 		btnCancelar = (Button) view.findViewById(R.id.buttonCancelar);
-
+		btnAvaliar = (Button) view.findViewById(R.id.buttonAvaliarServico);
+		btnAvaliar.setOnClickListener(btnAvaliarOnClickListener);
 		btnFavorito = (ImageButton) view.findViewById(R.id.imageButtonFavorito);
 		btnFavorito.setOnClickListener(btnFavoritoOnClickListener);
 		if (objDiarista.favorito) {
@@ -152,24 +158,26 @@ public class DetalheServicoFragment extends Fragment implements OnClickListener 
 		if (serv.getStatus().equals("PENDENTE")) {
 			statusServico
 					.setImageResource(R.drawable.ic_status_servico_pendente);
-
+			btnAvaliar.setVisibility(view.GONE);
 			if (hoje.compareTo(dataServico) > 0) {
 				llConfirmacao.setVisibility(View.GONE);
 			}
 
-		} else if (serv.getStatus().equals("ATIVO")) {
+		} else if (serv.getStatus().equals("ACEITO")) {
 			statusServico.setImageResource(R.drawable.ic_status_servico_ativo);
 
 			if (hoje.compareTo(dataServico) >= 2) {
 				btnCancelar.setVisibility(View.GONE);
 			}
 
-		} else if (serv.getStatus().equals("INATIVO")) {
+		} else if (serv.getStatus().equals("CANCELAR")) {
 			statusServico
 					.setImageResource(R.drawable.ic_status_servico_inativo);
+			btnAvaliar.setVisibility(view.GONE);
 		} else if (serv.getStatus().equals("CONCLUIDO")) {
 			statusServico
 					.setImageResource(R.drawable.ic_status_servico_concluido);
+			btnAvaliar.setVisibility(view.GONE);
 		} else {
 			statusServico
 					.setImageResource(R.drawable.ic_status_servico_sem_imagem);
@@ -229,6 +237,15 @@ public class DetalheServicoFragment extends Fragment implements OnClickListener 
 			break;
 		}
 	}
+	private OnClickListener btnAvaliarOnClickListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			Intent classificarIntent = new Intent(
+					getActivity(), ClassificaServicoActivity.class);
+			classificarIntent.putExtra("servico", serv);
+			startActivity(classificarIntent);
+		}
+	};
 
 	private OnClickListener btnFavoritoOnClickListener = new OnClickListener() {
 		@Override

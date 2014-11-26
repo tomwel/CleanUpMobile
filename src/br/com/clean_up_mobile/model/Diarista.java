@@ -11,18 +11,20 @@ public class Diarista implements Serializable {
 	private String cidade;
 	private List<Especialidade> especialidades;
 	public boolean favorito;
+	public Double mediaDiarista;
 
 	public Diarista() {
 	}
 
 	public Diarista(Integer codigo, String nome, String telefone,
-			String cidade, List<Especialidade> especialidades) {
+			String cidade, List<Especialidade> especialidades, Double mediaDiarista) {
 		super();
 		this.codigo = codigo;
 		this.nome = nome;
 		this.telefone = telefone;
 		this.cidade = cidade;
 		this.especialidades = especialidades;
+		this.mediaDiarista = mediaDiarista;
 	}
 
 	public Integer getCodigo() {
@@ -63,5 +65,13 @@ public class Diarista implements Serializable {
 
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
+	}
+	
+	public Double getMediaDiarista() {
+		return mediaDiarista;
+	}
+
+	public void setMediaDiarista(Double mediaDiarista) {
+		this.mediaDiarista = mediaDiarista;
 	}
 }
