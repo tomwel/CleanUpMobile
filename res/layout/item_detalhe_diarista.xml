@@ -178,7 +178,7 @@
             android:layout_below="@+id/autoCompleteTextEnderecoServico"
             android:layout_marginTop="15dp"
             android:layout_toRightOf="@+id/textView4"
-            android:background="@layout/layout_button_vermelho"
+            android:background="@color/gray"
             android:text="Cancelar"
             android:textColor="@color/branco" />
 

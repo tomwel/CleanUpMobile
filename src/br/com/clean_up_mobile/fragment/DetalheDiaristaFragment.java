@@ -108,17 +108,18 @@ public class DetalheDiaristaFragment extends Fragment implements
 		Button btConfirmar = (Button) layout
 				.findViewById(R.id.buttonConfirmarDiarista);
 		btConfirmar.setOnClickListener(btnConfirmarOnClickListener);
-		Button btCancelar = (Button) layout.findViewById(R.id.buttonCancelarDiarista);
+		Button btCancelar = (Button) layout
+				.findViewById(R.id.buttonCancelarDiarista);
 		btCancelar.setOnClickListener(btnCancelarOnClickListener);
 		Button btData = (Button) layout.findViewById(R.id.buttonCalendario);
 		btData.setOnClickListener(btnCalendarioOnClickListener);
-		
+
 		endereco.setOnClickListener(this);
 		endereco.setAdapter(new PlaceHolder(getActivity(),
 				R.layout.list_item_autocomplete));
 
 		diarista = (Diarista) getArguments().getSerializable("diarista");
-		//diarista.favorito = dbDiaristaFav.favorito(diarista);
+		// diarista.favorito = dbDiaristaFav.favorito(diarista);
 
 		List<Especialidade> especialidades = diarista.getEspecialidades();
 		Especialidade especialidade = new Especialidade();
@@ -151,6 +152,20 @@ public class DetalheDiaristaFragment extends Fragment implements
 		return layout;
 	}
 
+	public void validaForm() {
+
+		if (data.getText().toString().trim() != ""
+				&& endereco.getText().toString().trim() != "") {
+			Util.criarToast(getActivity(), R.string.msgServicoDataEndereco);
+		} else if (data.getText().toString().trim() != "") {
+			Util.criarToast(getActivity(), R.string.msgServicoData);
+		} else if (endereco.getText().toString().trim() != "") {
+			Util.criarToast(getActivity(), R.string.msgServicoEndereco);
+		} else {
+			salvarEndereco();
+		}
+	}
+
 	public void gravarServico() throws ParseException {
 
 		DiaristaVO diaristaVO = new DiaristaVO();
@@ -177,7 +192,7 @@ public class DetalheDiaristaFragment extends Fragment implements
 	private OnClickListener btnConfirmarOnClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			salvarEndereco();
+			validaForm();
 		}
 	};
 
@@ -302,11 +317,15 @@ public class DetalheDiaristaFragment extends Fragment implements
 	public void onActivityResult(int requestCode, int resultCode, Intent date) {
 		switch (requestCode) {
 		case 1:
-			if (date.getExtras().getString("data_servico") != null) {
-				data.setText(date.getExtras().getString("data_servico"));
+			if (date != null) {
+				if (date.getExtras().getString("data_servico") != null) {
+					data.setText(date.getExtras().getString("data_servico"));
+				}
+
+				super.onActivityResult(requestCode, resultCode, date);
 			}
 			break;
 		}
-		super.onActivityResult(requestCode, resultCode, date);
+
 	}
 }

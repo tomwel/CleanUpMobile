@@ -37,7 +37,7 @@ public class ClienteFragment extends ListFragment implements
 	TextView txtMensagem;
 	private SearchView mSearchView;
 	EspecialidadeDB dbEspecialidade;
-
+	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -74,6 +74,7 @@ public class ClienteFragment extends ListFragment implements
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+
 		View view = inflater.inflate(R.layout.fragment_cliente, container,
 				false);
 		progress = (ProgressBar) view.findViewById(R.id.progressBar1);
@@ -83,6 +84,8 @@ public class ClienteFragment extends ListFragment implements
 		mSearchView.setIconifiedByDefault(false);
 		mSearchView.setOnQueryTextListener(this);
 		mSearchView.clearFocus();
+		iniciarDownload();
+		System.out.println("atualizou");
 		return view;
 	}
 
@@ -106,8 +109,11 @@ public class ClienteFragment extends ListFragment implements
 			while (pos < mDiaristas.size()) {
 				diarista = mDiaristas.get(pos);
 				for (int i = 0; i < diarista.getEspecialidades().size(); i++) {
+					if (!especialidades.contains(diarista.getEspecialidades().get(i)
+							.getNomeEspecialidade().toLowerCase())){
 					especialidades.add(diarista.getEspecialidades().get(i)
 							.getNomeEspecialidade().toLowerCase());
+					}
 				}
 				if (diarista.getNome().toLowerCase()
 						.contains(text.toLowerCase())
@@ -187,6 +193,7 @@ public class ClienteFragment extends ListFragment implements
 				refreshList();
 				txtMensagem.setVisibility(View.GONE);
 			} else {
+				txtMensagem.setVisibility(View.GONE);
 				Util.criarToast(getActivity(), R.string.msgDeErroWebservice);
 			}
 			progress.setVisibility(View.GONE);

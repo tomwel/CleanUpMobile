@@ -36,12 +36,12 @@ public class DiaristasAdapter extends ArrayAdapter<Diarista> {
 				
 			if (especialidades.get(i) != null){
 				especialidade = especialidades.get(i);
-				listaEspecialidades = listaEspecialidades + especialidade.getNomeEspecialidade() + virgula;
+				listaEspecialidades = listaEspecialidades + especialidade.getNomeEspecialidade() + virgula + " ";
 			}else{	
 				break;
 			}
 		}
-		listaEspecialidades = listaEspecialidades.substring(0, listaEspecialidades.length() - 1);
+		listaEspecialidades = listaEspecialidades.substring(0, listaEspecialidades.length() - 2);
 		if (convertView == null) {
 			convertView = LayoutInflater.from(getContext()).inflate(
 					R.layout.item_lista_diarista, null);

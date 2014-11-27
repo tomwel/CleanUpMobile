@@ -8,81 +8,24 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="br.com.clean_up_mobile.ClassificaServicoActivity$PlaceholderFragment" >
 
-    <TextView
-        android:id="@+id/textViewDiaristaClassificada"
+    <EditText
+        android:id="@+id/editTextComentario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:paddingTop="5dp"
-        android:text="@string/diarista"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/textViewNomeDiaristaClassificada"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textViewDiaristaClassificada"
-        android:layout_alignRight="@+id/textViewDiaristaClassificada"
-        android:layout_below="@+id/textViewDiaristaClassificada"
-        android:paddingBottom="10dp"
-        android:text="Nome"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/textViewEnderecoClassificado"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignRight="@+id/textViewNomeDiaristaClassificada"
-        android:layout_below="@+id/textViewNomeDiaristaClassificada"
-        android:text="@string/endereco"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/textViewEnderecoServico"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textViewEnderecoClassificado"
-        android:layout_alignRight="@+id/textViewEnderecoClassificado"
-        android:layout_below="@+id/textViewEnderecoClassificado"
-        android:paddingBottom="10dp"
-        android:text="Endereco"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:layout_below="@+id/ratingBarClassificaServico"
+        android:ems="10"
+        android:hint="Deixe um comentário"
+        android:inputType="textMultiLine" />
 
     <RatingBar
         android:id="@+id/ratingBarClassificaServico"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignLeft="@+id/editTextComentario"
+        android:layout_marginTop="18dp"
         android:numStars="5"
-        android:stepSize="1.0"
-        android:layout_below="@+id/textViewEnderecoServico" />
-
-    <Button
-        android:id="@+id/buttonClassifica"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/ratingBarClassificaServico"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/textViewEnderecoServico"
-        android:background="@layout/layout_button_azul_ok"
-        android:text="@string/classificar"
-        android:textColor="@color/branco" />
-
-    <EditText
-        android:id="@+id/editTextComentario"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/buttonClassifica"
-        android:layout_alignLeft="@+id/ratingBarClassificaServico"
-        android:layout_alignRight="@+id/buttonClassifica"
-        android:layout_below="@+id/ratingBarClassificaServico"
-        android:ems="10"
-        android:inputType="textMultiLine" >
-
-        <requestFocus />
-    </EditText>
+        android:stepSize="1" />
 
 </RelativeLayout>

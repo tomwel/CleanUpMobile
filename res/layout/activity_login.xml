@@ -19,7 +19,7 @@
         android:id="@+id/RelativeLayout1"
         android:layout_width="278dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1"
+        android:layout_below="@+id/textViewAvaliarServico"
         android:layout_centerHorizontal="true"
         android:background="#F2F2F2"
         android:gravity="center_vertical"
@@ -65,7 +65,7 @@
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/textViewAvaliarServico"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/imageViewDiaristaDetalhe"

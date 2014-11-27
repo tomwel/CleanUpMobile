@@ -3,7 +3,6 @@ package br.com.clean_up_mobile.activity;
 import br.com.clean_up_mobile.R;
 import br.com.clean_up_mobile.db.UsuarioDB;
 import br.com.clean_up_mobile.fragment.ClienteFragment;
-import br.com.clean_up_mobile.fragment.DiaristaServicoFragment;
 import br.com.clean_up_mobile.fragment.ListaDiaristasFavoritas;
 import br.com.clean_up_mobile.fragment.ServicoFragment;
 import br.com.clean_up_mobile.model.Diarista;

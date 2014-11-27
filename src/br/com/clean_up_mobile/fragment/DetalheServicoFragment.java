@@ -8,7 +8,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.ProgressDialog;
+
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -19,28 +22,32 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import br.com.clean_up_mobile.R;
 import br.com.clean_up_mobile.R.drawable;
-import br.com.clean_up_mobile.activity.ClassificaServicoActivity;
 import br.com.clean_up_mobile.db.DiaristaFavoritaDB;
 import br.com.clean_up_mobile.db.EspecialidadeDB;
 import br.com.clean_up_mobile.db.ServicoDB;
 import br.com.clean_up_mobile.db.UsuarioDB;
 import br.com.clean_up_mobile.model.Cliente;
 import br.com.clean_up_mobile.model.DiaristaComCidade;
+import br.com.clean_up_mobile.model.DiaristaServico;
 import br.com.clean_up_mobile.model.Endereco;
 import br.com.clean_up_mobile.model.Especialidade;
+import br.com.clean_up_mobile.model.Servico;
 import br.com.clean_up_mobile.model.ServicoSimples;
 import br.com.clean_up_mobile.model.StatusServico;
 import br.com.clean_up_mobile.model.Usuario;
 import br.com.clean_up_mobile.task.WebService;
 import br.com.clean_up_mobile.util.Constantes;
 import br.com.clean_up_mobile.util.Util;
+import br.com.clean_up_mobile.vo.ClassificacaoVO;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -50,9 +57,18 @@ public class DetalheServicoFragment extends Fragment {
 
 	ServicoSimples serv = new ServicoSimples();
 	Usuario usuarioLogado;
-	TextView nome, telefone, nomeDiarista, data, endereco, descricao, valor,
-			infoContratante;
-	Button buttonCancelar, buttonAceitar, buttonRecusar;
+	ClassificacaoVO classificacaoVo;
+	TextView nome;
+	TextView telefone;
+	TextView nomeDiarista;
+	TextView data;
+	TextView endereco;
+	TextView descricao;
+	TextView valor;
+	TextView infoContratante;
+	Button buttonCancelar;
+	Button buttonAceitar;
+	Button buttonRecusar;
 	ImageView statusServico;
 	LinearLayout llConfirmacao;
 	StatusServico status;
@@ -175,14 +191,15 @@ public class DetalheServicoFragment extends Fragment {
 		if (serv.getStatus().equals("PENDENTE")) {
 			statusServico
 					.setImageResource(R.drawable.ic_status_servico_pendente);
-
+			btnAvaliar.setVisibility(view.GONE);
+			
 			if (diferencaData > 0) {
 				llConfirmacao.setVisibility(View.VISIBLE);
 			}
 
 		} else if (serv.getStatus().equals("ACEITO")) {
 			statusServico.setImageResource(R.drawable.ic_status_servico_ativo);
-
+			btnAvaliar.setVisibility(view.GONE);
 			if (diferencaData >= 2) {
 				buttonCancelar.setVisibility(View.VISIBLE);
 			}
@@ -194,8 +211,9 @@ public class DetalheServicoFragment extends Fragment {
 		} else if (serv.getStatus().equals("CONCLUIDO")) {
 			statusServico
 					.setImageResource(R.drawable.ic_status_servico_concluido);
-			btnAvaliar.setVisibility(view.GONE);
+			//btnAvaliar.setVisibility(view.GONE);
 		} else {
+			btnAvaliar.setVisibility(view.GONE);
 			statusServico
 					.setImageResource(R.drawable.ic_status_servico_sem_imagem);
 		}
@@ -206,6 +224,7 @@ public class DetalheServicoFragment extends Fragment {
 			telefone.setText(objCliente.getTelefone());
 			infoContratante.setText(R.string.tvContratanteCliente);
 			btnFavorito.setVisibility(view.GONE);
+			btnAvaliar.setVisibility(view.GONE);
 		} else {
 			nome.setText(objDiarista.getNome());
 			telefone.setText(objDiarista.getTelefone());
@@ -215,13 +234,74 @@ public class DetalheServicoFragment extends Fragment {
 
 		return view;
 	}
+
 	private OnClickListener btnAvaliarOnClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			Intent classificarIntent = new Intent(
-					getActivity(), ClassificaServicoActivity.class);
-			classificarIntent.putExtra("servico", serv);
-			startActivity(classificarIntent);
+			LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
+
+			View promptView = layoutInflater.inflate(
+					R.layout.fragment_classifica_servico, null);
+
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+					getActivity());
+
+			// set prompts.xml to be the layout file of the alertdialog builder
+
+			alertDialogBuilder.setView(promptView);
+
+			final RatingBar nota = (RatingBar) promptView
+					.findViewById(R.id.ratingBarClassificaServico);
+			final EditText comentario = (EditText) promptView
+					.findViewById(R.id.editTextComentario);
+			comentario.clearFocus();
+			// setup a dialog window
+
+			alertDialogBuilder.setTitle(R.string.classificaServico)
+					.setCancelable(false)
+					.setPositiveButton("OK",
+							new DialogInterface.OnClickListener() {
+
+								public void onClick(DialogInterface dialog,
+										int id) {
+
+									// get user input and set it to result
+									//dbServicoDB = new ServicoDB(getActivity());
+									Servico servico = new Servico();
+									DiaristaServico diarista = new DiaristaServico();
+									Cliente cliente = new Cliente();
+									Endereco endereco = new Endereco();
+									cliente.setCodigo(objCliente.getCodigo());
+									diarista.setCodigo(objDiarista.getCodigo());
+									endereco.setCodigo(objEndereco.getCodigo());
+									servico.setCliente(cliente);
+									servico.setDiarista(diarista);
+									servico.setCodServico(serv.getCodServico());
+									servico.setDataServico(serv.getDataServico());
+									servico.setDescricao(serv.getDescricao());
+									servico.setStatus(serv.getStatus());
+									servico.setEndereco(endereco);
+									classificacaoVo = new ClassificacaoVO();
+									classificacaoVo.setComentario(comentario.getText().toString());
+									classificacaoVo.setPontuacao(nota.getRating());
+									classificacaoVo.setServico(servico);
+									
+									if (Util.existeConexao(getActivity().getApplicationContext())) {
+										new ClassificarHttpAsyncTask(Constantes.POST_CLASSIFICASERVICO,
+												classificacaoVo).execute();
+									}
+								}
+							})
+					.setNegativeButton("Cancel",
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int id) {
+									dialog.cancel();
+								}
+							}); // create an alert dialog
+			AlertDialog alertD = alertDialogBuilder.create();
+			alertD.show();
+
 		}
 	};
 
@@ -360,6 +440,40 @@ public class DetalheServicoFragment extends Fragment {
 						R.string.msgDeErroWebservice);
 			}
 
+		}
+	}
+	
+	private class ClassificarHttpAsyncTask extends AsyncTask<Void, Void, String> {
+
+		private Object o;
+		private String url;
+
+		public ClassificarHttpAsyncTask(String url, Object o) {
+			this.o = o;
+			this.url = url;
+		}
+
+		@Override
+		protected void onPreExecute() {
+		}
+
+		@Override
+		protected String doInBackground(Void... params) {
+			return WebService.getREST(url, o);
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			if (result != null) {
+
+				try {
+					Util.criarToast(getActivity(),
+							R.string.msgServicoAvaliacao);
+				} catch (Exception e) {
+					Util.criarToast(getActivity(), R.string.msgDeErroWebservice);
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 

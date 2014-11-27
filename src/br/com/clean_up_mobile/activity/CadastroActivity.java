@@ -70,7 +70,7 @@ public class CadastroActivity extends Activity implements OnItemSelectedListener
 		Button btnRegister = (Button) findViewById(R.id.btnRegister);
 		btnRegister.setOnClickListener(btnRegisterOnClickListener);
 		
-		Button btnLogin = (Button) findViewById(R.id.btnLinkToLoginScreen);
+		Button btnLogin = (Button) findViewById(R.id.btnCancelarCadastro);
 		btnLogin.setOnClickListener(btnLoginOnClickListener);
 		
 		RadioGroup radioGroup = (RadioGroup) findViewById(R.id.tipo_usuario);
@@ -308,9 +308,7 @@ public class CadastroActivity extends Activity implements OnItemSelectedListener
 	}
 
 	private void navigatetoLoginActivity() {
-		Intent loginIntent = new Intent(getApplicationContext(),LoginActivity.class);
-		loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		startActivity(loginIntent);
+		finish();
 	}
 
 	private void setDefaultValues() {
@@ -363,6 +361,7 @@ public class CadastroActivity extends Activity implements OnItemSelectedListener
 			if (result) {
 				Util.criarToast(getApplicationContext(), R.string.msgCadastroRealizado);
 				setDefaultValues();
+				navigatetoLoginActivity();
 			}
 		}
 	}

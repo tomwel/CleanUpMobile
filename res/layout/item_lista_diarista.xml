@@ -1,18 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:padding="5dp"
     android:layout_height="match_parent" >
-
-    <TextView
-        android:id="@+id/textViewEspecialidadesListDiarista"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:maxWidth="70dp"
-        android:layout_alignBaseline="@+id/textViewEspecialidades"
-        android:layout_alignBottom="@+id/textViewEspecialidades"
-        android:layout_alignParentRight="true"
-        android:layout_toRightOf="@+id/textViewEspecialidades"
-        android:text="ListEspecialidades" />
 
     <TextView
         android:id="@+id/textViewNomeListDiarista"
@@ -45,19 +35,29 @@
         android:id="@+id/imageViewDiaristaDetalhe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textViewEspecialidades"
+        android:layout_alignBottom="@+id/ratingBarClassificacaoDiarista"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/textViewLoading"
+        android:padding="5dp"
         android:src="@drawable/diarista" />
+
+    <TextView
+        android:id="@+id/textViewEspecialidadesListDiarista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/textViewEspecialidades"
+        android:layout_toRightOf="@+id/imageViewDiaristaDetalhe"
+        android:maxWidth="70dp"
+        android:text="ListEspecialidades" />
 
     <RatingBar
         android:id="@+id/ratingBarClassificacaoDiarista"
         style="?android:attr/ratingBarStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/textViewEspecialidadesListDiarista"
-        android:layout_marginRight="17dp" />
+        android:layout_alignLeft="@+id/textViewEspecialidadesListDiarista"
+        android:layout_below="@+id/textViewEspecialidadesListDiarista" />
 
 </RelativeLayout>

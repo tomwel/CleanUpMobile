@@ -22,7 +22,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:background="@layout/layout_button_verde_sembordas"
-      android:text="Done"
+      android:text="@string/btnConfirmar"
       android:textColor="@color/branco" />
  
 </LinearLayout>

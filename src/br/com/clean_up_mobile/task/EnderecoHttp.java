@@ -20,7 +20,7 @@ import br.com.clean_up_mobile.model.Endereco;
 
 public class EnderecoHttp {
 	private static final String LOG_TAG = "DemoAddress";
-	private static final String GEO_LOCALIZACAO = "http://maps.googleapis.com/maps/api/geocode/json?address=";
+	private static final String GEO_LOCALIZACAO = "http://maps.googleapis.com/maps/api/geocode/json?language=pt-BR&address=";
 	Context context;
 	public static ArrayList<Endereco> autocomplete(String input) {
 

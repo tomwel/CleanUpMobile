@@ -7,19 +7,24 @@
     <string name="carregando">Carregando...</string>
     <string name="conexao">Falha na conexão!</string>
     <string name="logout">Logout</string>
+    <string name="classificaServico">Avalie o serviço:</string>
 
     <!-- Mensagens -->
-    <string name="msgFormularioVazio">Favor preencher o formulário </string>
+    <string name="msgFormularioVazio">Por favor preencher o formulário </string>
     <string name="msgSenhaInvalido">Digite uma senha (Min 8, Max 14)</string>
-    <string name="msgCpfInvalido">Favor digite um CPF válido </string>
-    <string name="msgEmailInvalido">Favor digite um Email válido </string>
+    <string name="msgCpfInvalido">Por favor digite um CPF válido </string>
+    <string name="msgEmailInvalido">Por favor digite um Email válido </string>
     <string name="msgCadastroRealizado">Cadastro Realizado</string>
     <string name="msgCpfCadastrado">CPF já cadastrado</string>
     <string name="msgEmailCadastrado">Email já cadastrado</string>
     <string name="msgLoginSucesso">Login realizado com sucesso</string>
     <string name="msgLoginErrado">Senha ou email errado.</string>
     <string name="msgDeErroWebservice">Ocorreu um erro de conexão com servidor. Tente novamente.</string>
-     <string name="msgServicoSolicitado">Serviço solicitado com sucesso.</string>
+    <string name="msgServicoSolicitado">Serviço solicitado com sucesso.</string>
+    <string name="msgServicoAvaliacao">Serviço avaliado com sucesso.</string>
+    <string name="msgServicoDataEndereco">Por favor selecionar uma data e informe um endereço.</string>
+    <string name="msgServicoData">Por favor selecionar uma data.</string>
+    <string name="msgServicoEndereco">Por favor informar um endereço.</string>
 
     <!-- TextView -->
     <string name="tvNome">Nome</string>
@@ -48,8 +53,10 @@
 
     <!-- Button -->
     <string name="btnLogin">Login</string>
-    <string name="btnRegister">Registrar</string>
-
+    <string name="btnCancelar">Cancelar</string>
+    <string name="btnRegister">Cadastrar</string>
+	<string name="btnConfirmar">Confirmar</string>
+	
     <!-- CheckBox -->
 
     <string name="ckbLavar">Lavar</string>

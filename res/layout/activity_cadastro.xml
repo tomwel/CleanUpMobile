@@ -7,7 +7,7 @@
     <RelativeLayout
         android:id="@+id/RelativeLayout1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="462dp"
         android:layout_gravity="top"
         android:layout_margin="10dp"
         android:gravity="center"
@@ -177,24 +177,27 @@
             android:textColorHint="@color/gray" />
 
         <Button
-            android:id="@+id/btnRegister"
+            android:id="@+id/btnCancelarCadastro"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/btnLinkToLoginScreen"
-            android:layout_alignBottom="@+id/btnLinkToLoginScreen"
+            android:layout_alignBaseline="@+id/btnRegister"
+            android:layout_alignBottom="@+id/btnRegister"
             android:layout_alignLeft="@+id/registerPassword"
-            android:background="@layout/layout_button_verde_sembordas"
-            android:text="@string/btnRegister" />
+            android:layout_marginLeft="14dp"
+            android:background="@color/gray"
+            android:text="@string/btnCancelar"
+            android:textColor="@color/branco" />
 
         <Button
-            android:id="@+id/btnLinkToLoginScreen"
+            android:id="@+id/btnRegister"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_alignRight="@+id/registerPassword"
             android:layout_below="@+id/registerPassword"
-            android:layout_marginTop="14dp"
-            android:background="@layout/layout_button_azul"
-            android:text="@string/btnLogin" />
+            android:layout_marginTop="15dp"
+            android:background="@layout/layout_button_verde_sembordas"
+            android:text="@string/btnRegister"
+            android:textColor="@color/branco" />
 
     </RelativeLayout>
 

@@ -36,7 +36,7 @@ Filterable {
 
 	private static final String LOG_TAG = "DemoAddress";
 	
-	private static final String GEO_LOCALIZACAO = "http://maps.googleapis.com/maps/api/geocode/json?address=";
+	private static final String GEO_LOCALIZACAO = "http://maps.googleapis.com/maps/api/geocode/json?language=pt-BR&address=";
 
 	Context context;
 
@@ -132,9 +132,7 @@ Filterable {
 			StringBuilder sb = new StringBuilder(GEO_LOCALIZACAO);
 
 			sb.append(URLEncoder.encode(input, "utf8"));
-
 			URL url = new URL(sb.toString());
-
 			conn = (HttpURLConnection) url.openConnection();
 
 			InputStreamReader in = new InputStreamReader(conn.getInputStream());
