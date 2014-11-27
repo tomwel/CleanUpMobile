@@ -3,7 +3,7 @@ package br.com.clean_up_mobile.vo;
 import br.com.clean_up_mobile.model.Servico;
 
 public class ClassificacaoVO {
-	private int pontuacao;
+	private Float pontuacao;
 	private String comentario;
 	private Servico servico;
 		
@@ -13,10 +13,10 @@ public class ClassificacaoVO {
 	public void setServico(Servico servico) {
 		this.servico = servico;
 	}
-	public int getPontuacao() {
+	public Float getPontuacao() {
 		return pontuacao;
 	}
-	public void setPontuacao(int pontuacao) {
+	public void setPontuacao(Float pontuacao) {
 		this.pontuacao = pontuacao;
 	}
 	public String getComentario() {
