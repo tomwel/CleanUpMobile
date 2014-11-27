@@ -98,7 +98,7 @@ public class ServicoDB {
 
 		SQLiteDatabase db = helper.getReadableDatabase();
 
-		if (statusServico.equals("ATIVO"))
+		if (statusServico.equals("ACEITO"))
 			causaWhere = " AND status='" + statusServico + "'";
 
 		Cursor cursor = db.rawQuery("select * from servico where 1=1"

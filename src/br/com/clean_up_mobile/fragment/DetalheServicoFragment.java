@@ -3,9 +3,11 @@ package br.com.clean_up_mobile.fragment;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
@@ -40,13 +42,17 @@ import br.com.clean_up_mobile.task.WebService;
 import br.com.clean_up_mobile.util.Constantes;
 import br.com.clean_up_mobile.util.Util;
 
-public class DetalheServicoFragment extends Fragment implements OnClickListener {
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+public class DetalheServicoFragment extends Fragment {
 
 	ServicoSimples serv = new ServicoSimples();
 	Usuario usuarioLogado;
 	TextView nome, telefone, nomeDiarista, data, endereco, descricao, valor,
 			infoContratante;
-	Button buttonCancel, buttonOk, btnCancelar;
+	Button buttonCancelar, buttonAceitar, buttonRecusar;
 	ImageView statusServico;
 	LinearLayout llConfirmacao;
 	StatusServico status;
@@ -62,6 +68,7 @@ public class DetalheServicoFragment extends Fragment implements OnClickListener 
 	Cliente objCliente;
 	DiaristaComCidade objDiarista;
 	ImageButton btnFavorito;
+	ProgressDialog prgDialog;
 	Button btnAvaliar;
 
 	public static DetalheServicoFragment novaInstancia(ServicoSimples servico) {
@@ -93,6 +100,9 @@ public class DetalheServicoFragment extends Fragment implements OnClickListener 
 
 		Date hoje = new Date();
 
+		long DAY = 24L * 60L * 60L * 1000L;
+		long diferencaData = ((dataServico.getTime() - hoje.getTime()) / DAY);
+
 		jsonEndereco = (JsonObject) parser.parse(serv.getEndereco());
 		jsonCliente = (JsonObject) parser.parse(serv.getCliente());
 		jsonDiarista = (JsonObject) parser.parse(serv.getDiarista());
@@ -116,7 +126,9 @@ public class DetalheServicoFragment extends Fragment implements OnClickListener 
 							objDiarista.getCodigo(),
 							especialidade.getCodigoEspecialidade());
 				}
-				if (dbEspecialidade.pegarEspecialidades(objDiarista.getCodigo()).size() < especialidades.size()){
+				if (dbEspecialidade
+						.pegarEspecialidades(objDiarista.getCodigo()).size() < especialidades
+						.size()) {
 					dbEspecialidade.inserirRelacionamentoEspecialidadeDiarista(
 							objDiarista.getCodigo(),
 							especialidade.getCodigoEspecialidade());
@@ -135,7 +147,12 @@ public class DetalheServicoFragment extends Fragment implements OnClickListener 
 				.findViewById(R.id.textViewContratante);
 		llConfirmacao = (LinearLayout) view
 				.findViewById(R.id.linearLayoutConfirmacao);
-		btnCancelar = (Button) view.findViewById(R.id.buttonCancelar);
+		buttonCancelar = (Button) view.findViewById(R.id.buttonCancelar);
+		buttonCancelar.setOnClickListener(btnCancelarOnClickListener);
+		buttonAceitar = (Button) view.findViewById(R.id.buttonAceitar);
+		buttonAceitar.setOnClickListener(btnAceitarOnClickListener);
+		buttonRecusar = (Button) view.findViewById(R.id.buttonRecusar);
+		buttonRecusar.setOnClickListener(btnCancelarOnClickListener);
 		btnAvaliar = (Button) view.findViewById(R.id.buttonAvaliarServico);
 		btnAvaliar.setOnClickListener(btnAvaliarOnClickListener);
 		btnFavorito = (ImageButton) view.findViewById(R.id.imageButtonFavorito);
@@ -158,16 +175,16 @@ public class DetalheServicoFragment extends Fragment implements OnClickListener 
 		if (serv.getStatus().equals("PENDENTE")) {
 			statusServico
 					.setImageResource(R.drawable.ic_status_servico_pendente);
-			btnAvaliar.setVisibility(view.GONE);
-			if (hoje.compareTo(dataServico) > 0) {
-				llConfirmacao.setVisibility(View.GONE);
+
+			if (diferencaData > 0) {
+				llConfirmacao.setVisibility(View.VISIBLE);
 			}
 
 		} else if (serv.getStatus().equals("ACEITO")) {
 			statusServico.setImageResource(R.drawable.ic_status_servico_ativo);
 
-			if (hoje.compareTo(dataServico) >= 2) {
-				btnCancelar.setVisibility(View.GONE);
+			if (diferencaData >= 2) {
+				buttonCancelar.setVisibility(View.VISIBLE);
 			}
 
 		} else if (serv.getStatus().equals("CANCELAR")) {
@@ -196,46 +213,7 @@ public class DetalheServicoFragment extends Fragment implements OnClickListener 
 			btnVerMapa.setVisibility(view.GONE);
 		}
 
-		// // Botões
-		// buttonCancel = (Button) view.findViewById(R.id.buttonCancel);
-		// buttonOk = (Button) view.findViewById(R.id.buttonOk);
-		//
-		// // if (serv.getStatus().equals("PENDENTE")) {
-		// // buttonCancel.setText("Recusar");
-		// // buttonOk.setText("Aceitar");
-		// // } else if (serv.getStatus().equals("ATIVO")) {
-		// // buttonCancel.setVisibility(View.GONE);
-		// // } else {
-		// // buttonCancel.setVisibility(View.GONE);
-		// // buttonOk.setVisibility(View.GONE);
-		// // }
-		// } else {
-		//
-		// // configurando exibição para o cliente
-		// nomeDiarista = (TextView)
-		// view.findViewById(R.id.textViewNomeDiaristaDetalhe);
-		// nomeDiarista.setText(serv.getDiarista().getNome());
-		// }
-		//
-		// // valor = (TextView) view.findViewById(R.id.textViewValor);
-
 		return view;
-	}
-
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.buttonAceitar:
-			if (buttonOk.getText().equals("Aceitar")) {
-				confirmarServico(serv);
-			} else {
-				cancelaServico(serv);
-			}
-			break;
-		case R.id.buttonRecusar:
-			cancelaServico(serv);
-			break;
-		}
 	}
 	private OnClickListener btnAvaliarOnClickListener = new OnClickListener() {
 		@Override
@@ -272,6 +250,30 @@ public class DetalheServicoFragment extends Fragment implements OnClickListener 
 		}
 	};
 
+	private OnClickListener btnCancelarOnClickListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			// somente 2 dias antes
+			if (Util.existeConexao(getActivity().getApplicationContext())) {
+				String url = Constantes.POST_ATUALIZAR + "recusar/"
+						+ serv.getCodServico();
+				new HttpAsyncTask(url).execute();
+			}
+		}
+	};
+
+	private OnClickListener btnAceitarOnClickListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			// somente se a data do servico não tiver passado
+			if (Util.existeConexao(getActivity().getApplicationContext())) {
+				String url = Constantes.POST_ATUALIZAR + "aceitar/"
+						+ serv.getCodServico();
+				new HttpAsyncTask(url).execute();
+			}
+		}
+	};
+
 	interface DiaristaNosFavoritos {
 		void diaristaAdicionadaAoFavorito(DiaristaComCidade diarista);
 	}
@@ -301,52 +303,64 @@ public class DetalheServicoFragment extends Fragment implements OnClickListener 
 		}
 	};
 
-	public void cancelaServico(ServicoSimples servico) {
-		// somente 2 dias antes
-		if (Util.existeConexao(getActivity().getApplicationContext()))
-			new HttpAsyncTask(Constantes.POST_CANCELASERVICO, servico)
-					.execute();
-	}
-
-	public void confirmarServico(ServicoSimples servico) {
-		// somente se a data do servico não tiver passado
-		if (Util.existeConexao(getActivity().getApplicationContext()))
-			new HttpAsyncTask(Constantes.POST_CONFIRMASERVICO, servico)
-					.execute();
+	private void mostrarProgressDialog(String texto) {
+		prgDialog = new ProgressDialog(getActivity());
+		prgDialog.setMessage(texto);
+		prgDialog.setTitle("Cleanup");
+		prgDialog.setCancelable(true);
+		prgDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+		prgDialog.show();
 	}
 
 	private class HttpAsyncTask extends AsyncTask<Void, Void, String> {
 
-		private Object o;
 		private String url;
 
-		public HttpAsyncTask(String url, Object o) {
-			this.o = o;
-			this.url = url;
+		public HttpAsyncTask(String u) {
+			this.url = u;
 		}
 
 		@Override
 		protected void onPreExecute() {
+			mostrarProgressDialog("Enviando informação...");
 		}
 
 		@Override
 		protected String doInBackground(Void... params) {
-			return WebService.getREST(url, o);
+			return WebService.getREST(url);
 		}
 
 		@Override
 		protected void onPostExecute(String result) {
 
-			/*
-			 * try { if (prgDialog.isShowing()) { prgDialog.dismiss(); } if
-			 * (result != null) {
-			 * 
-			 * JSONObject obj = new JSONObject(result);
-			 * 
-			 * } } catch (JSONException e) {
-			 * Util.criarToast(getActivity().getApplicationContext(),
-			 * R.string.msgDeErroWebservice); }
-			 */
+			try {
+
+				if (prgDialog.isShowing()) {
+					prgDialog.dismiss();
+				}
+
+				if (result != null) {
+					JSONObject obj = new JSONObject(result);
+
+					if (obj.getBoolean("status")) {
+						Util.criarToast(getActivity().getApplicationContext(),
+								"Informações Atualizada.");
+						
+						getActivity().finish();
+					} else {
+						Util.criarToast(getActivity().getApplicationContext(),
+								R.string.msgDeErroWebservice);
+					}
+
+					Util.criarToast(getActivity().getApplicationContext(),
+							R.string.msgDeErroWebservice);
+				}
+			} catch (JSONException e) {
+				Util.criarToast(getActivity().getApplicationContext(),
+						R.string.msgDeErroWebservice);
+			}
+
 		}
 	}
+
 }

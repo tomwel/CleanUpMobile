@@ -38,7 +38,7 @@ public class HomeDiaristaActivity extends ActionBarActivity implements
 		db = new UsuarioDB(getApplicationContext());
 		usuario = (Usuario) getIntent().getSerializableExtra("usuario");
 		
-		fragment1 = new ServicoFragment(true, getApplicationContext(),  "ATIVO");
+		fragment1 = new ServicoFragment(true, getApplicationContext(),  "ACEITO");
 		fragment2 = new ServicoFragment(false, getApplicationContext(), "TODOS");
 
 		final ActionBar actionBar = getSupportActionBar();
