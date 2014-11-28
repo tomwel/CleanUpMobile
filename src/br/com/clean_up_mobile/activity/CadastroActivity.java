@@ -31,9 +31,9 @@ import br.com.clean_up_mobile.util.Mask;
 import br.com.clean_up_mobile.util.Util;
 import br.com.clean_up_mobile.vo.PessoaVO;
 
-public class CadastroActivity extends Activity implements OnItemSelectedListener{
-	
-	
+public class CadastroActivity extends Activity implements
+		OnItemSelectedListener {
+
 	int tipoUsuario = 1;
 	ArrayList<Integer> especialidadesSelecionadas = new ArrayList<Integer>();
 	ProgressDialog prgDialog;
@@ -44,11 +44,10 @@ public class CadastroActivity extends Activity implements OnItemSelectedListener
 	EditText addressET;
 	EditText emailET;
 	EditText pwdET;
-	
 	Spinner spinner;
-	List<Cidade> cidades;
+	List<Cidade> cidades = new ArrayList<Cidade>();
 	Cidade cidade;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -56,7 +55,7 @@ public class CadastroActivity extends Activity implements OnItemSelectedListener
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		spinner = (Spinner) findViewById(R.id.spinner1);
 		spinner.setOnItemSelectedListener(this);
-		
+
 		nameET = (EditText) findViewById(R.id.registerName1);
 		lastNameET = (EditText) findViewById(R.id.registerName2);
 		cpfET = (EditText) findViewById(R.id.registerCPF);
@@ -69,10 +68,10 @@ public class CadastroActivity extends Activity implements OnItemSelectedListener
 
 		Button btnRegister = (Button) findViewById(R.id.btnRegister);
 		btnRegister.setOnClickListener(btnRegisterOnClickListener);
-		
+
 		Button btnLogin = (Button) findViewById(R.id.btnCancelarCadastro);
 		btnLogin.setOnClickListener(btnLoginOnClickListener);
-		
+
 		RadioGroup radioGroup = (RadioGroup) findViewById(R.id.tipo_usuario);
 		radioGroup.setOnCheckedChangeListener(btnRadioOnCheckedChangeListener);
 
@@ -93,47 +92,38 @@ public class CadastroActivity extends Activity implements OnItemSelectedListener
 		CheckBox checkBox5 = (CheckBox) findViewById(R.id.checkBox5);
 		checkBox5.setOnClickListener(checkBoxOnClickListener);
 
-		loadSpinnerData();
-	
-
+		ArrayAdapter<Cidade> dataAdapter = new ArrayAdapter<Cidade>(this,
+				android.R.layout.simple_spinner_item, cidades);
+		dataAdapter
+				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinner.setAdapter(dataAdapter);
 		atualizarEspecialidadesECidades();
 
 	}
-	
+
 	private void loadSpinnerData() {
-        // database handler
-        CidadeDB db = new CidadeDB(getApplicationContext());
- 
-        // Spinner Drop down elements
-        cidades = new ArrayList<Cidade>();
-        cidades = db.listarCidades();        
-        
-        // Criando adapter para spinner
-        ArrayAdapter<Cidade> dataAdapter = new ArrayAdapter<Cidade>(this,
-                android.R.layout.simple_spinner_item, cidades);
- 
-        // Drop down layout style - list view with radio button
-        dataAdapter
-                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
- 
-        // attaching data adapter to spinner
-        spinner.setAdapter(dataAdapter);
-       // spinner.setOnItemSelectedListener(new onItemSelectedListener());   
-        
-    }
+		CidadeDB db = new CidadeDB(getApplicationContext());
+		cidades = db.listarCidades();
+		ArrayAdapter<Cidade> dataAdapter = new ArrayAdapter<Cidade>(this,
+				android.R.layout.simple_spinner_item, cidades);
+		dataAdapter
+				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinner.setAdapter(dataAdapter);
+
+	}
 
 	public void onItemSelected(AdapterView<?> parent, View view, int position,
 			long id) {
 		// On selecting a spinner item
-	
-		        	cidade = cidades.get(position);
-	
+
+		cidade = cidades.get(position);
+
 	}
 
 	public void onNothingSelected(AdapterView<?> arg0) {
-        // TODO Auto-generated method stub
- 
-    }
+		// TODO Auto-generated method stub
+
+	}
 
 	OnClickListener checkBoxOnClickListener = new OnClickListener() {
 
@@ -141,58 +131,56 @@ public class CadastroActivity extends Activity implements OnItemSelectedListener
 		public void onClick(View view) {
 			boolean checked = ((CompoundButton) view).isChecked();
 
-	
 			int index = 0;
 			switch (view.getId()) {
 			case R.id.checkBox1:
 				if (checked) {
 					especialidadesSelecionadas.add(1);
-					
-				
+
 				} else {
 					index = especialidadesSelecionadas.indexOf(1);
 					especialidadesSelecionadas.remove(index);
-					
+
 				}
 				break;
 			case R.id.checkBox2:
 				if (checked) {
 					especialidadesSelecionadas.add(2);
-					
+
 				} else {
 					index = especialidadesSelecionadas.indexOf(2);
 					especialidadesSelecionadas.remove(index);
-					
+
 				}
 				break;
 			case R.id.checkBox3:
 				if (checked) {
 					especialidadesSelecionadas.add(3);
-				
+
 				} else {
 					index = especialidadesSelecionadas.indexOf(3);
 					especialidadesSelecionadas.remove(index);
-					
+
 				}
 				break;
 			case R.id.checkBox4:
 				if (checked) {
 					especialidadesSelecionadas.add(4);
-					
+
 				} else {
 					index = especialidadesSelecionadas.indexOf(4);
 					especialidadesSelecionadas.remove(index);
-					
+
 				}
 				break;
 			case R.id.checkBox5:
 				if (checked) {
 					especialidadesSelecionadas.add(5);
-					
+
 				} else {
 					index = especialidadesSelecionadas.indexOf(5);
 					especialidadesSelecionadas.remove(index);
-					
+
 				}
 				break;
 			}
@@ -221,14 +209,14 @@ public class CadastroActivity extends Activity implements OnItemSelectedListener
 	private OnClickListener btnRegisterOnClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			validaForm(); 
+			validaForm();
 		}
 	};
-	
+
 	private OnClickListener btnLoginOnClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			navigatetoLoginActivity(); 
+			navigatetoLoginActivity();
 		}
 	};
 
@@ -276,7 +264,7 @@ public class CadastroActivity extends Activity implements OnItemSelectedListener
 						p.setCpf(cpfLimpo);
 						p.setTelefone(telefoneLimpo);
 						p.setEndereco(address);
-					
+
 						p.setCidade(cidade.getCodigoCidade());
 						p.setEmail(email);
 						p.setSenha(password);
@@ -359,7 +347,8 @@ public class CadastroActivity extends Activity implements OnItemSelectedListener
 				prgDialog.dismiss();
 			}
 			if (result) {
-				Util.criarToast(getApplicationContext(), R.string.msgCadastroRealizado);
+				Util.criarToast(getApplicationContext(),
+						R.string.msgCadastroRealizado);
 				setDefaultValues();
 				navigatetoLoginActivity();
 			}
@@ -390,10 +379,10 @@ public class CadastroActivity extends Activity implements OnItemSelectedListener
 				Util.criarToast(getApplicationContext(),
 						R.string.msgDeErroWebservice);
 				navigatetoLoginActivity();
+			} else {
+				loadSpinnerData();
 			}
 		}
 	}
 
-
-	
 }
