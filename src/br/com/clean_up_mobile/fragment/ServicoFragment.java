@@ -62,6 +62,7 @@ public class ServicoFragment extends ListFragment implements OnRefreshListener {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		setRetainInstance(true);
 
 		if (mServicos != null) {
 			txtMensagem.setVisibility(View.GONE);
@@ -76,7 +77,7 @@ public class ServicoFragment extends ListFragment implements OnRefreshListener {
 				pegarLista();
 			}
 		}
-		setRetainInstance(true);
+		
 
 		ListView listView = getListView();
 		listView.setOnItemClickListener(new OnItemClickListener() {
@@ -92,6 +93,12 @@ public class ServicoFragment extends ListFragment implements OnRefreshListener {
 				startActivity(it);
 			}
 		});
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		onRefresh();
 	}
 
 	@Override

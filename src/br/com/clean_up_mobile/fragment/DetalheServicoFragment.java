@@ -489,6 +489,7 @@ public class DetalheServicoFragment extends Fragment {
 
 				try {
 					Util.criarToast(getActivity(), R.string.msgServicoAvaliacao);
+					getActivity().finish();
 				} catch (Exception e) {
 					Util.criarToast(getActivity(), R.string.msgDeErroWebservice);
 					e.printStackTrace();
