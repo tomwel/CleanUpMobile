@@ -71,10 +71,10 @@ public class ServicoAdapter extends ArrayAdapter<ServicoSimples> {
 		if (s.getStatus().equals("PENDENTE")) {
 			holder.imageStatus
 					.setImageResource(R.drawable.ic_status_servico_pendente);
-		} else if (s.getStatus().equals("ATIVO")) {
+		} else if (s.getStatus().equals("ACEITO")) {
 			holder.imageStatus
 					.setImageResource(R.drawable.ic_status_servico_ativo);
-		} else if (s.getStatus().equals("INATIVO")) {
+		} else if (s.getStatus().equals("CANCELAR")) {
 			holder.imageStatus
 					.setImageResource(R.drawable.ic_status_servico_inativo);
 		} else if (s.getStatus().equals("CONCLUIDO")) {

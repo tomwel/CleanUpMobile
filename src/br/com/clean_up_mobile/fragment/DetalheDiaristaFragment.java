@@ -154,12 +154,12 @@ public class DetalheDiaristaFragment extends Fragment implements
 
 	public void validaForm() {
 
-		if (data.getText().toString().trim() != ""
-				&& endereco.getText().toString().trim() != "") {
+		if (data.getText().toString().trim() == ""
+				&& endereco.getText().toString().trim() == "") {
 			Util.criarToast(getActivity(), R.string.msgServicoDataEndereco);
-		} else if (data.getText().toString().trim() != "") {
+		} else if (data.getText().toString().trim() == "") {
 			Util.criarToast(getActivity(), R.string.msgServicoData);
-		} else if (endereco.getText().toString().trim() != "") {
+		} else if (endereco.getText().toString().trim() == "") {
 			Util.criarToast(getActivity(), R.string.msgServicoEndereco);
 		} else {
 			salvarEndereco();

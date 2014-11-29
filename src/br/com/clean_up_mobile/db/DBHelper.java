@@ -35,7 +35,7 @@ public class DBHelper extends SQLiteOpenHelper {
 		// tabela servico
 		db.execSQL("create TABLE servico (codigo INTEGER PRIMARY KEY,"
 				+ "tipo TEXT, descricao TEXT, cliente TEXT, diarista TEXT,"
-				+ "endereco TEXT, data TEXT, valor TEXT, status TEXT)");
+				+ "endereco TEXT, data TEXT, valor TEXT, status TEXT, avaliacao INT, comentario TEXT)");
 		
 		// tabela cidade
 				db.execSQL("create TABLE " + Constantes.TABELA_CIDADE

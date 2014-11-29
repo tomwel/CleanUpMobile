@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import br.com.clean_up_mobile.model.Cliente;
-import br.com.clean_up_mobile.model.Diarista;
 import br.com.clean_up_mobile.model.Servico;
 import br.com.clean_up_mobile.model.ServicoSimples;
 import android.content.ContentValues;
@@ -52,6 +50,8 @@ public class ServicoDB {
 		values.put("data", servico.getDataServico());
 		values.put("valor", servico.getValor());
 		values.put("status", servico.getStatus());
+		values.put("avaliacao", servico.getAvaliacao());
+		values.put("comentario", servico.getComentario());
 		return values;
 	}
 
@@ -124,9 +124,11 @@ public class ServicoDB {
 		long data = Long.parseLong(cursor.getString(6));
 		double valor = 8.8;
 		String status = cursor.getString(8);
+		int avaliacao = cursor.getInt(9);
+		String comentario = cursor.getString(10);
 
 		ServicoSimples servico = new ServicoSimples(codigo, tipo, descricao,
-				cliente, diarista, endereco, data, valor, status);
+				cliente, diarista, endereco, data, valor, status, avaliacao, comentario);
 
 		return servico;
 	}

@@ -71,6 +71,7 @@ public class DetalheServicoFragment extends Fragment {
 	Button buttonRecusar;
 	ImageView statusServico;
 	LinearLayout llConfirmacao;
+	LinearLayout llAvaliacao;
 	StatusServico status;
 	String mensagem;
 	UsuarioDB db;
@@ -86,6 +87,8 @@ public class DetalheServicoFragment extends Fragment {
 	ImageButton btnFavorito;
 	ProgressDialog prgDialog;
 	Button btnAvaliar;
+	RatingBar rbClassificacaoDiarista;
+	TextView tvComentario;
 
 	public static DetalheServicoFragment novaInstancia(ServicoSimples servico) {
 		Bundle args = new Bundle();
@@ -163,6 +166,8 @@ public class DetalheServicoFragment extends Fragment {
 				.findViewById(R.id.textViewContratante);
 		llConfirmacao = (LinearLayout) view
 				.findViewById(R.id.linearLayoutConfirmacao);
+		llAvaliacao = (LinearLayout) view
+				.findViewById(R.id.linearLayoutAvaliacao);
 		buttonCancelar = (Button) view.findViewById(R.id.buttonCancelar);
 		buttonCancelar.setOnClickListener(btnCancelarOnClickListener);
 		buttonAceitar = (Button) view.findViewById(R.id.buttonAceitar);
@@ -173,6 +178,10 @@ public class DetalheServicoFragment extends Fragment {
 		btnAvaliar.setOnClickListener(btnAvaliarOnClickListener);
 		btnFavorito = (ImageButton) view.findViewById(R.id.imageButtonFavorito);
 		btnFavorito.setOnClickListener(btnFavoritoOnClickListener);
+		rbClassificacaoDiarista = (RatingBar) view
+				.findViewById(R.id.ratingBarClassificacaoDiarista);
+		tvComentario = (TextView) view.findViewById(R.id.textViewComentario);
+
 		if (objDiarista.favorito) {
 			btnFavorito.setImageResource(drawable.favorite_delete);
 		} else {
@@ -191,29 +200,33 @@ public class DetalheServicoFragment extends Fragment {
 		if (serv.getStatus().equals("PENDENTE")) {
 			statusServico
 					.setImageResource(R.drawable.ic_status_servico_pendente);
-			btnAvaliar.setVisibility(view.GONE);
-			
-			if (diferencaData > 0) {
+
+			if (diferencaData > 1
+					&& usuarioLogado.getPerfil().equals("ROLE_DIARIST")) {
 				llConfirmacao.setVisibility(View.VISIBLE);
 			}
 
 		} else if (serv.getStatus().equals("ACEITO")) {
 			statusServico.setImageResource(R.drawable.ic_status_servico_ativo);
-			btnAvaliar.setVisibility(view.GONE);
 			if (diferencaData >= 2) {
 				buttonCancelar.setVisibility(View.VISIBLE);
 			}
-
 		} else if (serv.getStatus().equals("CANCELAR")) {
 			statusServico
 					.setImageResource(R.drawable.ic_status_servico_inativo);
-			btnAvaliar.setVisibility(view.GONE);
 		} else if (serv.getStatus().equals("CONCLUIDO")) {
 			statusServico
 					.setImageResource(R.drawable.ic_status_servico_concluido);
-			//btnAvaliar.setVisibility(view.GONE);
+
+			if (serv.getAvaliacao() != 0 && serv.getComentario() != null
+					&& usuarioLogado.getPerfil().equals("ROLE_CLIENT")) {
+				llAvaliacao.setVisibility(view.VISIBLE);
+				rbClassificacaoDiarista.setRating(serv.getAvaliacao());
+				tvComentario.setText(serv.getComentario());
+			} else {
+				btnAvaliar.setVisibility(view.VISIBLE);
+			}
 		} else {
-			btnAvaliar.setVisibility(view.GONE);
 			statusServico
 					.setImageResource(R.drawable.ic_status_servico_sem_imagem);
 		}
@@ -257,7 +270,8 @@ public class DetalheServicoFragment extends Fragment {
 			comentario.clearFocus();
 			// setup a dialog window
 
-			alertDialogBuilder.setTitle(R.string.classificaServico)
+			alertDialogBuilder
+					.setTitle(R.string.classificaServico)
 					.setCancelable(false)
 					.setPositiveButton("OK",
 							new DialogInterface.OnClickListener() {
@@ -266,7 +280,8 @@ public class DetalheServicoFragment extends Fragment {
 										int id) {
 
 									// get user input and set it to result
-									//dbServicoDB = new ServicoDB(getActivity());
+									// dbServicoDB = new
+									// ServicoDB(getActivity());
 									Servico servico = new Servico();
 									DiaristaServico diarista = new DiaristaServico();
 									Cliente cliente = new Cliente();
@@ -277,17 +292,22 @@ public class DetalheServicoFragment extends Fragment {
 									servico.setCliente(cliente);
 									servico.setDiarista(diarista);
 									servico.setCodServico(serv.getCodServico());
-									servico.setDataServico(serv.getDataServico());
+									servico.setDataServico(serv
+											.getDataServico());
 									servico.setDescricao(serv.getDescricao());
 									servico.setStatus(serv.getStatus());
 									servico.setEndereco(endereco);
 									classificacaoVo = new ClassificacaoVO();
-									classificacaoVo.setComentario(comentario.getText().toString());
-									classificacaoVo.setPontuacao(nota.getRating());
+									classificacaoVo.setComentario(comentario
+											.getText().toString());
+									classificacaoVo.setPontuacao(nota
+											.getRating());
 									classificacaoVo.setServico(servico);
-									
-									if (Util.existeConexao(getActivity().getApplicationContext())) {
-										new ClassificarHttpAsyncTask(Constantes.POST_CLASSIFICASERVICO,
+
+									if (Util.existeConexao(getActivity()
+											.getApplicationContext())) {
+										new ClassificarHttpAsyncTask(
+												Constantes.POST_CLASSIFICASERVICO,
 												classificacaoVo).execute();
 									}
 								}
@@ -425,7 +445,7 @@ public class DetalheServicoFragment extends Fragment {
 					if (obj.getBoolean("status")) {
 						Util.criarToast(getActivity().getApplicationContext(),
 								"Informações Atualizada.");
-						
+
 						getActivity().finish();
 					} else {
 						Util.criarToast(getActivity().getApplicationContext(),
@@ -442,8 +462,9 @@ public class DetalheServicoFragment extends Fragment {
 
 		}
 	}
-	
-	private class ClassificarHttpAsyncTask extends AsyncTask<Void, Void, String> {
+
+	private class ClassificarHttpAsyncTask extends
+			AsyncTask<Void, Void, String> {
 
 		private Object o;
 		private String url;
@@ -467,8 +488,7 @@ public class DetalheServicoFragment extends Fragment {
 			if (result != null) {
 
 				try {
-					Util.criarToast(getActivity(),
-							R.string.msgServicoAvaliacao);
+					Util.criarToast(getActivity(), R.string.msgServicoAvaliacao);
 				} catch (Exception e) {
 					Util.criarToast(getActivity(), R.string.msgDeErroWebservice);
 					e.printStackTrace();

@@ -135,7 +135,6 @@
                     android:layout_weight="0.05"
                     android:background="@android:color/transparent"
                     android:src="@drawable/favorite_add" />
-
             </LinearLayout>
 
             <!-- nome do cliente -->
@@ -187,19 +186,7 @@
                     android:layout_weight="0.49"
                     android:text="(81) 3333 4444"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                <Button
-                    android:id="@+id/buttonAvaliarServico"
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="89dp"
-                    android:layout_height="34dp"
-                    android:layout_weight="0.35"
-                    android:background="@layout/layout_button_azul"
-                    android:text="avaliar serviço"
-                    android:textColor="@color/branco" />
-
             </LinearLayout>
-
         </LinearLayout>
         <!-- descrição -->
 
@@ -233,7 +220,7 @@
 
         <LinearLayout
             android:id="@+id/linearLayoutConfirmacao"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/linearLayout5"
             android:layout_alignRight="@+id/linearLayout5"
@@ -243,39 +230,99 @@
 
             <Button
                 android:id="@+id/buttonAceitar"
-                android:layout_width="136dp"
+                android:layout_width="144dp"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/linearLayout1"
-                android:layout_alignParentLeft="true"
                 android:layout_margin="5dp"
+                android:layout_weight="0.19"
                 android:background="@layout/layout_button_azul_ok"
                 android:text="Aceitar"
+                android:textColor="@color/branco"
                 android:width="70dp" />
 
             <Button
                 android:id="@+id/buttonRecusar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/buttonAvaliarServico"
-                android:layout_alignBottom="@+id/buttonAvaliarServico"
-                android:layout_alignParentRight="true"
                 android:layout_margin="5dp"
                 android:background="@layout/layout_button_vermelho"
-                android:text="Recusar" />
+                android:text="Recusar"
+                android:textColor="@color/branco" />
         </LinearLayout>
 
         <Button
             android:id="@+id/buttonCancelar"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/linearLayout5"
-            android:layout_alignRight="@+id/linearLayout5"
+            android:layout_alignLeft="@+id/linearLayoutConfirmacao"
+            android:layout_alignRight="@+id/linearLayoutConfirmacao"
             android:layout_below="@+id/linearLayoutConfirmacao"
             android:layout_margin="5dp"
             android:background="@layout/layout_button_vermelho"
             android:text="Cancelar"
+            android:textColor="@color/branco"
             android:visibility="gone" />
 
+        <Button
+            android:id="@+id/buttonAvaliarServico"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/buttonCancelar"
+            android:layout_alignRight="@+id/buttonCancelar"
+            android:layout_below="@+id/buttonCancelar"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@layout/layout_button_azul"
+            android:text="Avaliar Serviço"
+            android:textColor="@color/branco"
+            android:visibility="gone" />
+        <!-- Avaliação -->
+
+        <LinearLayout
+            android:id="@+id/linearLayoutAvaliacao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/linearLayout4"
+            android:layout_alignRight="@+id/linearLayout4"
+            android:layout_below="@+id/buttonAvaliarServico"
+            android:layout_marginBottom="10dp"
+             android:layout_marginTop="10dp"
+            android:background="@layout/layout_fundo_detalhe"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <LinearLayout
+                android:id="@+id/linearLayout7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/buttonAvaliarServico"
+                android:layout_margin="5dp"
+                android:layout_marginEnd="20dp"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="213dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.67"
+                    android:text="Avaliação:" />
+
+                <RatingBar
+                    android:id="@+id/ratingBarClassificacaoDiarista"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textViewComentario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/linearLayout5"
+                android:layout_below="@+id/linearLayout5"
+                android:layout_margin="5dp"
+                android:text="Se hoje é o dia das crianças... Ontem eu disse: o dia da criança é o dia da mãe, dos pais, das professoras, mas também é o dia dos animais, sempre que você olha uma criança, há sempre uma figura oculta, que é um cachorro atrás. O que é algo muito importante!" />
+        </LinearLayout>
     </RelativeLayout>
 
 </ScrollView>

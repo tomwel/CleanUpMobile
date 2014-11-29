@@ -105,6 +105,8 @@ public class ServicoController {
 			servico.setEndereco(ed.toString());
 			servico.setStatus(s.getString("status"));
 			servico.setDescricao(s.getString("descricao"));
+			servico.setAvaliacao(s.getInt("avaliacao"));
+			servico.setComentario(s.getString("comentario"));
 
 			listaServicos.add(servico);
 		}
