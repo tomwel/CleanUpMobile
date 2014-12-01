@@ -53,7 +53,7 @@
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/imageView1"
+                android:id="@+id/imageViewPerfil"
                 android:layout_width="100dp"
                 android:layout_height="70dp"
                 android:src="@drawable/diarista" />

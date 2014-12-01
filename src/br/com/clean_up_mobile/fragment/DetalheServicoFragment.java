@@ -3,20 +3,20 @@ package br.com.clean_up_mobile.fragment;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.app.ProgressDialog;
-
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,6 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import br.com.clean_up_mobile.R;
 import br.com.clean_up_mobile.R.drawable;
+import br.com.clean_up_mobile.activity.HomeDiaristaActivity;
 import br.com.clean_up_mobile.db.DiaristaFavoritaDB;
 import br.com.clean_up_mobile.db.EspecialidadeDB;
 import br.com.clean_up_mobile.db.ServicoDB;
@@ -85,6 +86,7 @@ public class DetalheServicoFragment extends Fragment {
 	Cliente objCliente;
 	DiaristaComCidade objDiarista;
 	ImageButton btnFavorito;
+	ImageView imgCliente;
 	ProgressDialog prgDialog;
 	Button btnAvaliar;
 	RatingBar rbClassificacaoDiarista;
@@ -159,6 +161,8 @@ public class DetalheServicoFragment extends Fragment {
 		endereco = (TextView) view.findViewById(R.id.textViewEnderecoCliente);
 		descricao = (TextView) view.findViewById(R.id.textViewDescricao);
 		nome = (TextView) view.findViewById(R.id.textViewNome);
+		imgCliente = (ImageView) view
+				.findViewById(R.id.imageViewClienteServico);
 		telefone = (TextView) view.findViewById(R.id.textViewTelefone);
 		statusServico = (ImageView) view.findViewById(R.id.imageViewStatus);
 		data = (TextView) view.findViewById(R.id.textViewData);
@@ -200,20 +204,22 @@ public class DetalheServicoFragment extends Fragment {
 		if (serv.getStatus().equals("PENDENTE")) {
 			statusServico
 					.setImageResource(R.drawable.ic_status_servico_pendente);
-
-			if (diferencaData > 1
-					&& usuarioLogado.getPerfil().equals("ROLE_DIARIST")) {
+			btnAvaliar.setVisibility(view.GONE);
+			buttonCancelar.setVisibility(View.VISIBLE);
+			if (diferencaData > 1) {
 				llConfirmacao.setVisibility(View.VISIBLE);
 			}
 
 		} else if (serv.getStatus().equals("ACEITO")) {
 			statusServico.setImageResource(R.drawable.ic_status_servico_ativo);
+			btnAvaliar.setVisibility(view.VISIBLE);
 			if (diferencaData >= 2) {
 				buttonCancelar.setVisibility(View.VISIBLE);
 			}
 		} else if (serv.getStatus().equals("CANCELAR")) {
 			statusServico
 					.setImageResource(R.drawable.ic_status_servico_inativo);
+			buttonCancelar.setVisibility(View.GONE);
 		} else if (serv.getStatus().equals("CONCLUIDO")) {
 			statusServico
 					.setImageResource(R.drawable.ic_status_servico_concluido);
@@ -223,8 +229,6 @@ public class DetalheServicoFragment extends Fragment {
 				llAvaliacao.setVisibility(view.VISIBLE);
 				rbClassificacaoDiarista.setRating(serv.getAvaliacao());
 				tvComentario.setText(serv.getComentario());
-			} else {
-				btnAvaliar.setVisibility(view.VISIBLE);
 			}
 		} else {
 			statusServico
@@ -234,15 +238,32 @@ public class DetalheServicoFragment extends Fragment {
 		// exibição de acordo com perfil
 		if (usuarioLogado.getPerfil().equals("ROLE_DIARIST")) {
 			nome.setText(objCliente.getNome());
+			if (!objCliente.getFotoUsuario().equals(
+					"/cleanUp/resources/assets/img/avatar.jpg")) {
+				Bitmap bitmap;
+				bitmap = decodeBase64(objCliente.getFotoUsuario());
+				bitmap = Bitmap.createScaledBitmap(bitmap, 100, 100, true);
+				imgCliente.setImageBitmap(bitmap);
+			}
 			telefone.setText(objCliente.getTelefone());
 			infoContratante.setText(R.string.tvContratanteCliente);
 			btnFavorito.setVisibility(view.GONE);
 			btnAvaliar.setVisibility(view.GONE);
+			buttonCancelar.setVisibility(View.GONE);
 		} else {
 			nome.setText(objDiarista.getNome());
+			if (!objDiarista.getFotoUsuario().equals(
+					"/cleanUp/resources/assets/img/avatar.jpg")) {
+				Bitmap bitmap;
+				bitmap = decodeBase64(objDiarista.getFotoUsuario());
+				bitmap = Bitmap.createScaledBitmap(bitmap, 100, 100, true);
+				imgCliente.setImageBitmap(bitmap);
+			}
 			telefone.setText(objDiarista.getTelefone());
 			infoContratante.setText(R.string.tvContratanteDiarista);
 			btnVerMapa.setVisibility(view.GONE);
+			buttonAceitar.setVisibility(view.GONE);
+			buttonRecusar.setVisibility(view.GONE);
 		}
 
 		return view;
@@ -445,12 +466,15 @@ public class DetalheServicoFragment extends Fragment {
 					if (obj.getBoolean("status")) {
 						Util.criarToast(getActivity().getApplicationContext(),
 								"Informações Atualizada.");
-
+						Intent it = new Intent(getActivity(),
+								HomeDiaristaActivity.class);
+						startActivity(it);
 						getActivity().finish();
 					} else {
 						Util.criarToast(getActivity().getApplicationContext(),
 								R.string.msgDeErroWebservice);
 					}
+				} else {
 
 					Util.criarToast(getActivity().getApplicationContext(),
 							R.string.msgDeErroWebservice);
@@ -496,6 +520,17 @@ public class DetalheServicoFragment extends Fragment {
 				}
 			}
 		}
+	}
+
+	public static Bitmap decodeBase64(String input) {
+		int inicio;
+		int fim;
+		inicio = input.indexOf(",");
+		fim = input.length();
+		String imgBase64 = input.substring(inicio + 1, fim);
+		byte[] decodedByte = Base64.decode(imgBase64, Base64.DEFAULT);
+		return BitmapFactory
+				.decodeByteArray(decodedByte, 0, decodedByte.length);
 	}
 
 }

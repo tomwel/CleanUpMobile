@@ -37,6 +37,7 @@ public class DiaristaFavoritaDB {
 		values.put("telefone", diarista.getTelefone());
 		values.put("cidade", diarista.getCidade().getNomeCidade());
 		values.put("mediaDiarista", diarista.getMediaDiarista());
+		values.put("fotoDiarista", diarista.getFotoUsuario());
 		diarista.favorito = true;
 
 		return values;
@@ -91,14 +92,15 @@ public class DiaristaFavoritaDB {
 		String nome = cursor.getString(1);
 		String telefone = cursor.getString(2);
 		String cidade = cursor.getString(3);
-		Double mediaDiarista = Double.parseDouble(cursor.getString(4)); 
+		Double mediaDiarista = Double.parseDouble(cursor.getString(4));
+		String fotoDiarista = cursor.getString(5);
 		EspecialidadeDB especialidadeDB = new EspecialidadeDB(contexto);
 
 		List<Especialidade> especialidades = especialidadeDB
 				.pegarEspecialidades(codigo);
 
 		Diarista diarista = new Diarista(codigo, nome, telefone, cidade,
-				especialidades, mediaDiarista);
+				especialidades, mediaDiarista, fotoDiarista);
 
 		return diarista;
 	}

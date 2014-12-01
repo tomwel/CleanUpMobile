@@ -13,7 +13,7 @@ public class DiaristaVO implements Serializable{
 	private String telefone;
 	private Cidade cidade;
 	private List<Especialidade> especialidades;
-
+	
 	public DiaristaVO(){
 //		cidade = new Cidade();
 //	    especialidades = new ArrayList

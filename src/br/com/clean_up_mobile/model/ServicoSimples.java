@@ -18,7 +18,7 @@ public class ServicoSimples implements Serializable {
 
 	public ServicoSimples(Integer codServico, String tipoServico,
 			String descricao, String cliente, String diarista, String endereco,
-			long dataServico, double valor, String status,int avaliacao, String comentario ) {
+			long dataServico, double valor, String status, int avaliacao, String comentario) {
 		super();
 		this.codServico = codServico;
 		this.tipoServico = tipoServico;
@@ -108,19 +108,19 @@ public class ServicoSimples implements Serializable {
 		this.status = status;
 	}
 
-	public String getComentario() {
-		return comentario;
-	}
-
-	public void setComentario(String comentario) {
-		this.comentario = comentario;
-	}
-
 	public int getAvaliacao() {
 		return avaliacao;
 	}
 
 	public void setAvaliacao(int avaliacao) {
 		this.avaliacao = avaliacao;
+	}
+
+	public String getComentario() {
+		return comentario;
+	}
+
+	public void setComentario(String comentario) {
+		this.comentario = comentario;
 	}
 }

@@ -1,5 +1,6 @@
 package br.com.clean_up_mobile.vo;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class PessoaVO {
@@ -9,6 +10,8 @@ public class PessoaVO {
 	private String cpf;
 	private String telefone;
 	private String endereco;
+	private BigDecimal lat;
+	private BigDecimal lng;
 	private int cidade;
 	private String email;
 	private String senha;
@@ -43,6 +46,18 @@ public class PessoaVO {
 	}
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
+	}
+	public BigDecimal getLat() {
+		return lat;
+	}
+	public void setLat(BigDecimal lat) {
+		this.lat = lat;
+	}
+	public BigDecimal getLng() {
+		return lng;
+	}
+	public void setLng(BigDecimal lng) {
+		this.lng = lng;
 	}
 	public int getCidade() {
 		return cidade;

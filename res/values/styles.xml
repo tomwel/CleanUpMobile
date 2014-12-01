@@ -17,6 +17,10 @@
         <item name="android:windowBackground">@drawable/background</item>
         <item name="android:windowNoTitle">true</item>
     </style>
+    
+    <style name="Theme.AppCompat.Light.NoActionBar" parent="@style/Theme.AppCompat.Light">
+    	<item name="android:windowNoTitle">true</item>
+ 	</style> 
 
     <style name="menu" parent="AppBaseTheme">
         <item name="android:windowBackground">@drawable/gradient_menu</item>

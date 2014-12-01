@@ -50,20 +50,21 @@ public class Util {
 
 	public static boolean existeConexao(Context c) {
 
-		ConnectivityManager cm = (ConnectivityManager) c
-				.getSystemService(Context.CONNECTIVITY_SERVICE);
-
-		int wifi = ConnectivityManager.TYPE_WIFI;
-		int mobile = ConnectivityManager.TYPE_MOBILE;
-
-		if (cm.getNetworkInfo(mobile).isConnected()
-				|| cm.getNetworkInfo(wifi).isConnected()) {
-			return true;
-		} else {
-			Toast.makeText(c, "Sem conexão com a internet", Toast.LENGTH_SHORT)
-					.show();
-			return false;
-		}
+//		ConnectivityManager cm = (ConnectivityManager) c
+//				.getSystemService(Context.CONNECTIVITY_SERVICE);
+//
+//		int wifi = ConnectivityManager.TYPE_WIFI;
+//		int mobile = ConnectivityManager.TYPE_MOBILE;
+//
+//		if (cm.getNetworkInfo(mobile).isConnected()
+//				|| cm.getNetworkInfo(wifi).isConnected()) {
+//			return true;
+//		} else {
+//			Toast.makeText(c, "Sem conexão com a internet", Toast.LENGTH_SHORT)
+//					.show();
+//			return false;
+//		}
+		return true;
 	}
 
 	public static boolean check(String documento) {

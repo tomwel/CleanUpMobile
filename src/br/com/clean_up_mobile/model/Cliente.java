@@ -7,6 +7,7 @@ public class Cliente implements Serializable {
 	private Integer codigo;
 	private String nome;
 	private String telefone;
+	private String fotoUsuario;
 
 	public Cliente() {
 	}
@@ -39,5 +40,13 @@ public class Cliente implements Serializable {
 
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
+	}
+
+	public String getFotoUsuario() {
+		return fotoUsuario;
+	}
+
+	public void setFotoUsuario(String fotoUsuario) {
+		this.fotoUsuario = fotoUsuario;
 	}
 }

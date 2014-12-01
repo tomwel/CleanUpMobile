@@ -1,0 +1,153 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#80FFFFFF" >
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="611dp"
+    android:padding="20dp"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin" >
+
+    <EditText
+        android:id="@+id/editTextEditarNomeDiarista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/textView1"
+        android:layout_marginTop="14dp"
+        android:ems="10"
+        android:hint="Nome"
+        android:inputType="textPersonName" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/editTextEditarTelefoneDiarista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/editTextEditarNomeDiarista"
+        android:layout_marginTop="18dp"
+        android:ems="10"
+        android:hint="@string/tvTelefone"
+        android:inputType="phone"
+        android:textColorHint="@color/gray" />
+
+    <EditText
+        android:id="@+id/editTextEditarEmailDiarista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/autoCompleteTextViewEditarEnderecoDiarista"
+        android:layout_marginTop="14dp"
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:id="@+id/editTextEditarSenhaDiarista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/editTextEditarEmailDiarista"
+        android:layout_marginTop="14dp"
+        android:ems="10"
+        android:hint="Nova senha"
+        android:inputType="textPassword" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="Editar Perfil"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="25sp" />
+
+    <Spinner
+        android:id="@+id/spinnerCidadeDiarista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/editTextEditarTelefoneDiarista" />
+
+    <CheckBox
+        android:id="@+id/checkBox1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/spinnerCidadeDiarista"
+        android:layout_below="@+id/spinnerCidadeDiarista"
+        android:text="@string/ckbLavar" />
+
+    <CheckBox
+        android:id="@+id/checkBox2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/checkBox1"
+        android:text="@string/ckbPassar" />
+
+    <CheckBox
+        android:id="@+id/checkBox3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/checkBox2"
+        android:text="@string/ckbCozinhar" />
+
+    <Button
+        android:id="@+id/buttonCancelarEdicaoDiarista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="@string/btnCancelar" />
+
+    <CheckBox
+        android:id="@+id/checkBox4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/checkBox3"
+        android:text="@string/ckbFaxinar" />
+
+    <CheckBox
+        android:id="@+id/checkBox5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/checkBox4"
+        android:text="@string/ckbBaba" />
+
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteTextViewEditarEnderecoDiarista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/checkBox5"
+        android:layout_marginTop="18dp"
+        android:ems="10"
+        android:hint="Endereço" />
+
+    <Button
+        android:id="@+id/buttonConfirmarEdicaoDiarista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/btnConfirmar" />
+
+</RelativeLayout>
+</ScrollView>

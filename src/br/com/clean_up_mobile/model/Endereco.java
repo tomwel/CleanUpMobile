@@ -1,8 +1,9 @@
 package br.com.clean_up_mobile.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Endereco {
+public class Endereco implements Serializable{
 	private Integer codigo;
 	private String logradouro;
 	private BigDecimal lat;

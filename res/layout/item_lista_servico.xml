@@ -3,39 +3,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <TextView
+        android:id="@+id/textInformacao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textData"
+        android:layout_toLeftOf="@+id/imageStatus"
+        android:gravity="center_vertical|center_horizontal|start"
+        android:padding="10dp"
+        android:text="Rua Campo..."
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
     <ImageView
         android:id="@+id/imageStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textView2"
+        android:layout_alignBottom="@+id/textInformacao"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
         android:src="@drawable/ic_ok" />
 
     <TextView
         android:id="@+id/textData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textInformacao"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_margin="5dp"
         android:background="@layout/layout_fundo_detalhe"
         android:gravity="center_vertical|center_horizontal|center"
         android:text="11/12"
         android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/textInformacao"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/imageStatus"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/imageStatus"
-        android:layout_toRightOf="@+id/textData"
-        android:gravity="center_vertical|center_horizontal|start"
-        android:padding="10dp"
-        android:text="Rua Campo..."
-        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

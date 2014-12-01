@@ -38,7 +38,7 @@ public class HomeDiaristaActivity extends ActionBarActivity implements
 		db = new UsuarioDB(getApplicationContext());
 		usuario = (Usuario) getIntent().getSerializableExtra("usuario");
 		
-		fragment1 = new ServicoFragment(true, getApplicationContext(),  "ACEITO");
+		fragment1 = new ServicoFragment(true, getApplicationContext(),  "PENDENTE");
 		fragment2 = new ServicoFragment(false, getApplicationContext(), "TODOS");
 
 		final ActionBar actionBar = getSupportActionBar();
@@ -89,7 +89,10 @@ public class HomeDiaristaActivity extends ActionBarActivity implements
 				e.getMessage();
 			}
 		case R.id.action_settings:
-			Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT).show();
+			Intent perfilIntent = new Intent(getApplicationContext(),
+					PerfilActivity.class);
+			perfilIntent.putExtra("usuario", usuario);
+			startActivity(perfilIntent);
 			break;
 		}
 

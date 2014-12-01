@@ -19,7 +19,8 @@ import br.com.clean_up_mobile.util.Constantes;
 
 public class DiaristasHttp {
 
-	public static List<Diarista> retrieveDiaristas() throws Exception, IOException {
+	public static List<Diarista> retrieveDiaristas() throws Exception,
+			IOException {
 		URL url = new URL(Constantes.GET_DIARISTAS);
 		HttpURLConnection conexao = (HttpURLConnection) url.openConnection();
 		conexao.setRequestMethod("GET");
@@ -31,15 +32,15 @@ public class DiaristasHttp {
 		if (conexao.getResponseCode() == 200) { // HTTP_OK
 			return carregarDiaristas(conexao.getInputStream());
 		}
-		return null;
-
+			return null;
 	}
 
 	public static List<Diarista> carregarDiaristas(InputStream is)
 			throws JSONException, IOException {
 		JSONArray jsonDiaristas;
 		jsonDiaristas = new JSONArray(bytesToString(is));
-		List<Diarista> diaristas = new ArrayList<Diarista>(jsonDiaristas.length());
+		List<Diarista> diaristas = new ArrayList<Diarista>(
+				jsonDiaristas.length());
 		for (int i = 0; i < jsonDiaristas.length(); i++) {
 			Diarista diarista = new Diarista();
 			Cidade cidade = new Cidade();
@@ -47,22 +48,26 @@ public class DiaristasHttp {
 			JSONObject jsonDiarista = jsonDiaristas.getJSONObject(i);
 			diarista.setCodigo(jsonDiarista.getInt("codigo"));
 			diarista.setNome(jsonDiarista.getString("nome"));
+			diarista.setFotoUsuario(jsonDiarista.getString("fotoUsuario"));
 			diarista.setMediaDiarista(jsonDiarista.getDouble("mediaDiarista"));
 			JSONObject jsonCidade = jsonDiarista.getJSONObject("cidade");
-//			cidade.setCodigoCidade(jsonCidade.getInt("codigoCidade"));
-//			cidade.setNomeCidade(jsonCidade.getString("nomeCidade"));
+			// cidade.setCodigoCidade(jsonCidade.getInt("codigoCidade"));
+			// cidade.setNomeCidade(jsonCidade.getString("nomeCidade"));
 			diarista.setCidade(jsonCidade.getString("nomeCidade"));
-			JSONArray jsonEspecialidades = jsonDiarista.getJSONArray("especialidades");
+			JSONArray jsonEspecialidades = jsonDiarista
+					.getJSONArray("especialidades");
 			for (int j = 0; j < jsonEspecialidades.length(); j++) {
 				Especialidade especialidade = new Especialidade();
-				JSONObject jsonEspecialidade = jsonEspecialidades.getJSONObject(j);
-				especialidade.setCodigoEspecialidade(jsonEspecialidade.getInt("codigoEspecialidade"));
-				especialidade.setNomeEspecialidade(jsonEspecialidade.getString("nomeEspecialidade"));
+				JSONObject jsonEspecialidade = jsonEspecialidades
+						.getJSONObject(j);
+				especialidade.setCodigoEspecialidade(jsonEspecialidade
+						.getInt("codigoEspecialidade"));
+				especialidade.setNomeEspecialidade(jsonEspecialidade
+						.getString("nomeEspecialidade"));
 				especialidades.add(especialidade);
-				diarista.setEspecialidades(especialidades);
 			}
-			
-			
+			diarista.setEspecialidades(especialidades);
+
 			diaristas.add(diarista);
 		}
 

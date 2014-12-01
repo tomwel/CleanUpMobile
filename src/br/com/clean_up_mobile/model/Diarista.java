@@ -7,6 +7,7 @@ public class Diarista implements Serializable {
 
 	private Integer codigo;
 	private String nome;
+	private String fotoUsuario;
 	private String telefone;
 	private String cidade;
 	private List<Especialidade> especialidades;
@@ -17,7 +18,7 @@ public class Diarista implements Serializable {
 	}
 
 	public Diarista(Integer codigo, String nome, String telefone,
-			String cidade, List<Especialidade> especialidades, Double mediaDiarista) {
+			String cidade, List<Especialidade> especialidades, Double mediaDiarista, String fotoUsuario) {
 		super();
 		this.codigo = codigo;
 		this.nome = nome;
@@ -25,6 +26,7 @@ public class Diarista implements Serializable {
 		this.cidade = cidade;
 		this.especialidades = especialidades;
 		this.mediaDiarista = mediaDiarista;
+		this.fotoUsuario = fotoUsuario;
 	}
 
 	public Integer getCodigo() {
@@ -73,5 +75,13 @@ public class Diarista implements Serializable {
 
 	public void setMediaDiarista(Double mediaDiarista) {
 		this.mediaDiarista = mediaDiarista;
+	}
+
+	public String getFotoUsuario() {
+		return fotoUsuario;
+	}
+
+	public void setFotoUsuario(String fotoUsuario) {
+		this.fotoUsuario = fotoUsuario;
 	}
 }

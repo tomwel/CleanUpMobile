@@ -9,9 +9,10 @@ public class Usuario implements Serializable{
 	private boolean ativo;
 	private String senha;
 	private String perfil;
+	private String fotoPerfil;
 	
 	public Usuario(int id, String email, String apelido, boolean ativo, String senha,
-			String perfil) {
+			String perfil, String fotoPerfil) {
 		super();
 		this.id = id;
 		this.email = email;
@@ -19,6 +20,7 @@ public class Usuario implements Serializable{
 		this.ativo = ativo;
 		this.senha = senha;
 		this.perfil = perfil;
+		this.fotoPerfil = fotoPerfil;
 	}
 
 	public Usuario(){
@@ -71,5 +73,13 @@ public class Usuario implements Serializable{
 	
 	public void setApelido(String apelido) {
 		this.apelido = apelido;
+	}
+
+	public String getFotoPerfil() {
+		return fotoPerfil;
+	}
+
+	public void setFotoPerfil(String fotoPerfil) {
+		this.fotoPerfil = fotoPerfil;
 	}
 }

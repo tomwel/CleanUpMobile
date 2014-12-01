@@ -31,12 +31,11 @@ public class HomeClienteActivity extends ActionBarActivity implements
 	ViewPager pager;
 	Usuario usuario;
 	UsuarioDB db;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home_cliente);
-		
 		
 		db = new UsuarioDB(getApplicationContext());
 		usuario = (Usuario) getIntent().getSerializableExtra("usuario");
@@ -107,8 +106,10 @@ public class HomeClienteActivity extends ActionBarActivity implements
 				e.getMessage();
 			}
 		case R.id.action_settings:
-			Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT)
-					.show();
+			Intent perfilIntent = new Intent(getApplicationContext(),
+					PerfilActivity.class);
+			perfilIntent.putExtra("usuario", usuario);
+			startActivity(perfilIntent);
 			break;
 		}
 

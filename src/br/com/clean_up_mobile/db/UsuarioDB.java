@@ -44,6 +44,7 @@ public class UsuarioDB {
 		values.put("ativo", usuario.getAtivo());
 		values.put("senha", usuario.getSenha());
 		values.put("perfil", usuario.getPerfil());
+		values.put("fotoPerfil", usuario.getFotoPerfil());
 		return values;
 	}
 
@@ -86,7 +87,8 @@ public class UsuarioDB {
 		String apelido = cursor.getString(3);
 		String senha = cursor.getString(4);
 		String perfil = cursor.getString(5);
-		Usuario usuario = new Usuario(id, email, apelido, ativo, senha, perfil);
+		String fotoPerfil = cursor.getString(6);
+		Usuario usuario = new Usuario(id, email, apelido, ativo, senha, perfil, fotoPerfil);
 
 		return usuario;
 	}

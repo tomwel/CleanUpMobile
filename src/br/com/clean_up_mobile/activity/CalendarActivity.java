@@ -31,7 +31,7 @@ public class CalendarActivity extends Activity {
 		setContentView(R.layout.calendar_activity);
 
 		Calendar nextYear = Calendar.getInstance();
-		nextYear.add(Calendar.MONTH, 1);
+		nextYear.add(Calendar.DAY_OF_MONTH, 3);
 
 		calendar = (CalendarPickerView) findViewById(R.id.calendar_view);
 		Date today = new Date();

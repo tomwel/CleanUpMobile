@@ -1,7 +1,6 @@
 package br.com.clean_up_mobile.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class Servico implements Serializable  {
 
@@ -14,7 +13,6 @@ public class Servico implements Serializable  {
 	private long dataServico;
 	private double valor;
 	private String status;
-	
 	public  Servico() {
 		this.diarista = new DiaristaServico();
 		this.cliente = new Cliente();

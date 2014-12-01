@@ -12,7 +12,7 @@ import android.support.v7.app.ActionBarActivity;
 public class MainActivity extends ActionBarActivity {
 	UsuarioDB db;
 	Usuario usuario;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -29,7 +29,7 @@ public class MainActivity extends ActionBarActivity {
 
 				try {
 					// Thread will sleep for 5 seconds
-					sleep(3 * 1000);
+					sleep(5 * 1000);
 					
 //					n.cancelaNotificacao();
 

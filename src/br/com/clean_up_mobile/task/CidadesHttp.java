@@ -28,7 +28,6 @@ public class CidadesHttp {
 			return carregarCidades(conexao.getInputStream());
 		}
 		return null;
-
 	}
 
 	public static List<Cidade> carregarCidades(InputStream is)

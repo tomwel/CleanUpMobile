@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import br.com.clean_up_mobile.model.Cliente;
+import br.com.clean_up_mobile.model.Diarista;
 import br.com.clean_up_mobile.model.Servico;
 import br.com.clean_up_mobile.model.ServicoSimples;
 import android.content.ContentValues;
@@ -98,7 +100,7 @@ public class ServicoDB {
 
 		SQLiteDatabase db = helper.getReadableDatabase();
 
-		if (statusServico.equals("ACEITO"))
+		if (statusServico.equals("PENDENTE"))
 			causaWhere = " AND status='" + statusServico + "'";
 
 		Cursor cursor = db.rawQuery("select * from servico where 1=1"

@@ -5,7 +5,6 @@ import br.com.clean_up_mobile.model.Usuario;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v4.widget.SlidingPaneLayout.PanelSlideListener;
 import android.view.View;
 import android.view.Window;
@@ -17,7 +16,7 @@ public class HomeActivity extends FragmentActivity implements
 
 	//private SlidingPaneLayout mSlidingLayout;
 	Usuario usuario;
-
+	    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -46,22 +45,6 @@ public class HomeActivity extends FragmentActivity implements
 			startActivity(homeDiaristaIntent);
 			finish();
 		}
-
-//		// centro
-//		FragmentTransaction transactionCentro = getSupportFragmentManager()
-//				.beginTransaction();
-//		transactionCentro.replace(R.id.frameLayoutCentro, f);
-//		transactionCentro.commit();
-//
-//		// menu
-//		FragmentTransaction transactionMenu = getSupportFragmentManager()
-//				.beginTransaction();
-//		transactionMenu.replace(R.id.frameLayoutMenu, new MenuFragment());
-//		transactionMenu.commit();
-//
-//		mSlidingLayout = (SlidingPaneLayout) findViewById(R.id.sliding_pane_layout);
-//		mSlidingLayout.setPanelSlideListener(this);
-//
 	}
 
 	@Override

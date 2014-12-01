@@ -5,7 +5,8 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Intent;
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.content.pm.ActivityInfo;
@@ -14,6 +15,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -26,13 +28,16 @@ import br.com.clean_up_mobile.R;
 import br.com.clean_up_mobile.controller.CadastroController;
 import br.com.clean_up_mobile.db.CidadeDB;
 import br.com.clean_up_mobile.model.Cidade;
+import br.com.clean_up_mobile.model.Endereco;
+import br.com.clean_up_mobile.task.EnderecoHttp;
 import br.com.clean_up_mobile.util.Constantes;
 import br.com.clean_up_mobile.util.Mask;
+import br.com.clean_up_mobile.util.PlaceHolder;
 import br.com.clean_up_mobile.util.Util;
 import br.com.clean_up_mobile.vo.PessoaVO;
 
 public class CadastroActivity extends Activity implements
-		OnItemSelectedListener {
+		OnItemSelectedListener, OnClickListener {
 
 	int tipoUsuario = 1;
 	ArrayList<Integer> especialidadesSelecionadas = new ArrayList<Integer>();
@@ -41,19 +46,23 @@ public class CadastroActivity extends Activity implements
 	EditText lastNameET;
 	EditText cpfET;
 	EditText phoneET;
-	EditText addressET;
+	AutoCompleteTextView addressET;
 	EditText emailET;
 	EditText pwdET;
 	Spinner spinner;
 	List<Cidade> cidades = new ArrayList<Cidade>();
 	Cidade cidade;
-
+	EnderecoTask mTask;
+	ArrayAdapter<String> adapter;
+	Endereco mEndereco;
+	PessoaVO pessoaVO = new PessoaVO();
+	PlaceHolder placeHolder;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_cadastro);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-		spinner = (Spinner) findViewById(R.id.spinner1);
+		spinner = (Spinner) findViewById(R.id.spinnerCidade);
 		spinner.setOnItemSelectedListener(this);
 
 		nameET = (EditText) findViewById(R.id.registerName1);
@@ -62,10 +71,15 @@ public class CadastroActivity extends Activity implements
 		cpfET.addTextChangedListener(Mask.insert("###.###.###-##", cpfET));
 		phoneET = (EditText) findViewById(R.id.registerPhone);
 		phoneET.addTextChangedListener(Mask.insert("(##)#####-####", phoneET));
-		addressET = (EditText) findViewById(R.id.registerAddress);
+		addressET = (AutoCompleteTextView) findViewById(R.id.registerAddress);
 		emailET = (EditText) findViewById(R.id.registerEmail);
 		pwdET = (EditText) findViewById(R.id.registerPassword);
-
+		
+		
+		addressET.setOnClickListener(this);
+		addressET.setAdapter(new PlaceHolder(getApplicationContext(),
+				R.layout.list_item_autocomplete));
+		
 		Button btnRegister = (Button) findViewById(R.id.btnRegister);
 		btnRegister.setOnClickListener(btnRegisterOnClickListener);
 
@@ -259,19 +273,22 @@ public class CadastroActivity extends Activity implements
 						String cpfLimpo = Util.limpaCpf(cpf);
 						String telefoneLimpo = Util.limpaTelefone(phone);
 
-						PessoaVO p = new PessoaVO();
-						p.setNome(name + " " + lastname);
-						p.setCpf(cpfLimpo);
-						p.setTelefone(telefoneLimpo);
-						p.setEndereco(address);
+						pessoaVO.setNome(name + " " + lastname);
+						pessoaVO.setCpf(cpfLimpo);
+						pessoaVO.setTelefone(telefoneLimpo);
+						//pessoaVO.setEndereco(address);
 
-						p.setCidade(cidade.getCodigoCidade());
-						p.setEmail(email);
-						p.setSenha(password);
-						p.setTipo(tipoUsuario);
-						p.setEspecialidades(especialidadesSelecionadas);
+						pessoaVO.setCidade(cidade.getCodigoCidade());
+						pessoaVO.setEmail(email);
+						pessoaVO.setSenha(password);
+						pessoaVO.setTipo(tipoUsuario);
+						pessoaVO.setEspecialidades(especialidadesSelecionadas);
 
-						doCadastroUsuario(p);
+						if(tipoUsuario == 1){
+							doCadastroUsuario(pessoaVO);
+						}else if(tipoUsuario == 0){
+							salvarEndereco();
+						}
 					}
 				}
 			}
@@ -383,6 +400,56 @@ public class CadastroActivity extends Activity implements
 				loadSpinnerData();
 			}
 		}
+	}
+	
+	private void salvarEndereco() {
+
+		ConnectivityManager cm = (ConnectivityManager) getApplicationContext()
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+		if (cm.getActiveNetworkInfo() != null
+				&& cm.getActiveNetworkInfo().isConnected()) {
+
+			mTask = new EnderecoTask();
+			mTask.execute();
+		}
+	}
+
+	class EnderecoTask extends AsyncTask<Void, Void, ArrayList<Endereco>> {
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+		}
+
+		@Override
+		protected ArrayList<Endereco> doInBackground(Void... params) {
+			try {
+				return EnderecoHttp.autocomplete(addressET.getText().toString());
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+
+		}
+
+		@Override
+		protected void onPostExecute(ArrayList<Endereco> result) {
+			super.onPostExecute(result);
+			if (result != null) {
+				mEndereco = result.get(0);
+				pessoaVO.setEndereco(result.get(0).getLogradouro());
+				pessoaVO.setLat(result.get(0).getLat());
+				pessoaVO.setLng(result.get(0).getLng());
+				doCadastroUsuario(pessoaVO);
+			}
+		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

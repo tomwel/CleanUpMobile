@@ -8,9 +8,7 @@ import br.com.clean_up_mobile.R;
 import br.com.clean_up_mobile.activity.OnClickDiarista;
 import br.com.clean_up_mobile.adapter.DiaristasAdapter;
 import br.com.clean_up_mobile.db.EspecialidadeDB;
-import br.com.clean_up_mobile.fragment.ServicoFragment.AtualizaManualTask;
 import br.com.clean_up_mobile.model.Diarista;
-import br.com.clean_up_mobile.model.Especialidade;
 import br.com.clean_up_mobile.task.DiaristasHttp;
 import br.com.clean_up_mobile.util.Util;
 import android.content.Context;
@@ -58,19 +56,6 @@ public class ClienteFragment extends ListFragment implements
 		setRetainInstance(true);
 	}
 
-	private void iniciarDownload() {
-
-		ConnectivityManager cm = (ConnectivityManager) getActivity()
-				.getSystemService(Context.CONNECTIVITY_SERVICE);
-
-		if (cm.getActiveNetworkInfo() != null
-				&& cm.getActiveNetworkInfo().isConnected()) {
-
-			mTask = new DiaristasTask();
-			mTask.execute();
-		}
-	}
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -85,8 +70,21 @@ public class ClienteFragment extends ListFragment implements
 		mSearchView.setOnQueryTextListener(this);
 		mSearchView.clearFocus();
 		iniciarDownload();
-		System.out.println("atualizou");
 		return view;
+	
+	}
+	
+	private void iniciarDownload() {
+
+		ConnectivityManager cm = (ConnectivityManager) getActivity()
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+		if (cm.getActiveNetworkInfo() != null
+				&& cm.getActiveNetworkInfo().isConnected()) {
+
+			mTask = new DiaristasTask();
+			mTask.execute();
+		}
 	}
 
 	@Override

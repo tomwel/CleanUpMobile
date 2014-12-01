@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <!-- Menu Lateral -->
+     <!--Menu Lateral --> 
 
     <FrameLayout
         android:id="@+id/frameLayoutMenu"
@@ -14,7 +14,7 @@
         android:background="@drawable/gradient_menu" >
     </FrameLayout>
 
-    <!-- Conteúdo da tela -->
+     <!-- Conteúdo da tela  --> 
 
     <RelativeLayout
         android:id="@+id/rightPane"
@@ -29,6 +29,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="174dp" >
         </FrameLayout>
+        
     </RelativeLayout>
 
 </android.support.v4.widget.SlidingPaneLayout>

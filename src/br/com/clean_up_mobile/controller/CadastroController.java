@@ -77,6 +77,16 @@ public class CadastroController {
 		}
 		return true;
 	}
+	
+	public boolean atualizaCidades() {
+		try {
+			atualizarCidades();
+
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
 
 	public void atualizarEspecialidades() throws JSONException {
 

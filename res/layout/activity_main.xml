@@ -3,39 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@drawable/background_screen"
     tools:context="br.com.clean_up_mobile.activity.MainActivity" >
-
-    <ImageView
-        android:id="@+id/imgLogo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="82dp"
-        android:src="@drawable/logo" />
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imgLogo"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="27dp"
-        android:fontFamily="@string/common_google_play_services_notification_ticker"
-        android:text="@string/tvLogo1"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/preto" />
-
-    <TextView
-        android:id="@+id/textViewLogo2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"
-        android:text="@string/tvLogo2"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/preto" />
 
 </RelativeLayout>

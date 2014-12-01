@@ -8,5 +8,18 @@
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- API 14 theme customizations can go here. -->
     </style>
+    
+     <style name="CleberActionBarTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:actionBarStyle">@style/CleberActionBar</item>
+    </style>
+	
+    <style name="CleberActionBar" parent="@style/Widget.AppCompat.ActionBar">
+        <item name="android:titleTextStyle">@style/Cleber.TitleTextStyle</item>
+    </style>
+    
+    <style name="Cleber.TitleTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/abc_search_url_text_holo</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 
 </resources>

@@ -111,21 +111,27 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content"
+                android:layout_weight="0.93" >
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.39"
-                    android:orientation="vertical" >
+                    android:layout_weight="0.69" >
 
                     <TextView
                         android:id="@+id/textViewContratante"
                         android:layout_width="wrap_content"
-                        android:layout_height="36dp"
+                        android:layout_height="match_parent"
                         android:layout_margin="5dp"
-                        android:gravity="center_vertical|center_horizontal|center"
                         android:text="Cliente" />
+
+                    <ImageView
+                        android:id="@+id/imageViewClienteServico"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:src="@drawable/ic_diarista" />
                 </LinearLayout>
 
                 <ImageButton
@@ -188,6 +194,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium" />
             </LinearLayout>
         </LinearLayout>
+
         <!-- descrição -->
 
         <LinearLayout
@@ -297,7 +304,6 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/buttonAvaliarServico"
                 android:layout_margin="5dp"
-                android:layout_marginEnd="20dp"
                 android:orientation="horizontal" >
 
                 <TextView

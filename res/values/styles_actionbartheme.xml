@@ -30,7 +30,7 @@
         <item name="actionModeSplitBackground">@drawable/cab_background_bottom_actionbartheme</item>
         <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Actionbartheme</item>
 		<item name="actionBarTabTextStyle">@style/TabTextColor.Actionbartheme</item>
- 
+ 		
 		<item name="android:actionBarItemBackground">@drawable/selectable_background_actionbartheme</item>
         <item name="android:popupMenuStyle">@style/PopupMenu.Actionbartheme</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListView.Actionbartheme</item>
@@ -78,7 +78,12 @@
     <style name="TabTextColor.Actionbartheme" parent="@style/Widget.AppCompat.Light.ActionBar.TabText">
         <item name="android:textColor">#ffffff</item>
     </style>
-	
+    
+    <style name="TextColor.Actionbartheme" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/branco</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+ 
     <style name="DropDownNav.Actionbartheme" parent="@style/Widget.AppCompat.Light.Spinner.DropDown.ActionBar">
         <item name="android:background">@drawable/spinner_background_ab_actionbartheme</item>
         <item name="android:popupBackground">@drawable/menu_dropdown_panel_actionbartheme</item>

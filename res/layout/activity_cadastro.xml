@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:padding="10dp"
     android:background="#80FFFFFF" >
 
     <RelativeLayout
@@ -10,8 +11,7 @@
         android:layout_height="462dp"
         android:layout_gravity="top"
         android:layout_margin="10dp"
-        android:gravity="center"
-        android:padding="10dp" >
+        android:gravity="center" >
 
         <TextView
             android:id="@+id/textViewRegistrar"
@@ -82,7 +82,7 @@
             android:textColorHint="@color/gray" />
 
         <Spinner
-            android:id="@+id/spinner1"
+            android:id="@+id/spinnerCidade"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/registerCPF"
@@ -93,12 +93,12 @@
             android:id="@+id/specialty"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/spinner1"
+            android:layout_below="@+id/spinnerCidade"
             android:layout_centerHorizontal="true"
             android:orientation="vertical"
             android:visibility="gone" >
             
-            <EditText
+            <AutoCompleteTextView
             android:id="@+id/registerAddress"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

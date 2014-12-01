@@ -1,5 +1,6 @@
 package br.com.clean_up_mobile.fragment;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -25,11 +26,15 @@ import br.com.clean_up_mobile.vo.DiaristaVO;
 import br.com.clean_up_mobile.vo.ServicoVO;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -62,7 +67,6 @@ public class DetalheDiaristaFragment extends Fragment implements
 	ImageView imgDiarista;
 	EditText data;
 	EditText descricao;
-	AutoCompleteTextView enderecoCompleto;
 	AutoCompleteTextView endereco;
 	ArrayAdapter<String> adapter;
 	ArrayList<Endereco> mEnderecos;
@@ -97,8 +101,7 @@ public class DetalheDiaristaFragment extends Fragment implements
 				.findViewById(R.id.textViewCidadeDiaristaDetalhe);
 		txtEspecialidades = (TextView) layout
 				.findViewById(R.id.textViewEspecialidadesDiaristaDetalhe);
-		imgDiarista = (ImageView) layout
-				.findViewById(R.id.imageViewDiaristaDetalhe);
+		imgDiarista = (ImageView) layout.findViewById(R.id.imageViewPerfil);
 
 		data = (EditText) layout.findViewById(R.id.editTextDataServico);
 		descricao = (EditText) layout
@@ -146,6 +149,13 @@ public class DetalheDiaristaFragment extends Fragment implements
 			}
 		}
 		txtNome.setText(diarista.getNome());
+		if (!diarista.getFotoUsuario().equals(
+				"/cleanUp/resources/assets/img/avatar.jpg")) {
+			Bitmap bitmap;
+			bitmap = decodeBase64(diarista.getFotoUsuario());
+			bitmap = Bitmap.createScaledBitmap(bitmap, 600, 600, true);
+			imgDiarista.setImageBitmap(bitmap);
+		}
 		txtCidade.setText(diarista.getCidade());
 		txtEspecialidades.setText(listaEspecialidades);
 
@@ -153,13 +163,12 @@ public class DetalheDiaristaFragment extends Fragment implements
 	}
 
 	public void validaForm() {
-
-		if (data.getText().toString().trim() == ""
-				&& endereco.getText().toString().trim() == "") {
+		if (data.getText().toString().trim().equals("")
+				&& endereco.getText().toString().equals("")) {
 			Util.criarToast(getActivity(), R.string.msgServicoDataEndereco);
-		} else if (data.getText().toString().trim() == "") {
+		} else if (data.getText().toString().trim().equals("")) {
 			Util.criarToast(getActivity(), R.string.msgServicoData);
-		} else if (endereco.getText().toString().trim() == "") {
+		} else if (endereco.getText().toString().trim().equals("")) {
 			Util.criarToast(getActivity(), R.string.msgServicoEndereco);
 		} else {
 			salvarEndereco();
@@ -180,7 +189,7 @@ public class DetalheDiaristaFragment extends Fragment implements
 		int dia = cal.get(Calendar.DAY_OF_MONTH);
 		int mes = cal.get(Calendar.MONTH) + 1;
 		int ano = cal.get(Calendar.YEAR);
-		String strDate = ano + "-" + mes + "-" + dia;
+		String strDate = ano + "-" + mes + "-" + dia + "T" + "23:59:59.000";
 		servicoVo.setData(strDate);
 		servicoVo.setDescricao(descricao.getText().toString());
 		servicoVo.setDiarista(diaristaVO);
@@ -327,5 +336,16 @@ public class DetalheDiaristaFragment extends Fragment implements
 			break;
 		}
 
+	}
+
+	public static Bitmap decodeBase64(String input) {
+		int inicio;
+		int fim;
+		inicio = input.indexOf(",");
+		fim = input.length();
+		String imgBase64 = input.substring(inicio + 1, fim);
+		byte[] decodedByte = Base64.decode(imgBase64, Base64.DEFAULT);
+		return BitmapFactory
+				.decodeByteArray(decodedByte, 0, decodedByte.length);
 	}
 }

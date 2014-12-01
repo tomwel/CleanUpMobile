@@ -10,10 +10,10 @@
     android:padding="16dp" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/textViewAvaliarServico"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView1"
+        android:layout_below="@+id/imageViewPerfil"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="100dp"
         android:layout_marginTop="18dp"
@@ -21,7 +21,7 @@
         android:textAlignment="center" />
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/imageViewPerfil"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -34,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/imageView1"
+        android:layout_alignTop="@+id/imageViewPerfil"
         android:layout_marginRight="32dp"
         android:src="@drawable/ic_configuracao" />
 
