@@ -1,7 +1,6 @@
 package br.com.clean_up_mobile.activity;
 
 import br.com.clean_up_mobile.R;
-import br.com.clean_up_mobile.controller.NotificacaoController;
 import br.com.clean_up_mobile.db.UsuarioDB;
 import br.com.clean_up_mobile.model.Usuario;
 import android.content.Intent;
@@ -18,14 +17,9 @@ public class MainActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-		final NotificacaoController n = new NotificacaoController();
-
-		n.exibeNotificacao(getApplicationContext());
 
 		Thread background = new Thread() {
 			public void run() {
-
-				n.atulizaNotificacao(getApplicationContext());
 
 				try {
 					// Thread will sleep for 5 seconds

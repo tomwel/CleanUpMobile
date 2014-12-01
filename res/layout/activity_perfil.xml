@@ -32,7 +32,9 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/editTextNome"
         android:layout_marginTop="27dp"
-        android:text="Alterar dados" />
+        android:background="@layout/layout_button_azul"
+        android:text="Alterar dados"
+        android:textColor="@color/branco" />
 
     <ImageView
         android:id="@+id/imageViewPhotoPerfil"

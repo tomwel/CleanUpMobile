@@ -110,12 +110,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_alignRight="@+id/buttonCancelarDiarista"
             android:layout_below="@+id/textView4"
             android:layout_marginTop="16dp"
+            android:layout_toLeftOf="@+id/buttonCalendario"
             android:ems="10"
             android:enabled="false"
             android:inputType="date" >
+
         </EditText>
 
         <Button
@@ -172,26 +173,25 @@
             android:ems="10" />
 
         <Button
-            android:id="@+id/buttonCancelarDiarista"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/autoCompleteTextEnderecoServico"
-            android:layout_marginTop="15dp"
-            android:layout_toRightOf="@+id/textView4"
-            android:background="@color/gray"
-            android:text="Cancelar"
-            android:textColor="@color/branco" />
-
-        <Button
             android:id="@+id/buttonConfirmarDiarista"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/buttonCancelarDiarista"
-            android:layout_alignBottom="@+id/buttonCancelarDiarista"
-            android:layout_alignLeft="@+id/buttonCalendario"
-            android:layout_marginLeft="16dp"
-            android:background="@layout/layout_button_verde_sembordas"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/autoCompleteTextEnderecoServico"
+            android:background="@layout/layout_button_azul_ok"
             android:text="Confirmar"
+            android:layout_marginTop="20px"
+            android:textColor="@color/branco" />
+
+        <Button
+            android:id="@+id/buttonCancelarDiarista"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/autoCompleteTextEnderecoServico"
+            android:layout_below="@+id/autoCompleteTextEnderecoServico"
+            android:background="@color/gray"
+            android:text="Cancelar"
+            android:layout_marginTop="20px"
             android:textColor="@color/branco" />
 
     </RelativeLayout>

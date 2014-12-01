@@ -250,6 +250,9 @@
                 android:id="@+id/buttonRecusar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+               	android:layout_alignBaseline="@+id/buttonAvaliarServico"
+               	android:layout_alignBottom="@+id/buttonAvaliarServico"
+              	android:layout_alignParentRight="true"
                 android:layout_margin="5dp"
                 android:background="@layout/layout_button_vermelho"
                 android:text="Recusar"
@@ -327,7 +330,7 @@
                 android:layout_alignLeft="@+id/linearLayout5"
                 android:layout_below="@+id/linearLayout5"
                 android:layout_margin="5dp"
-                android:text="Se hoje é o dia das crianças... Ontem eu disse: o dia da criança é o dia da mãe, dos pais, das professoras, mas também é o dia dos animais, sempre que você olha uma criança, há sempre uma figura oculta, que é um cachorro atrás. O que é algo muito importante!" />
+                android:text="" />
         </LinearLayout>
     </RelativeLayout>
 

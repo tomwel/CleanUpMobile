@@ -62,7 +62,7 @@ public class ServicoFragment extends ListFragment implements OnRefreshListener {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-
+		setRetainInstance(true);
 		if (mServicos != null) {
 			txtMensagem.setVisibility(View.GONE);
 			progress.setVisibility(View.GONE);
@@ -120,12 +120,25 @@ public class ServicoFragment extends ListFragment implements OnRefreshListener {
 
 		return view;
 	}
+	
+//	@Override
+//	public void onResume() {
+//		super.onResume();
+//		if (tipoUsuario != ""){
+//			onRefresh();
+//		}
+//	}
 
 	@Override
 	public void onRefresh() {
 		if (Util.existeConexao(context))
 			new AtualizaManualTask().execute();
 	}
+//	@Override
+//	public void onDestroy(){
+//		super.onDestroy();
+//		getActivity().finish();
+//	}
 
 	private void mostrarProgress() {
 		progress.setVisibility(View.VISIBLE);

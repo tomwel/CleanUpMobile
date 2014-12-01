@@ -23,6 +23,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -59,12 +60,10 @@ public class PerfilActivity extends ActionBarActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_perfil);
-
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		usuario = (Usuario) getIntent().getSerializableExtra("usuario");
-
 		nomeUsuario = (EditText) findViewById(R.id.editTextNome);
 		imgPerfil = (ImageView) findViewById(R.id.imageViewPhotoPerfil);
-
 		btnEditarDados = (Button) findViewById(R.id.buttonAlterarDados);
 		btnEditarDados.setOnClickListener(btnAlterarDadosOnClickListener);
 
@@ -304,7 +303,9 @@ public class PerfilActivity extends ActionBarActivity implements
 					bitmap = decodeBase64(clienteVO.getFotoUsuario());
 					bitmap = Bitmap.createScaledBitmap(bitmap, 433, 398, true);
 					imgPerfil.setImageBitmap(bitmap);
-					nomeUsuario.setText(clienteVO.getNome().toString());
+					nomeUsuario.setText(clienteVO.getNome());
+				}else{
+					nomeUsuario.setText(clienteVO.getNome());
 				}
 				
 			} else {
@@ -348,8 +349,9 @@ public class PerfilActivity extends ActionBarActivity implements
 					bitmap = decodeBase64(diaristaVO.getFotoUsuario());
 					bitmap = Bitmap.createScaledBitmap(bitmap, 433, 398, true);
 					imgPerfil.setImageBitmap(bitmap);
-					nomeUsuario.setText(diaristaVO.getUsuario().getApelido()
-							.toString());
+					nomeUsuario.setText(diaristaVO.getNome());
+				}else{
+					nomeUsuario.setText(diaristaVO.getNome());
 				}
 			} else {
 				Util.criarToast(getApplicationContext(),

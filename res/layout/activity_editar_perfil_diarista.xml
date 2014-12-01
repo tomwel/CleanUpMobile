@@ -106,14 +106,6 @@
         android:layout_below="@+id/checkBox2"
         android:text="@string/ckbCozinhar" />
 
-    <Button
-        android:id="@+id/buttonCancelarEdicaoDiarista"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:text="@string/btnCancelar" />
-
     <CheckBox
         android:id="@+id/checkBox4"
         android:layout_width="wrap_content"
@@ -142,12 +134,27 @@
         android:hint="Endereço" />
 
     <Button
-        android:id="@+id/buttonConfirmarEdicaoDiarista"
+        android:id="@+id/buttonCancelarEdicaoDiarista"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editTextEditarSenhaDiarista"
         android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/checkBox4"
+        android:background="@color/gray"
+        android:layout_marginTop="20px"
+        android:text="@string/btnCancelar"
+        android:textColor="@color/branco" />
+
+    <Button
+        android:id="@+id/buttonConfirmarEdicaoDiarista"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:text="@string/btnConfirmar" />
+        android:layout_below="@+id/editTextEditarSenhaDiarista"
+        android:background="@layout/layout_button_azul_ok"
+        android:layout_marginTop="20px"
+        android:text="@string/btnConfirmar"
+        android:textColor="@color/branco" />
 
 </RelativeLayout>
 </ScrollView>

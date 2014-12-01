@@ -8,7 +8,7 @@
     <RelativeLayout
         android:id="@+id/RelativeLayout1"
         android:layout_width="match_parent"
-        android:layout_height="462dp"
+        android:layout_height="504dp"
         android:layout_gravity="top"
         android:layout_margin="10dp"
         android:gravity="center" >
@@ -177,26 +177,25 @@
             android:textColorHint="@color/gray" />
 
         <Button
-            android:id="@+id/btnCancelarCadastro"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/btnRegister"
-            android:layout_alignBottom="@+id/btnRegister"
-            android:layout_alignLeft="@+id/registerPassword"
-            android:layout_marginLeft="14dp"
-            android:background="@color/gray"
-            android:text="@string/btnCancelar"
-            android:textColor="@color/branco" />
-
-        <Button
             android:id="@+id/btnRegister"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_alignRight="@+id/registerPassword"
+            android:layout_alignParentRight="true"
             android:layout_below="@+id/registerPassword"
-            android:layout_marginTop="15dp"
-            android:background="@layout/layout_button_verde_sembordas"
+            android:background="@layout/layout_button_azul_ok"
             android:text="@string/btnRegister"
+            android:layout_marginTop="20px"
+            android:textColor="@color/branco" />
+
+        <Button
+            android:id="@+id/btnCancelarCadastro"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/registerPassword"
+            android:background="@color/gray"
+            android:text="@string/btnCancelar"
+            android:layout_marginTop="20px"
             android:textColor="@color/branco" />
 
     </RelativeLayout>

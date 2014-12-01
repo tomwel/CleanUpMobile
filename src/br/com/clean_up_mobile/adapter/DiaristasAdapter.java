@@ -4,11 +4,15 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import br.com.clean_up_mobile.R;
+import br.com.clean_up_mobile.R.drawable;
 import br.com.clean_up_mobile.model.Diarista;
 import br.com.clean_up_mobile.model.Especialidade;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.DrawableRes;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,8 +82,10 @@ public class DiaristasAdapter extends ArrayAdapter<Diarista> {
 				"/cleanUp/resources/assets/img/avatar.jpg")) {
 			Bitmap bitmap;
 			bitmap = decodeBase64(diarista.getFotoUsuario());
-			bitmap = Bitmap.createScaledBitmap(bitmap, 200, 300, true);
+			bitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
 			holder.fotoDiarista.setImageBitmap(bitmap);
+		}else{
+			holder.fotoDiarista.setImageResource(R.drawable.diarista);
 		}
 		// holder.cidadeDiarista.setText(diarista.getCidade().getNomeCidade());
 		holder.cidadeDiarista.setText(diarista.getCidade());
@@ -88,6 +94,11 @@ public class DiaristasAdapter extends ArrayAdapter<Diarista> {
 				.floatValue());
 
 		return convertView;
+	}
+
+	private Resources getResources() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	static class ViewHolder {

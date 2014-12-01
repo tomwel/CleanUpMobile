@@ -271,12 +271,10 @@ public class CadastroActivity extends Activity implements
 								R.string.msgCpfInvalido);
 					} else {
 						String cpfLimpo = Util.limpaCpf(cpf);
-						String telefoneLimpo = Util.limpaTelefone(phone);
 
 						pessoaVO.setNome(name + " " + lastname);
-						pessoaVO.setCpf(cpfLimpo);
-						pessoaVO.setTelefone(telefoneLimpo);
-						//pessoaVO.setEndereco(address);
+						pessoaVO.setCpf(cpf);
+						pessoaVO.setTelefone(phone);
 
 						pessoaVO.setCidade(cidade.getCodigoCidade());
 						pessoaVO.setEmail(email);

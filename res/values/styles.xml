@@ -26,30 +26,4 @@
         <item name="android:windowBackground">@drawable/gradient_menu</item>
     </style>
 
-    <style name="botaoCustomizadoOk" parent="AppBaseTheme">
-        <item name="android:windowBackground">@drawable/button_custom_ok</item>
-        <item name="android:textSize">15sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">#FFFFFF</item>
-        <item name="android:gravity">center</item>
-        <item name="android:shadowColor">#FFFFFF</item>
-        <item name="android:shadowDx">1</item>
-        <item name="android:shadowDy">1</item>
-        <item name="android:shadowRadius">0.6</item>
-        <item name="android:padding">10dip</item>
-    </style>
-
-    <style name="botaoCustomizadoNormal" parent="AppBaseTheme">
-        <item name="android:windowBackground">@drawable/button_custom_ok</item>
-        <item name="android:textSize">15sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">#FFFFFF</item>
-        <item name="android:gravity">center</item>
-        <item name="android:shadowColor">#FFFFFF</item>
-        <item name="android:shadowDx">1</item>
-        <item name="android:shadowDy">1</item>
-        <item name="android:shadowRadius">0.6</item>
-        <item name="android:padding">10dip</item>
-    </style>
-
 </resources>

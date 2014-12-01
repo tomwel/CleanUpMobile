@@ -199,8 +199,7 @@ public class EditarPerfilClienteActivity extends Activity implements
 					Util.criarToast(getApplicationContext(),
 							R.string.msgSenhaInvalido);
 				} else {
-					clienteVO.setTelefone(Util.limpaTelefone(clienteVO
-							.getTelefone()));
+					
 					clienteVO.setCodUsuario(usuario.getId());
 					alterarPerfil(clienteVO);
 				}
@@ -307,4 +306,14 @@ public class EditarPerfilClienteActivity extends Activity implements
 		// TODO Auto-generated method stub
 
 	}
+	
+	@Override 
+	public void onBackPressed() {
+		Intent it = new Intent(getApplicationContext(), PerfilActivity.class);
+		it.putExtra("usuario", usuario);
+		startActivity(it);
+		finish();
+
+	     super.onBackPressed();
+	 }
 }

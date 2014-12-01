@@ -68,7 +68,8 @@ public class ClienteFragment extends ListFragment implements
 		mSearchView.setQueryHint("Procurar Diarista");
 		mSearchView.setIconifiedByDefault(false);
 		mSearchView.setOnQueryTextListener(this);
-		mSearchView.clearFocus();
+		mSearchView.setFocusable(false);
+	    mSearchView.clearFocus();
 		iniciarDownload();
 		return view;
 	

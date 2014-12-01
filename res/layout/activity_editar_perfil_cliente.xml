@@ -53,26 +53,6 @@
         android:hint="Telefone"
         android:inputType="phone" />
 
-    <Button
-        android:id="@+id/buttonCancelarEdicaoPerfil"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:background="@color/gray"
-        android:text="@string/btnCancelar"
-        android:textColor="@color/branco" />
-
-    <Button
-        android:id="@+id/buttonConcluirEdicaoPerfil"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:background="@layout/button_custom_ok"
-        android:text="@string/btnConfirmar"
-        android:textColor="@color/branco" />
-
     <EditText
         android:id="@+id/editTextEditarEmail"
         android:layout_width="wrap_content"
@@ -99,5 +79,27 @@
 
         <requestFocus />
     </EditText>
+
+    <Button
+        android:id="@+id/buttonConcluirEdicaoPerfil"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/editTextEditarSenha"
+        android:background="@layout/layout_button_azul_ok"
+        android:text="@string/btnConfirmar"
+        android:layout_marginTop="20px"
+        android:textColor="@color/branco" />
+
+    <Button
+        android:id="@+id/buttonCancelarEdicaoPerfil"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/editTextEditarSenha"
+        android:background="@color/gray"
+        android:layout_marginTop="20px"
+        android:text="@string/btnCancelar"
+        android:textColor="@color/branco" />
 
 </RelativeLayout>

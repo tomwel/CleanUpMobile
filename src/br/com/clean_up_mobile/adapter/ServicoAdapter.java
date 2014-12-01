@@ -71,7 +71,7 @@ public class ServicoAdapter extends ArrayAdapter<ServicoSimples> {
 		if (s.getStatus().equals("PENDENTE")) {
 			holder.imageStatus
 					.setImageResource(R.drawable.ic_status_servico_pendente);
-		} else if (s.getStatus().equals("ATIVO")) {
+		} else if (s.getStatus().equals("ACEITO")) {
 			holder.imageStatus
 					.setImageResource(R.drawable.ic_status_servico_ativo);
 		} else if (s.getStatus().equals("CANCELAR")) {
@@ -80,11 +80,10 @@ public class ServicoAdapter extends ArrayAdapter<ServicoSimples> {
 		} else if (s.getStatus().equals("CONCLUIDO")) {
 			holder.imageStatus
 					.setImageResource(R.drawable.ic_status_servico_concluido);
-		}else{
+		} else {
 			holder.imageStatus
 					.setImageResource(R.drawable.ic_status_servico_sem_imagem);
 		}
-
 		return convertView;
 	}
 

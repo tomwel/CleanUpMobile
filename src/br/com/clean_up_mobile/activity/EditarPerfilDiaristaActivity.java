@@ -250,8 +250,6 @@ public class EditarPerfilDiaristaActivity extends Activity implements
 					Util.criarToast(getApplicationContext(),
 							R.string.msgSenhaInvalido);
 				} else {
-					diaristaVO.setTelefone(Util.limpaTelefone(diaristaVO
-							.getTelefone()));
 					salvarEndereco();
 				}
 			}
@@ -471,4 +469,14 @@ public class EditarPerfilDiaristaActivity extends Activity implements
 		// TODO Auto-generated method stub
 
 	}
+	
+	@Override 
+	public void onBackPressed() {
+		Intent it = new Intent(getApplicationContext(), PerfilActivity.class);
+		it.putExtra("usuario", usuario);
+		startActivity(it);
+		finish();
+
+	     super.onBackPressed();
+	 }
 }

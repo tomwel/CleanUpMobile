@@ -32,6 +32,7 @@ import android.widget.Toast;
 import br.com.clean_up_mobile.R;
 import br.com.clean_up_mobile.R.drawable;
 import br.com.clean_up_mobile.activity.HomeDiaristaActivity;
+import br.com.clean_up_mobile.activity.PerfilActivity;
 import br.com.clean_up_mobile.db.DiaristaFavoritaDB;
 import br.com.clean_up_mobile.db.EspecialidadeDB;
 import br.com.clean_up_mobile.db.ServicoDB;
@@ -200,30 +201,24 @@ public class DetalheServicoFragment extends Fragment {
 		descricao.setText(serv.getDescricao());
 		data.setText(dataServicoFormatada);
 
-		// Altera a imagem de status do serviço
-		if (serv.getStatus().equals("PENDENTE")) {
-			statusServico
-					.setImageResource(R.drawable.ic_status_servico_pendente);
-			btnAvaliar.setVisibility(view.GONE);
-			buttonCancelar.setVisibility(View.VISIBLE);
-			if (diferencaData > 1) {
-				llConfirmacao.setVisibility(View.VISIBLE);
-			}
-
+		if (diferencaData > 1
+				&& usuarioLogado.getPerfil().equals("ROLE_DIARIST")) {
+			llConfirmacao.setVisibility(View.VISIBLE);
 		} else if (serv.getStatus().equals("ACEITO")) {
 			statusServico.setImageResource(R.drawable.ic_status_servico_ativo);
-			btnAvaliar.setVisibility(view.VISIBLE);
+			if(usuarioLogado.getPerfil().equals("ROLE_CLIENT")){
+			}
 			if (diferencaData >= 2) {
+				btnAvaliar.setVisibility(view.VISIBLE);
+			}else{
 				buttonCancelar.setVisibility(View.VISIBLE);
 			}
 		} else if (serv.getStatus().equals("CANCELAR")) {
 			statusServico
 					.setImageResource(R.drawable.ic_status_servico_inativo);
-			buttonCancelar.setVisibility(View.GONE);
 		} else if (serv.getStatus().equals("CONCLUIDO")) {
 			statusServico
 					.setImageResource(R.drawable.ic_status_servico_concluido);
-
 			if (serv.getAvaliacao() != 0 && serv.getComentario() != null
 					&& usuarioLogado.getPerfil().equals("ROLE_CLIENT")) {
 				llAvaliacao.setVisibility(view.VISIBLE);
@@ -238,34 +233,16 @@ public class DetalheServicoFragment extends Fragment {
 		// exibição de acordo com perfil
 		if (usuarioLogado.getPerfil().equals("ROLE_DIARIST")) {
 			nome.setText(objCliente.getNome());
-			if (!objCliente.getFotoUsuario().equals(
-					"/cleanUp/resources/assets/img/avatar.jpg")) {
-				Bitmap bitmap;
-				bitmap = decodeBase64(objCliente.getFotoUsuario());
-				bitmap = Bitmap.createScaledBitmap(bitmap, 100, 100, true);
-				imgCliente.setImageBitmap(bitmap);
-			}
 			telefone.setText(objCliente.getTelefone());
 			infoContratante.setText(R.string.tvContratanteCliente);
 			btnFavorito.setVisibility(view.GONE);
 			btnAvaliar.setVisibility(view.GONE);
-			buttonCancelar.setVisibility(View.GONE);
 		} else {
 			nome.setText(objDiarista.getNome());
-			if (!objDiarista.getFotoUsuario().equals(
-					"/cleanUp/resources/assets/img/avatar.jpg")) {
-				Bitmap bitmap;
-				bitmap = decodeBase64(objDiarista.getFotoUsuario());
-				bitmap = Bitmap.createScaledBitmap(bitmap, 100, 100, true);
-				imgCliente.setImageBitmap(bitmap);
-			}
 			telefone.setText(objDiarista.getTelefone());
 			infoContratante.setText(R.string.tvContratanteDiarista);
 			btnVerMapa.setVisibility(view.GONE);
-			buttonAceitar.setVisibility(view.GONE);
-			buttonRecusar.setVisibility(view.GONE);
 		}
-
 		return view;
 	}
 
@@ -330,6 +307,7 @@ public class DetalheServicoFragment extends Fragment {
 										new ClassificarHttpAsyncTask(
 												Constantes.POST_CLASSIFICASERVICO,
 												classificacaoVo).execute();
+										btnAvaliar.setVisibility(View.GONE);
 									}
 								}
 							})
@@ -513,7 +491,6 @@ public class DetalheServicoFragment extends Fragment {
 
 				try {
 					Util.criarToast(getActivity(), R.string.msgServicoAvaliacao);
-					getActivity().finish();
 				} catch (Exception e) {
 					Util.criarToast(getActivity(), R.string.msgDeErroWebservice);
 					e.printStackTrace();
